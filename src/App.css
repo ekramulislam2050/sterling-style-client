@@ -1,2 +1,11 @@
+
 @import "tailwindcss";
 @plugin "daisyui";
+
+/* 🌙 Global dark background setup */
+body {
+  @apply bg-black text-white;
+ 
+}
+
+ 
