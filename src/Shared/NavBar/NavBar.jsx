@@ -1,7 +1,9 @@
 import logo from "../../assets/logo/logo.png"
-import logo2 from "../../assets/logo/logo-2.png"
+ 
 import dropdownIcon from "../../assets/DropdownIcon/icons8-dropdown-96.png"
+ 
 const NavBar = () => {
+   
   const links = <>
     <li className="text-sm">ড্যাশবোর্ড </li>
     <li className="text-sm">মার্চেন্ডাইজিং </li>
@@ -20,7 +22,7 @@ const NavBar = () => {
   return (
     <div >
       <div className="shadow-lg  shadow-zinc-600 navbar pb-3">
-
+            
         <div className="navbar-start ">
           {/* dropdown-------- */}
           <div className="dropdown ">
@@ -62,7 +64,7 @@ const NavBar = () => {
         <div className="navbar-center ">
           {/* project logo for desktop--------- */}
           <div className=" sm:flex justify-center items-center hidden">
-
+     
             <img src={logo} alt="logo" className="w-14 h-14 object-cover  " />
             <h2 className="text-3xl font-mono  "><span className="text-6xl text-[#efb520] ">𝔰</span>𝚝𝚎𝚛𝚕𝚒𝚗𝚐 <span className="text-6xl text-[#06b1f3]">𝔰</span>𝚝𝚢𝚕𝚎s
             </h2>
