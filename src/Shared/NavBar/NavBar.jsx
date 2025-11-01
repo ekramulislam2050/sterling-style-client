@@ -1,28 +1,31 @@
 import logo from "../../assets/logo/logo.png"
- 
+
 import dropdownIcon from "../../assets/DropdownIcon/icons8-dropdown-96.png"
- 
+import { NavLink } from "react-router-dom";
+
 const NavBar = () => {
-   
+
   const links = <>
-    <li className="text-sm">ড্যাশবোর্ড </li>
-    <li className="text-sm">মার্চেন্ডাইজিং </li>
-    <li className="text-sm">প্রোডাকশন </li>
-    <li className="text-sm">ইনভেন্টরি </li>
-    <li className="text-sm">এইচআর </li>
-    <li className="text-sm">অ্যাকাউন্টস </li>
-    <li className="text-sm">কিউসি </li>
-    <li className="text-sm">ডেলিভারি </li>
-    <li className="text-sm">রিপোর্টস </li>
+    <NavLink><li className="text-sm">ড্যাশবোর্ড </li></NavLink>
+    <NavLink><li className="text-sm">মার্চেন্ডাইজিং </li></NavLink>
+    <NavLink><li className="text-sm">প্রোডাকশন </li></NavLink>
+    <NavLink><li className="text-sm">ইনভেন্টরি </li></NavLink>
+    <NavLink><li className="text-sm">এইচআর </li></NavLink>
+    <NavLink> <li className="text-sm">অ্যাকাউন্টস </li></NavLink>
+    <NavLink><li className="text-sm">কিউসি </li></NavLink>
+    <NavLink><li className="text-sm">ডেলিভারি </li></NavLink>
+    <NavLink><li className="text-sm">রিপোর্টস </li></NavLink>
+  </>
 
-
-
-
+  const links2 = <>
+    <NavLink to={"/login"}><li className="hover:bg-blue-500 text-sm rounded py-1 pl-2" >লগইন </li></NavLink>
+    <NavLink><li className="hover:bg-blue-500 text-sm rounded py-1 pl-2">লগ আউট </li>
+    </NavLink>
   </>
   return (
     <div >
       <div className="shadow-lg  shadow-zinc-600 navbar pb-3">
-            
+
         <div className="navbar-start ">
           {/* dropdown-------- */}
           <div className="dropdown ">
@@ -64,7 +67,7 @@ const NavBar = () => {
         <div className="navbar-center ">
           {/* project logo for desktop--------- */}
           <div className=" sm:flex justify-center items-center hidden">
-     
+
             <img src={logo} alt="logo" className="w-14 h-14 object-cover  " />
             <h2 className="text-3xl font-mono  "><span className="text-6xl text-[#efb520] ">𝔰</span>𝚝𝚎𝚛𝚕𝚒𝚗𝚐 <span className="text-6xl text-[#06b1f3]">𝔰</span>𝚝𝚢𝚕𝚎s
             </h2>
@@ -105,8 +108,7 @@ const NavBar = () => {
               <img src={dropdownIcon} alt="icon" className="w-full h-full object-cover  " />
             </div>
             <ul tabIndex="0" className="dropdown-content menu  rounded-box z-1 w-52 p-2 shadow-sm bg-[#06b1f3] ">
-              <li className="hover:bg-blue-500 text-sm rounded py-1 pl-2">লগইন </li>
-              <li className="hover:bg-blue-500 text-sm rounded py-1 pl-2">লগ আউট </li>
+              {links2}
             </ul>
 
           </div>
