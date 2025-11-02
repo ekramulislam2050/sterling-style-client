@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 
 
@@ -21,13 +22,14 @@ const Register = () => {
                 body: formData
             })
             const data = await res.json()
+            // console.log('cloudinary',data)
             if (data.secure_url) {
                 setImgUrl(data.secure_url)
-                // todo:must be shown in this success msg-----------
+                toast.success("ছবি আপলোড সফল হয়েছে ")
             }
 
         } catch (err) {
-            // todo:must be shown in this err message-----------
+              toast.error('ছবি আপলোড বার্থ হয়েছে ')
         } finally {
             setLoading(false)
         }
@@ -44,23 +46,29 @@ const Register = () => {
                     </h2>
                     <fieldset className="fieldset">
                         <label className="label text-[#ffffff]">Name</label>
-                        <input type="text" className="input bg-transparent border border-blue-400" placeholder="Name" required/>
+                        <input type="text" className="input bg-transparent border border-blue-400" placeholder="Name" required />
 
                         <label className="label text-[#ffffff]">Photo</label>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImgUpload}
-                            className="  input  bg-transparent border border-blue-400" placeholder="photo" required/>
-                        {loading && (
-                            <p className="text-red-500 text-sm mt-2">ছবি আপলোড হচ্ছে...</p>
-                        )}
+                        {
+                            imgUrl? <input
+                                type="text"
+                                readOnly
+                                value={imgUrl}
+                                className="input bg-transparent border border-green-400 text-xs text-green-300"
+                            /> : 
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImgUpload}
+                                className="  input  bg-transparent border border-blue-400" placeholder="photo" required />
+                        }
+
                         <label className="label text-[#ffffff]">Email</label>
                         <input type="email" className="input bg-transparent border border-blue-400" placeholder="Email" required />
 
                         <label className="label text-[#ffffff]">Password</label>
-                        <input type="password" className="input bg-transparent border border-blue-400" placeholder="Password" required/>
-                        
+                        <input type="password" className="input bg-transparent border border-blue-400" placeholder="Password" required />
+
                         <div><a className="link link-hover">Forgot password?</a></div>
                         <button className="btn bg-blue-500 text-[#ffffff] ">রেজিস্টার</button>
                     </fieldset>
