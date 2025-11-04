@@ -1,11 +1,30 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
+import AuthContext from "../AuthContext/AuthContext";
+
 
 
 
 const Register = () => {
+    const {signUp,updateUserProfile}=useContext(AuthContext)
     const [loading, setLoading] = useState(false)
     const [imgUrl, setImgUrl] = useState("")
+
+    // handle register--------------
+    const handleRegister = async(e) => {
+        e.preventDefault()
+        const formData= new FormData(e.target)
+        const data = Object.fromEntries(formData.entries())
+        // sing up---------------
+          const res = await signUp(data.email,data.password)
+ 
+          if(res.user){
+             updateUserProfile(data.name,data.imgUrl)
+             console.log(res.user)
+          }
+    }
+
+    // img handle by cloudinary--------------
     const handleImgUpload = async (e) => {
         const file = e.target.files[0]
         if (!file) {
@@ -29,7 +48,7 @@ const Register = () => {
             }
 
         } catch (err) {
-              toast.error('ছবি আপলোড বার্থ হয়েছে ')
+            toast.error('ছবি আপলোড বার্থ হয়েছে ')
         } finally {
             setLoading(false)
         }
@@ -44,34 +63,40 @@ const Register = () => {
                     <h2 className="text-2xl font-bold text-center text-blue-500 pb-4">
                         রেজিস্টার করুন
                     </h2>
-                    <fieldset className="fieldset">
-                        <label className="label text-[#ffffff]">Name</label>
-                        <input type="text" className="input bg-transparent border border-blue-400" placeholder="Name" required />
+                    <form onSubmit={handleRegister}>
+                        <fieldset className="fieldset">
+                            <label className="label text-[#ffffff]">Name</label>
+                            <input type="text" className="input bg-transparent border border-blue-400" placeholder="Name" name="name" required />
 
-                        <label className="label text-[#ffffff]">Photo</label>
-                        {
-                            imgUrl? <input
-                                type="text"
-                                readOnly
-                                value={imgUrl}
-                                className="input bg-transparent border border-green-400 text-xs text-green-300"
-                            /> : 
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImgUpload}
-                                className="  input  bg-transparent border border-blue-400" placeholder="photo" required />
-                        }
+                            <label className="label text-[#ffffff]">Photo</label>
 
-                        <label className="label text-[#ffffff]">Email</label>
-                        <input type="email" className="input bg-transparent border border-blue-400" placeholder="Email" required />
+                            {
+                                loading ?
+                                    <div className="skeleton input bg-transparent"></div>
+                                    :
+                                    imgUrl ? <input
+                                        type="text"
+                                        readOnly
+                                        name="imgUrl"
+                                        value={imgUrl}
+                                        className="input bg-transparent border border-green-400 text-xs text-green-300"
+                                    /> :
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleImgUpload}
+                                            className="  input  bg-transparent border border-blue-400" placeholder="photo" required />
+                            }
+                            <label className="label text-[#ffffff]">Email</label>
+                            <input type="email" className="input bg-transparent border border-blue-400" placeholder="Email" name="email" required />
 
-                        <label className="label text-[#ffffff]">Password</label>
-                        <input type="password" className="input bg-transparent border border-blue-400" placeholder="Password" required />
+                            <label className="label text-[#ffffff]">Password</label>
+                            <input type="password" className="input bg-transparent border border-blue-400" placeholder="Password" name="password" required />
 
-                        <div><a className="link link-hover">Forgot password?</a></div>
-                        <button className="btn bg-blue-500 text-[#ffffff] ">রেজিস্টার</button>
-                    </fieldset>
+                            <div><a className="link link-hover">Forgot password?</a></div>
+                            <button className="btn bg-blue-500 text-[#ffffff] "  type="submit">রেজিস্টার</button>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
