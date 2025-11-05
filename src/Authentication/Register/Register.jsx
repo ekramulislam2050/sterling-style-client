@@ -1,27 +1,36 @@
 import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../AuthContext/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 
 
 const Register = () => {
-    const {signUp,updateUserProfile}=useContext(AuthContext)
+    const navigate = useNavigate()
+    const { signUp, updateUserProfile } = useContext(AuthContext)
     const [loading, setLoading] = useState(false)
     const [imgUrl, setImgUrl] = useState("")
 
     // handle register--------------
-    const handleRegister = async(e) => {
+    const handleRegister = async (e) => {
         e.preventDefault()
-        const formData= new FormData(e.target)
+        const formData = new FormData(e.target)
         const data = Object.fromEntries(formData.entries())
         // sing up---------------
-          const res = await signUp(data.email,data.password)
- 
-          if(res.user){
-             updateUserProfile(data.name,data.imgUrl)
-             console.log(res.user)
-          }
+        try {
+            const res = await signUp(data.email, data.password)
+
+            if (res.user) {
+                updateUserProfile(data.name, data.imgUrl)
+                e.target.reset()
+                toast.success("রেজিস্ট্রেশন সফল হয়েছে")
+                navigate("/login")
+            }
+        } catch (err) {
+            toast.error("রেজিস্ট্রেশন ব্যার্থ হয়েছে")
+        }
+
     }
 
     // img handle by cloudinary--------------
@@ -72,7 +81,7 @@ const Register = () => {
 
                             {
                                 loading ?
-                                    <div className="skeleton input bg-transparent"></div>
+                                    <div className="skeleton input bg-transparent  "></div>
                                     :
                                     imgUrl ? <input
                                         type="text"
@@ -94,7 +103,7 @@ const Register = () => {
                             <input type="password" className="input bg-transparent border border-blue-400" placeholder="Password" name="password" required />
 
                             <div><a className="link link-hover">Forgot password?</a></div>
-                            <button className="btn bg-blue-500 text-[#ffffff] "  type="submit">রেজিস্টার</button>
+                            <button className="btn bg-blue-500 text-[#ffffff] " type="submit">রেজিস্টার</button>
                         </fieldset>
                     </form>
                 </div>
