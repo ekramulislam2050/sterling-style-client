@@ -1,26 +1,41 @@
 import logo from "../../assets/logo/logo.png"
 
 import dropdownIcon from "../../assets/DropdownIcon/icons8-dropdown-96.png"
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../Authentication/AuthContext/AuthContext";
+import { toast } from "react-toastify";
 
 const NavBar = () => {
-
+  const navigate = useNavigate()
+  const { logOut,user } = useContext(AuthContext)
+  
+  const handleLogOut = () => {
+    try {
+      logOut()
+      toast.success("লগ আউট সফল হয়েছে  ")
+      navigate("/login")
+    } catch (err) {
+      toast.error("লগ আউট ব্যার্থ হয়েছে  ")
+    }
+  }
   const links = <>
-    <NavLink><li className="text-sm">ড্যাশবোর্ড </li></NavLink>
-    <NavLink><li className="text-sm">মার্চেন্ডাইজিং </li></NavLink>
-    <NavLink><li className="text-sm">প্রোডাকশন </li></NavLink>
-    <NavLink><li className="text-sm">ইনভেন্টরি </li></NavLink>
-    <NavLink><li className="text-sm">এইচআর </li></NavLink>
-    <NavLink> <li className="text-sm">অ্যাকাউন্টস </li></NavLink>
-    <NavLink><li className="text-sm">কিউসি </li></NavLink>
-    <NavLink><li className="text-sm">ডেলিভারি </li></NavLink>
-    <NavLink><li className="text-sm">রিপোর্টস </li></NavLink>
+    <NavLink className="text-sm">ড্যাশবোর্ড </NavLink>
+    <NavLink className="text-sm">মার্চেন্ডাইজিং </NavLink>
+    <NavLink className="text-sm">প্রোডাকশন </NavLink>
+    <NavLink className="text-sm">ইনভেন্টরি</NavLink>
+    <NavLink className="text-sm">এইচআর </NavLink>
+    <NavLink className="text-sm">অ্যাকাউন্টস </NavLink>
+    <NavLink className="text-sm">কিউসি </NavLink>
+    <NavLink className="text-sm">ডেলিভারি </NavLink>
+    <NavLink className="text-sm">রিপোর্টস </NavLink>
   </>
 
   const links2 = <>
     <NavLink to={"/login"}><li className="hover:bg-blue-500 text-sm rounded py-1 pl-2" >লগইন </li></NavLink>
-    <NavLink><li className="hover:bg-blue-500 text-sm rounded py-1 pl-2">লগ আউট </li>
-    </NavLink>
+    <li onClick={handleLogOut}><button className="hover:bg-blue-500 text-sm rounded py-1 pl-2">
+      লগ আউট
+    </button> </li>
   </>
   return (
     <div >
@@ -99,7 +114,7 @@ const NavBar = () => {
           <div className="dropdown dropdown-hover dropdown-end">
             <div className="avatar">
               <div className="ring-primary ring-offset-base-100 sm:w-14 rounded-full ring-2 ring-offset-2 w-12">
-                <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                <img src={user?.photoURL} />
               </div>
 
             </div>
@@ -108,6 +123,7 @@ const NavBar = () => {
               <img src={dropdownIcon} alt="icon" className="w-full h-full object-cover  " />
             </div>
             <ul tabIndex="0" className="dropdown-content menu  rounded-box z-1 w-52 p-2 shadow-sm bg-[#06b1f3] ">
+              {/* authentication menu---------- */}
               {links2}
             </ul>
 

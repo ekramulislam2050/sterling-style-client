@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
+
     // sign up------------
     const signUp = (email, password) => {
 
@@ -25,7 +26,7 @@ const AuthProvider = ({ children }) => {
     const provider = new GoogleAuthProvider()
     const signInByGoogle = () => {
 
-        return signInWithPopup(auth, provider)
+        return signInWithPopup(auth,provider)
 
     }
 
