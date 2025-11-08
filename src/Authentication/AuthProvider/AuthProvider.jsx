@@ -2,6 +2,8 @@ import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged,
 import AuthContext from "../AuthContext/AuthContext";
 import auth from "../../firebase/firebase.init";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 
 const AuthProvider = ({ children }) => {
@@ -10,7 +12,7 @@ const AuthProvider = ({ children }) => {
 
     // sign up------------
     const signUp = (email, password) => {
-
+             console.log(email,password)
         return createUserWithEmailAndPassword(auth, email, password)
 
     }
@@ -26,7 +28,7 @@ const AuthProvider = ({ children }) => {
     const provider = new GoogleAuthProvider()
     const signInByGoogle = () => {
 
-        return signInWithPopup(auth,provider)
+        return signInWithPopup(auth, provider)
 
     }
 
@@ -50,7 +52,30 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
-            setLoading(false)
+  
+            // for jwt token-------------
+            if (currentUser) {
+                const userEmail = { email: currentUser.email }
+                axios.post(`http://localhost:5000/jwt`, userEmail,{headers:{"Content-Type":"application/json"}})
+                    .then((res) => {
+                        if (res.data.token) {
+                            localStorage.setItem("access-token", res.data.token)
+                        } else {
+                            localStorage.removeItem("access-token")
+                        }
+                    })
+                    .catch((err) => {
+                        toast.error("jwt টোকেন ব্যর্থ  হয়েছে ")
+                        localStorage.removeItem("access-token")
+                    })
+                    .finally(() => {
+                        setLoading(false)
+                    })
+            }else{
+                localStorage.removeItem("access-token")
+                setLoading(false)
+            }
+
         })
         return () => unsubscribe()
     }, [])

@@ -17,6 +17,7 @@ const Register = () => {
         e.preventDefault()
         const formData = new FormData(e.target)
         const data = Object.fromEntries(formData.entries())
+        console.log("register=",data)
         // sing up---------------
         try {
             const res = await signUp(data.email, data.password)
