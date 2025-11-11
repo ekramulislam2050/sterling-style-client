@@ -20,8 +20,8 @@ const NavBar = () => {
     }
   }
   const links = <>
-    <NavLink className="text-sm">ড্যাশবোর্ড </NavLink>
-    <NavLink className="text-sm">মার্চেন্ডাইজিং </NavLink>
+    <NavLink className="text-sm" to={"/dashboard"}>ড্যাশবোর্ড </NavLink>
+    <NavLink className="text-sm" to={"/merchandise"}>মার্চেন্ডাইজিং </NavLink>
     <NavLink className="text-sm">প্রোডাকশন </NavLink>
     <NavLink className="text-sm">ইনভেন্টরি</NavLink>
     <NavLink className="text-sm">এইচআর </NavLink>

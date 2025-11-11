@@ -2,12 +2,16 @@ import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
+import PrivateRoute from "./PrivateRoute";
+
 // lazy loaded components------------
 const MainLayOut = lazy(() => import("../Pages/MainLayOut/MainLayOut"))
 const ErrorElement = lazy(() => import("../Shared/ErrorElement/ErrorElement"))
 const Home = lazy(() => import("../Pages/Home/Home"))
 const Login = lazy(() => import("../Authentication/Login/Login"))
 const Register = lazy(() => import("../Authentication/Register/Register"))
+const Dashboard = lazy(()=>import("../Pages/Dashboard/Dashboard"))
+const Merchandise =lazy(()=>import("../Pages/Merchandise/Merchandise"))
 
 // skeleton-component------------------
 const PageSkeleton = () => {
@@ -45,6 +49,14 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element:<WithSuspense Component={Register}></WithSuspense>
+      },
+      {
+        path:"/dashboard",
+        element:<PrivateRoute><WithSuspense Component={Dashboard}></WithSuspense></PrivateRoute>
+      },
+      {
+        path:"/merchandise",
+        element:<PrivateRoute><WithSuspense Component={Merchandise}></WithSuspense></PrivateRoute>
       }
 
     ]

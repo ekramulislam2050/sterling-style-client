@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../AuthContext/AuthContext";
 import { toast } from "react-toastify";
 
@@ -7,13 +7,14 @@ import { toast } from "react-toastify";
 const Login = () => {
     const navigate = useNavigate()
     const { signIn,signInByGoogle } = useContext(AuthContext)
-        
+    const location=useLocation()
+     const from=location.state?.from?.pathname || "/"
     // login by google------------
       const handleGoogleLogin=async()=>{
             try{
                const result = await signInByGoogle()
                if(result.user){
-                  navigate("/")
+                  navigate(from,{replace:true})
                   toast.success("লগইন সফল হয়েছে")
                }
             }catch(err){
@@ -31,7 +32,7 @@ const Login = () => {
             if (res.user) {
                 e.target.reset()
                 toast.success("লগইন সফল হয়েছে")
-                navigate("/")
+                navigate(from,{replace:true})
             }
         } catch (err) {
             toast.error("লগইন ব্যার্থ  হয়েছে")
