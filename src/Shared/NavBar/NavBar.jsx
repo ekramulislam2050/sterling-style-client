@@ -8,8 +8,8 @@ import { toast } from "react-toastify";
 
 const NavBar = () => {
   const navigate = useNavigate()
-  const { logOut,user } = useContext(AuthContext)
-  
+  const { logOut, user } = useContext(AuthContext)
+
   const handleLogOut = () => {
     try {
       logOut()
@@ -42,43 +42,49 @@ const NavBar = () => {
       <div className="shadow-lg  shadow-zinc-600 navbar pb-3">
 
         <div className="navbar-start ">
-          {/* dropdown-------- */}
-          <div className="dropdown ">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle ">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /> </svg>
+          <div className="drawer">
+            <input id="my-drawer-1" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+              {/* Page content here */}
+              <label htmlFor="my-drawer-1" className="  drawer-button  ">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle  ">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /> </svg>
+                </div>
+              </label>
             </div>
 
-            <ul
-              tabIndex="-1"
-              className="p-2 mt-3 shadow menu menu-sm dropdown-content bg-[#0491c9] rounded-box z-1 w-52 ">
-              {/* search field------- */}
-              <li>
+            <div className="drawer-side">
+              <label htmlFor="my-drawer-1" aria-label="close sidebar" className="drawer-overlay  "></label>
+              <ul className="menu bg-[#0491c9] min-h-full w-50 p-4">
 
-                <label className="input bg-transparent border border-gray-600">
-                  <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <g
-                      strokeLinejoin="round"
-                      strokeLinecap="round"
-                      strokeWidth="2.5"
-                      fill="none"
-                      stroke="currentColor"
-                    >
-                      <circle cx="11" cy="11" r="8"></circle>
-                      <path d="m21 21-4.3-4.3"></path>
-                    </g>
-                  </svg>
-                  <input type="search" required placeholder="Search" />
-                </label>
+                {/* search---------------- */}
+                <li>
 
-              </li>
-              {/* nav menu-------------- */}
-              <li>
-                {links}
-              </li>
-            </ul>
+                  <label className="input bg-transparent border border-gray-600">
+                    <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <g
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
+                        strokeWidth="2.5"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                      </g>
+                    </svg>
+                    <input type="search" required placeholder="Search" />
+                  </label>
+
+                </li>
+                {/* Sidebar content here */}
+                <li> {links}</li>
+              </ul>
+            </div>
           </div>
 
         </div>
+
         <div className="navbar-center ">
           {/* project logo for desktop--------- */}
           <div className=" sm:flex justify-center items-center hidden">

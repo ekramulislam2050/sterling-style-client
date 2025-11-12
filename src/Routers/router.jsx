@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import Skeleton from "react-loading-skeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
 import PrivateRoute from "./PrivateRoute";
 
@@ -10,21 +10,33 @@ const ErrorElement = lazy(() => import("../Shared/ErrorElement/ErrorElement"))
 const Home = lazy(() => import("../Pages/Home/Home"))
 const Login = lazy(() => import("../Authentication/Login/Login"))
 const Register = lazy(() => import("../Authentication/Register/Register"))
-const Dashboard = lazy(()=>import("../Pages/Dashboard/Dashboard"))
-const Merchandise =lazy(()=>import("../Pages/Merchandise/Merchandise"))
+const Dashboard = lazy(() => import("../Pages/Dashboard/Dashboard"))
+const Merchandise = lazy(() => import("../Pages/Merchandise/Merchandise"))
 
 // skeleton-component------------------
 const PageSkeleton = () => {
   return (
-    <div>
-      <Skeleton height={40} width={200}></Skeleton>
-      <Skeleton height={20} count={3}></Skeleton>
-      <Skeleton height={200}></Skeleton>
-    </div>
-  )
-}
+   <SkeletonTheme baseColor="#2e2e2e" highlightColor="#0877b2">
+      <div className="p-6 space-y-8 max-w-3xl mx-auto bg-gray-900 min-h-screen text-white">
+        {/* Title Skeleton */}
+        <Skeleton height={40} width={250} />
+
+        {/* Paragraph lines */}
+        <div className="my-5">
+          <Skeleton height={20} />
+          <Skeleton height={20} width="90%" />
+          <Skeleton height={20} width="80%" />
+        </div>
+
+        {/* Image or Card block */}
+        <Skeleton height={250} />
+      </div>
+    </SkeletonTheme>
+  );
+};
+
 // suspense fallback-component-------------------
-const WithSuspense = ({Component}) => {
+const WithSuspense = ({ Component }) => {
   return (
     <Suspense fallback={<PageSkeleton />}>
       <Component />
@@ -35,28 +47,28 @@ const WithSuspense = ({Component}) => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element:<WithSuspense Component={MainLayOut}></WithSuspense>,
-    errorElement:<WithSuspense Component={ErrorElement}></WithSuspense>,
+    element: <WithSuspense Component={MainLayOut}></WithSuspense>,
+    errorElement: <WithSuspense Component={ErrorElement}></WithSuspense>,
     children: [
       {
         path: "/",
-        element:<WithSuspense Component={Home}></WithSuspense>
+        element: <WithSuspense Component={Home}></WithSuspense>
       },
       {
         path: "/login",
-        element:<WithSuspense Component={Login}></WithSuspense>
+        element: <WithSuspense Component={Login}></WithSuspense>
       },
       {
         path: "/register",
-        element:<WithSuspense Component={Register}></WithSuspense>
+        element: <WithSuspense Component={Register}></WithSuspense>
       },
       {
-        path:"/dashboard",
-        element:<PrivateRoute><WithSuspense Component={Dashboard}></WithSuspense></PrivateRoute>
+        path: "/dashboard",
+        element: <PrivateRoute><WithSuspense Component={Dashboard}></WithSuspense></PrivateRoute>
       },
       {
-        path:"/merchandise",
-        element:<PrivateRoute><WithSuspense Component={Merchandise}></WithSuspense></PrivateRoute>
+        path: "/merchandise",
+        element: <PrivateRoute><WithSuspense Component={Merchandise}></WithSuspense></PrivateRoute>
       }
 
     ]
