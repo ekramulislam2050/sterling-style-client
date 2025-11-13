@@ -17,7 +17,7 @@ const Merchandise = lazy(() => import("../Pages/Merchandise/Merchandise"))
 const PageSkeleton = () => {
   return (
    <SkeletonTheme baseColor="#2e2e2e" highlightColor="#0877b2">
-      <div className="p-6 space-y-8 max-w-3xl mx-auto bg-gray-900 min-h-screen text-white">
+      <div className="p-6 space-y-8 max-w-3xl mx-auto min-h-screen text-white">
         {/* Title Skeleton */}
         <Skeleton height={40} width={250} />
 
