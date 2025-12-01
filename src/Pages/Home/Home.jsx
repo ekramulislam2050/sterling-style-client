@@ -1,9 +1,18 @@
- 
+import Banner from "../../Components/Banner/Banner";
+import FeatureAndModules from "../../Components/FeatureAndModules/FeatureAndModules";
+import KeyBenefit from "../../Components/KeyBenefit/KeyBenefit";
+import OverviewSection from "../../Components/OverviewSection/OverviewSection";
+import WorkFlow from "../../Components/WorkFlow/WorkFlow";
+
 
 const Home = () => {
     return (
         <div>
-            <h1 className="text-5xl text-red-500">home---------------</h1>
+            <Banner></Banner>
+            <FeatureAndModules></FeatureAndModules>
+            <OverviewSection></OverviewSection>
+            <KeyBenefit></KeyBenefit>
+            <WorkFlow></WorkFlow>
         </div>
     );
 };

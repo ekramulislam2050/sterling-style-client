@@ -4,7 +4,7 @@
 
 /* 🌙 Global dark background setup */
 body {
-  @apply bg-black text-white;
+  @apply bg-black text-[#ffffff];
  
 }
 

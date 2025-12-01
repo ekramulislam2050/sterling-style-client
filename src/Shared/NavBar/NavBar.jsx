@@ -39,7 +39,7 @@ const NavBar = () => {
   </>
   return (
     <div >
-      <div className="shadow-lg  shadow-zinc-600 navbar pb-3">
+      <div className="shadow-lg    navbar pb-3 fixed z-20 bg-black  ">
 
         <div className="navbar-start ">
           <div className="drawer">
