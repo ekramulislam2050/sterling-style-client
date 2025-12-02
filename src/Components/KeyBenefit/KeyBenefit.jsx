@@ -15,7 +15,7 @@ const KeyBenefits = () => {
                 <div className="flex flex-col mt-22 items-center">
                     {/* first avatar------------- */}
                     <div className="avatar">
-                        <div className="mask mask-hexagon-2 w-59  bg-blue-500 ">
+                        <div className="mask mask-hexagon-2 w-59  bg-blue-500 shadow-lg hover:scale-105 transition ">
                             <div className="flex flex-col items-center ">
                                 <p className="text-5xl py-4"> ⚡</p>
                                 <h3 className="font-bold text-lg">Real-Time Data</h3>
@@ -26,7 +26,7 @@ const KeyBenefits = () => {
 
                     {/* 2nd avatar------------- */}
                     <div className="avatar">
-                        <div className="mask mask-hexagon-2 w-59  bg-[#cc9b1b]   ">
+                        <div className="mask mask-hexagon-2 w-59  bg-[#cc9b1b]   shadow-lg hover:scale-105 transition">
                             <div className="flex flex-col items-center ">
                                 <p className="text-5xl py-4"> 📈</p>
                                 <h3 className="font-bold text-lg">Efficiency Monitoring</h3>
@@ -37,7 +37,7 @@ const KeyBenefits = () => {
 
                     {/* 3rd avatar------------- */}
                     <div className="avatar">
-                        <div className="mask mask-hexagon-2 w-59  bg-blue-500   ">
+                        <div className="mask mask-hexagon-2 w-59  bg-blue-500 shadow-lg hover:scale-105 transition   ">
                             <div className="flex flex-col items-center ">
                                 <p className="text-5xl py-4"> 🤖</p>
                                 <h3 className="font-bold text-lg">Automated HR</h3>
@@ -49,7 +49,7 @@ const KeyBenefits = () => {
                 {/* 4th avatar-------------------- */}
                 <div className="flex flex-col items-center">
                     <div className="avatar">
-                        <div className="mask mask-hexagon-2 w-59  bg-[#cc9b1b]   ">
+                        <div className="mask mask-hexagon-2 w-59  bg-[#cc9b1b]   shadow-lg hover:scale-105 transition">
                             <div className="flex flex-col items-center ">
                                 <p className="text-5xl py-4"> 📊</p>
                                 <h3 className="font-bold text-lg">Smart Reports</h3>
@@ -60,7 +60,7 @@ const KeyBenefits = () => {
 
                     {/* 5th avatar------------- */}
                     <div className="avatar">
-                        <div className="mask mask-hexagon-2 w-59  bg-blue-500  ">
+                        <div className="mask mask-hexagon-2 w-59  bg-blue-500  shadow-lg hover:scale-105 transition">
                             <div className="flex flex-col items-center ">
                                 <p className="text-5xl py-4"> ☁️</p>
                                 <h3 className="font-bold text-lg">Cloud-Based System</h3>
@@ -71,7 +71,7 @@ const KeyBenefits = () => {
 
                     {/* 6th avatar------------- */}
                     <div className="avatar">
-                        <div className="mask mask-hexagon-2 w-59  bg-[#cc9b1b]   ">
+                        <div className="mask mask-hexagon-2 w-59  bg-[#cc9b1b]   shadow-lg hover:scale-105 transition">
                             <div className="flex flex-col items-center ">
                                 <p className="text-5xl py-4"> 📱</p>
                                 <h3 className="font-bold text-lg">Mobile Optimized</h3>
