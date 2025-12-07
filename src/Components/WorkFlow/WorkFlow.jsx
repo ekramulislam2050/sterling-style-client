@@ -1,5 +1,5 @@
 
-import "../../../src/boxShadow.css"
+import "../../Css/boxShadow.css"
 
 export default function Workflow() {
   const steps = [
