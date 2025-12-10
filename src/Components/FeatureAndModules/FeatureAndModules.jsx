@@ -1,3 +1,6 @@
+import { Slide } from "react-awesome-reveal";
+
+
 const features = [
     {
         icon: "🗂️",
@@ -27,32 +30,39 @@ const features = [
 ];
 
 const FeatureAndModules = () => {
+    const direction = ["left", "left", "down", "right", "right"]
     return (
         <div className="w-full py-16 bg-black/20 backdrop-blur-sm">
             <div className="max-w-6xl mx-auto px-4 text-center">
-                     {/* heading------------------ */}
+                {/* heading------------------ */}
                 <h2 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg ">
                     Key Modules & Features
 
                 </h2>
                 <p className="mb-8 text-gray-400 pt-2 ">গুরুত্বপূর্ণ বিভাগ ও সুবিধাসমূহ</p>
 
-                  {/* card---------------------- */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                {/* card---------------------- */}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mt-20">
                     {features.map((item, index) => (
-                        <div
-                            key={index}
-                            className="bg-white/10 backdrop-blur-md rounded-xl p-6 flex flex-col items-center justify-center 
+                        <Slide key={index} direction={direction[index]} damping={0.15} cascade>
+                            <div
+                            
+                                className="bg-white/10 backdrop-blur-md rounded-xl p-6 flex flex-col items-center justify-center 
                          hover:scale-105 transition-transform duration-300 shadow-lg shadow-cyan-900/20 border border-blue-400 border-r-0 border-b-0"
-                        >
-                            <div className="text-4xl mb-4 text-cyan-300">{item.icon}</div>
-                            <h3 className="text-xl font-semibold text-white mb-2">
-                                {item.title}
-                            </h3>
-                            <p className="text-sm text-white/80 text-center">{item.desc}</p>
-                        </div>
+                            >
+                                <div className="text-4xl mb-4 text-cyan-300">{item.icon}</div>
+                                <h3 className="text-xl font-semibold text-white mb-2">
+                                    {item.title}
+                                </h3>
+                                <p className="text-sm text-white/80 text-center">{item.desc}</p>
+                            </div>
+                        </Slide>
+
+
                     ))}
                 </div>
+
 
             </div>
         </div>
@@ -60,3 +70,5 @@ const FeatureAndModules = () => {
 };
 
 export default FeatureAndModules;
+
+

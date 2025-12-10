@@ -17,7 +17,6 @@
     "firebase": "^12.4.0",
     "localforage": "^1.10.0",
     "match-sorter": "^8.1.0",
-    "motion": "^12.23.25",
     "react": "^19.1.1",
     "react-awesome-reveal": "^4.3.1",
     "react-dom": "^19.1.1",

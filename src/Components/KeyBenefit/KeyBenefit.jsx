@@ -7,16 +7,20 @@ const KeyBenefits = () => {
 
         <div className="mt-15">
             <div className="flex flex-col items-center mb-10">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2 flex justify-center  ">
-                    Key Benefits
-                </h2>
-                <p className="text-gray-400 pt-2 text-center lg:w-[80%] px-1 ">আপনি কেন আপনার কারখানার এই সিস্টেম ব্যবহার করবেন তা নিম্নে দেখুন</p>
+                <Fade direction="left" delay={300} duration={800}>
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-2 flex justify-center  ">
+                        Key Benefits
+                    </h2>
+                </Fade>
+                 <Fade className=" lg:w-[80%]  " direction="right" delay={300} duration={800}>
+                      <p className="text-gray-400 pt-2 text-center w-full px-1 ">আপনি কেন আপনার কারখানার এই সিস্টেম ব্যবহার করবেন তা নিম্নে দেখুন</p>
+                 </Fade>
             </div>
             <div className="md:flex justify-center">
 
                 <div className="flex flex-col mt-22 items-center">
                     {/* first avatar------------- */}
-                    <Fade delay={200} duration={2000} fraction={0.3}>
+                    <Fade delay={400} duration={800} fraction={0.3}>
                         <div className="avatar">
                             <div className="mask mask-hexagon-2 w-59  bg-blue-500 shadow-lg hover:scale-105 transition ">
                                 <div className="flex flex-col items-center ">
