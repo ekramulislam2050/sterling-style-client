@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import CosmicWavesShaders from "../CosmicWavesShaders/CosmicWavesShaders"
 import "../../Css/rotateBorder.css"
+import { Link } from "react-router-dom";
 
 
 const Banner = () => {
@@ -57,7 +58,7 @@ const Banner = () => {
 
         </p>
 
-        <button className="relative px-6 py-2 mt-6 md:px-8 md:py-3 bg-white/20 
+        <Link to={"/dashboard"} className="relative px-6 py-2 mt-6 md:px-8 md:py-3 bg-white/20 
         hover:bg-white/30 rounded-xl backdrop-blur border border-white/40 
         transition text-lg overflow-hidden">
 
@@ -66,7 +67,7 @@ const Banner = () => {
           {/* Rotating Border */}
           <span className="absolute inset-0 rounded-xl border-2 border-cyan-400 
         animate-rotate-border"></span>
-        </button>
+        </Link>
 
 
 

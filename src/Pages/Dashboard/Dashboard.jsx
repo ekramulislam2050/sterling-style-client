@@ -1,11 +1,19 @@
  
+import ProductionMonitoring from "../../Components/ProductionMonitoring/ProductionMonitoring";
+import ProductionOverview from "../../Components/ProductionOverview/ProductionOverview";
+
+
+
+
 
 const Dashboard = () => {
-    return (
-        <div className=" place-content-center place-items-center mt-[50px]">
-            <h1 className="text-2xl text-red-500">Dashboard----------</h1>
-        </div>
-    );
+  return (
+   <div className="p-3">
+      <ProductionOverview></ProductionOverview>
+      <ProductionMonitoring></ProductionMonitoring>
+       
+   </div>
+  );
 };
 
 export default Dashboard;

@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 const NavBar = () => {
   const navigate = useNavigate()
   const { logOut, user } = useContext(AuthContext)
-
+     console.log("user===",user)
   const handleLogOut = () => {
     try {
       logOut()
@@ -20,6 +20,7 @@ const NavBar = () => {
     }
   }
   const links = <>
+    <NavLink className="text-sm" to={"/"}>হোম  </NavLink>
     <NavLink className="text-sm" to={"/dashboard"}>ড্যাশবোর্ড </NavLink>
     <NavLink className="text-sm" to={"/merchandise"}>মার্চেন্ডাইজিং </NavLink>
     <NavLink className="text-sm">প্রোডাকশন </NavLink>
@@ -96,8 +97,8 @@ const NavBar = () => {
           </div>
           {/* project logo for mobile--------- */}
           <div className=" sm:hidden justify-center items-center flex flex-col">
-
-            <img src={logo} alt="logo" className="w-14 h-14 object-cover  " />
+            
+            <img src={user?.photoURL} alt="logo" className="w-14 h-14 object-cover  " />
             <h2 className="text-xl font-extrabold font-mono bg-linear-to-r from-[#06b1f3] to-[#efb520] bg-clip-text text-transparent drop-shadow-md">
               Sterling Styles
             </h2>
@@ -106,6 +107,7 @@ const NavBar = () => {
 
         </div>
         <div className="navbar-end gap-4">
+           
           {/* notification icon--------- */}
           <div>
             <button className="btn btn-ghost btn-circle ">
@@ -115,10 +117,17 @@ const NavBar = () => {
 
               </div>
             </button>
+              
           </div>
+
+           {/* user name------------------ */}
+           <p>{user?.displayName}</p>
+
           {/* profile picture---------- */}
           <div className="dropdown dropdown-hover dropdown-end">
+            
             <div className="avatar">
+            
               <div className="ring-primary ring-offset-base-100 sm:w-14 rounded-full ring-2 ring-offset-2 w-12">
                 <img src={user?.photoURL} />
               </div>
