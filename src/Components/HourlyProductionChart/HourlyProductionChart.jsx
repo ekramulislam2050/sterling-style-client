@@ -7,9 +7,9 @@ const HourlyProductionChart = () => {
         { name: "11 AM", uv: 500, pv: 380 },
     ];
     return (
-        <div className='flex flex-col items-center '>
+        <div className='flex flex-col items-center  w-full h-full '>
             <h1 className='py-1 text-yellow-400'>Hourly Production Chart (Graph)</h1>
-            <div className="  bg-linear-to-tr from-yellow-500 to-yellow-700 p-3 rounded-xl w-full">
+            <div className="  bg-linear-to-tr from-yellow-500 to-yellow-700 px-3 pt-1   w-full h-full rounded-xl xl:pb-8">
                 <LineChart
 
                     style={{ width: '100%', maxWidth: '700px', height: '100%', maxHeight: '70vh', aspectRatio: 1.618, }}

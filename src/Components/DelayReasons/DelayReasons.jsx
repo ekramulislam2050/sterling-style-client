@@ -10,11 +10,11 @@ const total = delayReasons.reduce((sum, r) => sum + r.count, 0);
 
 const DelayReasons = () => {
     return (
-        <div className="flex flex-col items-center ">
+        <div className="flex flex-col items-center   w-full h-full">
             <h3 className="py-1 text-blue-300">
                 Top Delay Reasons
             </h3>
-            <div className="bg-linear-to-bl from-blue-600 to-blue-900 p-5 rounded-2xl text-white shadow-lg w-full ">
+            <div className="bg-linear-to-bl from-blue-600 to-blue-900 p-5 rounded-xl text-white shadow-lg w-full h-full ">
 
 
                 <div className="space-y-5 pb-2">

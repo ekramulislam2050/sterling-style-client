@@ -9,14 +9,14 @@ const ProductionMonitoring = () => {
     
 
     return (
-        <div className="grid grid-cols-3">
-           <div >
+        <div className="grid lg:grid-cols-3  gap-3 md:grid-cols-2   px-1">
+           <div className=' h-[280px] w-full   overflow-hidden  rounded-xl '>
             <HourlyProductionChart></HourlyProductionChart>
            </div>
-            <div>
+            <div className=' h-[280px] w-full   overflow-hidden'>
                 <LineWiseProduction></LineWiseProduction>
             </div>
-            <div> 
+            <div className=' h-[280px] w-full   overflow-hidden'> 
                  <DelayReasons></DelayReasons>
             </div>
         </div>

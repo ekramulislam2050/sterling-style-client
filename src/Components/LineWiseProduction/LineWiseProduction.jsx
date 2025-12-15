@@ -9,11 +9,11 @@ const LineWiseProduction = () => {
     ];
 
     return (
-        <div className=" flex flex-col items-center  ">
+        <div className=" flex flex-col items-center   w-full h-full">
             <h3 className='py-1 text-green-300'>
                Line Wise Production
             </h3>
-            <div className="bg-linear-to-bl from-green-500 to-green-800 p-4 rounded-xl space-y-1 w-full">
+            <div className="bg-linear-to-bl from-green-500 to-green-800  rounded-xl space-y-1   p-4  w-full h-full ">
                 {lines.map((line, index) => {
                     const percent = Math.round((line.pcs / maxTarget) * 100);
 
