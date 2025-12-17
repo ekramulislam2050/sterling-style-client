@@ -8,8 +8,8 @@ const QcRejected = () => {
 
     const total = qcData.passed + qcData.rejected;
     return (
-        <div className="px-1 mt-3">
-            <div className=" bg-linear-to-br to-red-900 via-green-900 from-indigo-900 p-5 rounded-xl shadow-lg text-white">
+        <div className="  mt-3">
+            <div className="  p-5 rounded-xl shadow-lg text-white bg-linear-to-r from-indigo-900 to-indigo-700">
                 <h3 className="text-lg font-semibold mb-4">QC Status</h3>
 
                 <div className="flex justify-between items-center mb-3">
