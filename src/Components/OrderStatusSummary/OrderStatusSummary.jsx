@@ -9,11 +9,11 @@ const OrderStatusSummary = () => {
         { id: 4, status: "Complete", count: 42, icon: CheckCircle, gradient: "from-blue-400 to-blue-600" },
     ];
     return (
-        <div className="flex flex-col items-center  ">
+        <div className="flex flex-col items-center w-full ">
              <h2 className=" my-3 text-red-400 ">  Order Status Summary</h2>
-            <div className="p-6  min-h-screen bg-linear-to-br to-red-900 via-green-900 from-indigo-900 rounded-2xl">
+            <div className="p-6    bg-linear-to-br to-red-900 via-green-900 from-indigo-900 rounded-2xl lg:h-[520px] w-full">
                 
-                <div className="grid grid-cols-4 gap-6">
+                <div className="grid lg:grid-cols-4 gap-6 grid-cols-2">
                     {orders.map((order) => {
                         const IconComponent = order.icon;
                         return (
@@ -22,7 +22,7 @@ const OrderStatusSummary = () => {
                                 className={`p-6 rounded-2xl text-white font-semibold text-center shadow-xl transform hover:scale-105 transition-transform bg-linear-to-r ${order.gradient}`}
                             >
                                 <IconComponent className="mx-auto mb-2" size={36} />
-                                <p className="text-lg">{order.status}</p>
+                                <p className="text-lg  flex justify-center">{order.status}</p>
                                 <p className="text-2xl font-bold mt-1">{order.count}</p>
                             </div>
                         );
@@ -30,7 +30,9 @@ const OrderStatusSummary = () => {
                 </div>
 
                 {/* QC rejected status------------------ */}
-                <QcRejected></QcRejected>
+                <div className="mt-5">
+                      <QcRejected></QcRejected>
+                </div>
             </div>
 
         </div>

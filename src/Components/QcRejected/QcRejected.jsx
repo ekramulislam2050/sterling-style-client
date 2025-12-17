@@ -9,6 +9,7 @@ const QcRejected = () => {
     const total = qcData.passed + qcData.rejected;
     return (
         <div className="  mt-3">
+            <h2 className="flex justify-center mb-5">  QC Status Summary</h2>
             <div className="  p-5 rounded-xl shadow-lg text-white bg-linear-to-r from-indigo-900 to-indigo-700">
                 <h3 className="text-lg font-semibold mb-4">QC Status</h3>
 

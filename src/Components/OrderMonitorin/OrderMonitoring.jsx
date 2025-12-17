@@ -5,11 +5,11 @@ import UpcomingShipment from "../UpcomingShipment/UpcomingShipment";
 
 const OrderMonitoring = () => {
     return (
-        <div className="grid grid-cols-2  ">
-            <div className="border">
+        <div className="grid lg:grid-cols-2  gap-3  ">
+            <div className=" ">
                 <OrderStatusSummary></OrderStatusSummary>
             </div>
-            <div className="border">
+            <div className="  ">
                 <UpcomingShipment></UpcomingShipment>
             </div>
         </div>
