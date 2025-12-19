@@ -55,7 +55,7 @@ const InventoryWidgets = () => {
                     return (
                         <div
                             key={card.id}
-                            className={`rounded-2xl p-5 xl:p-10 text-white bg-linear-to-br ${card.gradient}
+                            className={`rounded-tl-[40px] rounded-br-[40px] p-5 xl:p-10 text-white bg-linear-to-br ${card.gradient}
             shadow-lg hover:scale-[1.03] transition-all duration-300`}
                         >
                             <div className="flex items-center justify-between mb-4">

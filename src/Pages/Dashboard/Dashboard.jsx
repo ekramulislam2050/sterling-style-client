@@ -1,4 +1,5 @@
 
+import AlertAndNotification from "../../Components/AlertAndNotification/AlertAndNotification";
 import HrWidgets from "../../Components/HrWidgets/HrWidgets";
 import InventoryWidgets from "../../Components/InventoryWidgets/InventoryWidgets";
 import OrderMonitoring from "../../Components/OrderMonitorin/OrderMonitoring";
@@ -18,6 +19,7 @@ const Dashboard = () => {
       <OrderMonitoring></OrderMonitoring>
       <InventoryWidgets></InventoryWidgets>
       <HrWidgets></HrWidgets>
+      <AlertAndNotification></AlertAndNotification>
     </div>
   );
 };
