@@ -5,11 +5,23 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../Authentication/AuthContext/AuthContext";
 import { toast } from "react-toastify";
+import {
+  Home,
+  LayoutDashboard,
+  Briefcase,
+  Factory,
+  Boxes,
+  Users,
+  Calculator,
+  CheckCircle,
+  Truck,
+  FileText,
+} from "lucide-react";
 
 const NavBar = () => {
   const navigate = useNavigate()
   const { logOut, user } = useContext(AuthContext)
-     console.log("user===",user)
+  console.log("user===", user)
   const handleLogOut = () => {
     try {
       logOut()
@@ -19,23 +31,179 @@ const NavBar = () => {
       toast.error("লগ আউট ব্যার্থ হয়েছে  ")
     }
   }
-  const links = <>
-    <NavLink className="text-sm" to={"/"}>হোম  </NavLink>
-    <NavLink className="text-sm" to={"/dashboard"}>ড্যাশবোর্ড </NavLink>
-    <NavLink className="text-sm" to={"/merchandise"}>মার্চেন্ডাইজিং </NavLink>
-    <NavLink className="text-sm">প্রোডাকশন </NavLink>
-    <NavLink className="text-sm">ইনভেন্টরি</NavLink>
-    <NavLink className="text-sm">এইচআর </NavLink>
-    <NavLink className="text-sm">অ্যাকাউন্টস </NavLink>
-    <NavLink className="text-sm">কিউসি </NavLink>
-    <NavLink className="text-sm">ডেলিভারি </NavLink>
-    <NavLink className="text-sm">রিপোর্টস </NavLink>
+  
+
+ const links = (
+  <>
+    <NavLink
+      to="/"
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+        border-l-4
+        ${
+          isActive
+            ? "border-blue-600 bg-blue-800 text-blue-100 font-semibold"
+            : "border-transparent hover:border-blue-500 hover:bg-blue-800"
+        }`
+      }
+    >
+      <Home size={16} className="text-yellow-500" />
+      Home
+    </NavLink>
+
+    <NavLink
+      to="/dashboard"
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+        border-l-4
+        ${
+          isActive
+            ? "border-teal-600 bg-teal-800 text-teal-100 font-semibold"
+            : "border-transparent hover:border-teal-500 hover:bg-teal-800"
+        }`
+      }
+    >
+      <LayoutDashboard size={16} className="text-blue-500" />
+      Dashboard
+    </NavLink>
+
+    <NavLink
+      to="/merchandise"
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+        border-l-4
+        ${
+          isActive
+            ? "border-purple-600 bg-purple-800 text-purple-100 font-semibold"
+            : "border-transparent hover:border-purple-500 hover:bg-purple-800"
+        }`
+      }
+    >
+      <Briefcase size={16} className="text-indigo-500" />
+      Merchandising
+    </NavLink>
+
+    <NavLink
+      to="/production"
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+        border-l-4
+        ${
+          isActive
+            ? "border-orange-600 bg-orange-800 text-orange-100 font-semibold"
+            : "border-transparent hover:border-orange-500 hover:bg-orange-800"
+        }`
+      }
+    >
+      <Factory size={16} className="text-teal-500" />
+      Production
+    </NavLink>
+
+    <NavLink
+      to="/inventory"
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+        border-l-4
+        ${
+          isActive
+            ? "border-emerald-600 bg-emerald-800 text-emerald-100 font-semibold"
+            : "border-transparent hover:border-emerald-500 hover:bg-green-800"
+        }`
+      }
+    >
+      <Boxes size={16} className="text-emerald-500" />
+      Inventory
+    </NavLink>
+
+    <NavLink
+      to="/hr"
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+        border-l-4
+        ${
+          isActive
+            ? "border-pink-600 bg-pink-800 text-pink-100 font-semibold"
+            : "border-transparent hover:border-pink-500 hover:bg-pink-800"
+        }`
+      }
+    >
+      <Users size={16} className="text-pink-500" />
+      HR
+    </NavLink>
+
+    <NavLink
+      to="/accounts"
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+        border-l-4
+        ${
+          isActive
+            ? "border-cyan-600 bg-cyan-800 text-cyan-100 font-semibold"
+            : "border-transparent hover:border-cyan-500 hover:bg-cyan-800"
+        }`
+      }
+    >
+      <Calculator size={16} className="text-cyan-500" />
+      Accounts
+    </NavLink>
+
+    <NavLink
+      to="/qc"
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+        border-l-4
+        ${
+          isActive
+            ? "border-green-600 bg-green-800 text-green-100 font-semibold"
+            : "border-transparent hover:border-green-500 hover:bg-green-800"
+        }`
+      }
+    >
+      <CheckCircle size={16} className="text-green-500" />
+      Quality Control
+    </NavLink>
+
+    <NavLink
+      to="/delivery"
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+        border-l-4
+        ${
+          isActive
+            ? "border-yellow-600 bg-yellow-800 text-yellow-100 font-semibold"
+            : "border-transparent hover:border-yellow-500 hover:bg-yellow-800"
+        }`
+      }
+    >
+      <Truck size={16} className="text-yellow-500" />
+      Delivery
+    </NavLink>
+
+    <NavLink
+      to="/reports"
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+        border-l-4
+        ${
+          isActive
+            ? "border-red-600 bg-red-800 text-red-100 font-semibold"
+            : "border-transparent hover:border-red-500 hover:bg-red-800"
+        }`
+      }
+    >
+      <FileText size={16} className="text-red-500" />
+      Reports
+    </NavLink>
   </>
+);
+
+
+
 
   const links2 = <>
-    <NavLink to={"/login"}><li className="hover:bg-blue-500 text-sm rounded py-1 pl-2" >লগইন </li></NavLink>
+    <NavLink to={"/login"}><li className="hover:bg-blue-500 text-sm rounded py-1 pl-2" >Log In </li></NavLink>
     <li onClick={handleLogOut}><button className="hover:bg-blue-500 text-sm rounded py-1 pl-2">
-      লগ আউট
+     Log Out
     </button> </li>
   </>
   return (
@@ -56,12 +224,12 @@ const NavBar = () => {
 
             <div className="drawer-side">
               <label htmlFor="my-drawer-1" aria-label="close sidebar" className="drawer-overlay  "></label>
-              <ul className="menu bg-[#0491c9] min-h-full w-50 p-4">
+              <ul className="menu bg-gray-900 min-h-full w-50 p-4">
 
                 {/* search---------------- */}
                 <li>
 
-                  <label className="input bg-transparent border border-gray-600">
+                  <label className="input bg-transparent border border-gray-500">
                     <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                       <g
                         strokeLinejoin="round"
@@ -97,7 +265,7 @@ const NavBar = () => {
           </div>
           {/* project logo for mobile--------- */}
           <div className=" sm:hidden justify-center items-center flex flex-col">
-            
+
             <img src={user?.photoURL} alt="logo" className="w-14 h-14 object-cover  " />
             <h2 className="text-xl font-extrabold font-mono bg-linear-to-r from-[#06b1f3] to-[#efb520] bg-clip-text text-transparent drop-shadow-md">
               Sterling Styles
@@ -107,27 +275,15 @@ const NavBar = () => {
 
         </div>
         <div className="navbar-end gap-4">
-           
-          {/* notification icon--------- */}
-          <div>
-            <button className="btn btn-ghost btn-circle ">
-              <div className="indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" className="sm:w-8 sm:h-8 w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /> </svg>
-                <span className="badge badge-xs badge-secondary indicator-item sm:text-sm font-bold ">+1</span>
+          {/* user name------------------ */}
 
-              </div>
-            </button>
-              
-          </div>
-
-           {/* user name------------------ */}
-           <p>{user?.displayName}</p>
+          <p>{user?.displayName}</p>
 
           {/* profile picture---------- */}
           <div className="dropdown dropdown-hover dropdown-end">
-            
+
             <div className="avatar">
-            
+
               <div className="ring-primary ring-offset-base-100 sm:w-14 rounded-full ring-2 ring-offset-2 w-12">
                 <img src={user?.photoURL} />
               </div>
