@@ -1,14 +1,8 @@
-
-import AlertAndNotification from "../../Components/AlertAndNotification/AlertAndNotification";
-import HrWidgets from "../../Components/HrWidgets/HrWidgets";
-import InventoryWidgets from "../../Components/InventoryWidgets/InventoryWidgets";
 import OrderMonitoring from "../../Components/OrderMonitorin/OrderMonitoring";
 import ProductionMonitoring from "../../Components/ProductionMonitoring/ProductionMonitoring";
 import ProductionOverview from "../../Components/ProductionOverview/ProductionOverview";
- 
-
-
-
+import WidgetsLayout from "../../Components/WidgetsLayout/WidgetsLayout";
+import HrWidgets from "../../Components/HrWidgets/HrWidgets"
 
 
 const Dashboard = () => {
@@ -17,9 +11,9 @@ const Dashboard = () => {
       <ProductionOverview></ProductionOverview>
       <ProductionMonitoring></ProductionMonitoring>
       <OrderMonitoring></OrderMonitoring>
-      <InventoryWidgets></InventoryWidgets>
+      <WidgetsLayout></WidgetsLayout>
       <HrWidgets></HrWidgets>
-      <AlertAndNotification></AlertAndNotification>
+
     </div>
   );
 };

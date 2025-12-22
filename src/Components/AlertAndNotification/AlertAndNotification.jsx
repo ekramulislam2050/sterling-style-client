@@ -42,45 +42,49 @@ const AlertAndNotification = () => {
     ];
 
     return (
-        <div className="flex flex-col items-center mt-5">
-            <h1 className="mb-3 text-yellow-300 font-semibold text-lg">
+        <div className=" ">
+            <h1 className="my-3 text-green-500 text-center">
                 Alert & Notification
             </h1>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-                {alerts.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                        <div
-                            key={item.id}
-                            className={`  rounded-2xl overflow-hidden  ${item.background}  `}
-                        >
+            <div className=" bg-linear-to-bl from-blue-800 to-yellow-700 p-6 rounded-2xl pb-8 min-h-[500px] ">
+                <div className="grid grid-cols-1  xl:grid-cols-2 gap-3 lg:grid-cols-2 xl:gap-6 md:grid-cols-2 md:gap-4 ">
+                    {alerts.map((item) => {
+                        const Icon = item.icon;
+                        return (
                             <div
-                                className={`bg-linear-to-br ${item.color}
-                               text-white py-5 px-13 shadow-lg
+                                key={item.id}
+                                className={`  rounded-2xl overflow-hidden  ${item.background}  `}
+                            >
+                                <div
+                                    className={`bg-linear-to-br ${item.color}
+                               text-white py-5 px-3 shadow-lg
                                  hover:scale-105 hover:shadow-2xl
                                  transition-all duration-300
                                  rounded-tr-[60%]
-                                 min-h-[180px]
-                                 flex flex-col justify-between `}
-                            >
-                                <div className="flex items-center justify-between mb-4">
-                                    <Icon className="w-10 h-10 opacity-90" />
-                                    <span className="text-xs bg-white/20 px-2 py-1 rounded-full">
-                                        Alert
-                                    </span>
-                                </div>
+                                 flex flex-col 
+                                
+                                  min-h-[200px]   
+                                     `}
+                                >
+                                    <div className="flex items-center justify-between ">
+                                        <Icon className="w-10 h-10 opacity-90" />
+                                        <span className="text-xs bg-red-500 px-2 py-1 rounded-full tracking-wider">
+                                            Alert
+                                        </span>
+                                    </div>
 
-                                <h3 className="text-lg font-semibold">
-                                    {item.title}
-                                </h3>
-                                <p className="text-sm opacity-90 mt-1">
-                                    {item.message}
-                                </p>
+                                    <h3 className="text-lg font-semibold text-center">
+                                        {item.title}
+                                    </h3>
+                                    <p className="text-sm opacity-90 mt-1 text-center">
+                                        {item.message}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );

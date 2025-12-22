@@ -10,7 +10,7 @@ const UpcomingShipmentCards = () => {
 
   return (
     <div className="flex flex-col items-center  w-full pr-1"> 
-      <h2 className=" my-3 text-orange-400"> Upcoming Shipments</h2>
+      <h2 className=" my-3 text-yellow-400"> Upcoming Shipments</h2>
       <div className=" sm:p-6   p-6  bg-linear-to-br to-red-900 via-green-900 from-indigo-900 rounded-2xl lg:h-[520px]  w-full">
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
