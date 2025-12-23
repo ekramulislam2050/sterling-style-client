@@ -208,7 +208,7 @@ const NavBar = () => {
   </>
   return (
     <div >
-      <div className="shadow-lg    navbar pb-3 fixed z-20 bg-black  ">
+      <div className="navbar pb-3 fixed z-20 bg-gray-800  backdrop-blur-2xl shadow-[0_3px_12px_rgba(0,123,255,0.5)]   ">
 
         <div className="navbar-start ">
           <div className="drawer">
