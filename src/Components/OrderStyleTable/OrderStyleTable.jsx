@@ -2,7 +2,7 @@
 
 const OrderStyleTable = () => {
     return (
-        <div className="bg-slate-800 rounded-xl p-3 md:p-4 lg:col-span-2 overflow-x-auto">
+        <div className="bg-slate-600/80 rounded-xl p-3 md:p-4 lg:col-span-2 overflow-x-auto">
             <h3 className="font-semibold mb-3">Order & Style Status</h3>
 
             <table className="min-w-[500px] w-full text-sm">

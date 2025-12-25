@@ -8,7 +8,7 @@ const TopSummaryWidgets = () => {
         </div>
     );
     return (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-24">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 ">
             <SummaryCard title="Running Styles" value="8" color="blue" />
             <SummaryCard title="Pending Samples" value="3" color="purple" />
             <SummaryCard title="Fabric Not In-House" value="2" color="emerald" />

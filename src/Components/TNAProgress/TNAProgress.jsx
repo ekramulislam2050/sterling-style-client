@@ -2,7 +2,7 @@
 
 const TNAProgress = () => {
     return (
-        <div className="bg-slate-800 rounded-xl p-3 md:p-4">
+        <div className="bg-green-600/50 rounded-xl p-3 md:p-4">
             <h3 className="font-semibold mb-3">TNA Progress</h3>
 
             <div className="flex flex-wrap gap-2 text-xs md:text-sm">

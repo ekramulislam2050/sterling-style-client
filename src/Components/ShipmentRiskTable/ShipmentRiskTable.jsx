@@ -2,7 +2,7 @@
 
 const ShipmentRiskTable = () => {
     return (
-        <div className="bg-slate-800 rounded-xl p-3 md:p-4 overflow-x-auto">
+        <div className="bg-teal-700/60 rounded-xl p-3 md:p-4 overflow-x-auto">
             <h3 className="font-semibold mb-3">Shipment Risk Alert</h3>
 
             <table className="min-w-[500px] w-full text-sm">
