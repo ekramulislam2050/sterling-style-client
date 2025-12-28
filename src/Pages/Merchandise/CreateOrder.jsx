@@ -1,6 +1,8 @@
 import { useState } from "react";
+import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
 
 const CreateOrder = () => {
+    const axiosSecure=useAxiosSecure()
     const [order, setOrder] = useState({
         buyer: "",
         styleNo: "",
@@ -15,16 +17,14 @@ const CreateOrder = () => {
         setOrder({ ...order, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = e => {
+    const handleSubmit =async e => {
         e.preventDefault();
-
-        fetch("http://localhost:5000/api/orders", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(order)
-        })
-            .then(res => res.json())
-            .then(() => alert("Order Created"));
+            
+        const res=await axiosSecure.post('/api/orders',order)
+          if(res.data){
+            alert("success")
+          }
+       
     };
 
 
