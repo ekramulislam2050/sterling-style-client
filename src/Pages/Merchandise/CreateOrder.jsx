@@ -1,8 +1,12 @@
 import { useState } from "react";
 import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
+import ErrMsg from "../../SuccessAndErrMsg/ErrMsg/ErrMsg";
+import SuccessMsg from "../../SuccessAndErrMsg/successMsg/successMsg";
+import { useNavigate } from "react-router-dom";
 
 const CreateOrder = () => {
-    const axiosSecure=useAxiosSecure()
+    const navigate = useNavigate()
+    const axiosSecure = useAxiosSecure()
     const [order, setOrder] = useState({
         buyer: "",
         styleNo: "",
@@ -17,14 +21,36 @@ const CreateOrder = () => {
         setOrder({ ...order, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit =async e => {
+    const handleSubmit = async e => {
         e.preventDefault();
-            
-        const res=await axiosSecure.post('/api/orders',order)
-          if(res.data){
-            alert("success")
-          }
-       
+
+        try {
+            const res = await axiosSecure.post('/api/orders', order)
+            if (res.data) {
+                SuccessMsg('post successful')
+
+                // form reset---------
+                setOrder({
+                    buyer: "",
+                    styleNo: "",
+                    orderQty: "",
+                    orderDate: "",
+                    exFactoryDate: "",
+                    season: ""
+                });
+                // navigate to merchandising---------
+                navigate("/merchandise")
+            }
+        } catch (err) {
+            const message =
+                err.response?.data?.message ||
+                err.message ||
+                "Something went wrong";
+
+            ErrMsg(message)
+        }
+
+
     };
 
 
@@ -40,23 +66,23 @@ const CreateOrder = () => {
                     className="grid grid-cols-1 md:grid-cols-2 gap-4
                    p-6 rounded-xl"
                 >
-                    <input name="buyer" placeholder="Buyer" onChange={handleChange}
+                    <input name="buyer" placeholder="Buyer" onChange={handleChange} value={order.buyer}
                         className="input input-bordered bg-zinc-600" />
 
-                    <input name="styleNo" placeholder="Style No" onChange={handleChange}
+                    <input name="styleNo" placeholder="Style No" onChange={handleChange} value={order.styleNo}
                         className="input input-bordered bg-zinc-600" />
 
-                    <input name="orderQty" type="number" placeholder="Quantity"
+                    <input name="orderQty" type="number" placeholder="Quantity" value={order.orderQty}
                         onChange={handleChange}
                         className="input input-bordered bg-zinc-600" />
 
-                    <input name="orderDate" type="date" onChange={handleChange}
+                    <input name="orderDate" type="date" onChange={handleChange} value={order.orderDate}
                         className="input input-bordered bg-zinc-600" />
 
-                    <input name="exFactoryDate" type="date" onChange={handleChange}
+                    <input name="exFactoryDate" type="date" onChange={handleChange} value={order.exFactoryDate}
                         className="input input-bordered bg-zinc-600" />
 
-                    <input name="season" placeholder="Season" onChange={handleChange}
+                    <input name="season" placeholder="Season" onChange={handleChange} value={order.season}
                         className="input input-bordered bg-zinc-600" />
 
                     <button className="btn btn-primary col-span-full rounded-b-2xl">
