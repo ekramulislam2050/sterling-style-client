@@ -25,7 +25,7 @@ const CreateOrder = () => {
         e.preventDefault();
 
         try {
-            const res = await axiosSecure.post('/api/orders', order)
+            const res = await axiosSecure.post('/api/postOrders', order)
             if (res.data) {
                 SuccessMsg('post successful')
 

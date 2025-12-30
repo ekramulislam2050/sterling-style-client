@@ -1,12 +1,10 @@
-
-
-const OrderStyleTable = () => {
+const OrderStyleTable = ({ orders = [] }) => {
     return (
         <div className="bg-slate-600/80 rounded-xl p-3 md:p-4 lg:col-span-2 overflow-x-auto">
             <h3 className="font-semibold mb-3">Order & Style Status</h3>
 
-            <table className="min-w-[500px] w-full text-sm">
-                <thead className="text-left text-slate-400">
+            <table className="min-w-[600px] w-full text-sm">
+                <thead className="text-left text-slate-300">
                     <tr>
                         <th>Style</th>
                         <th>Buyer</th>
@@ -17,13 +15,35 @@ const OrderStyleTable = () => {
                 </thead>
 
                 <tbody>
-                    <tr className="border-t border-slate-700">
-                        <td>ST-1024</td>
-                        <td>H&M</td>
-                        <td>5,000</td>
-                        <td>15-Jul</td>
-                        <td className="text-green-400">In Production</td>
-                    </tr>
+                    {orders.length === 0 ? (
+                        <tr>
+                            <td colSpan="5" className="text-center py-4 text-slate-400">
+                                No orders found
+                            </td>
+                        </tr>
+                    ) : (
+                        orders.map(order => (
+                            <tr
+                                key={order._id}
+                                className="border-t border-slate-700 hover:bg-slate-700/40"
+                            >
+                                <td className="font-medium">{order.styleNo}</td>
+                                <td>{order.buyer}</td>
+                                <td>{order.orderQty}</td>
+                                <td>
+                                    {order.exFactoryDate
+                                        ? new Date(order.exFactoryDate).toLocaleDateString("en-GB", {
+                                              day: "2-digit",
+                                              month: "short",
+                                          })
+                                        : "—"}
+                                </td>
+                                <td className="text-green-400">
+                                    In Production
+                                </td>
+                            </tr>
+                        ))
+                    )}
                 </tbody>
             </table>
         </div>
