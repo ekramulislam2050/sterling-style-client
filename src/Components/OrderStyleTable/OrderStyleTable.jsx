@@ -29,7 +29,7 @@ const OrderStyleTable = ({ orders = [] }) => {
                             >
                                 <td className="font-medium">{order.styleNo}</td>
                                 <td>{order.buyer}</td>
-                                <td>{order.orderQty}</td>
+                                <td>{Number(order.orderQty).toLocaleString()}</td>
                                 <td>
                                     {order.exFactoryDate
                                         ? new Date(order.exFactoryDate).toLocaleDateString("en-GB", {

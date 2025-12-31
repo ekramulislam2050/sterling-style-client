@@ -24,8 +24,19 @@ const CreateOrder = () => {
     const handleSubmit = async e => {
         e.preventDefault();
 
+        const payload = {
+            ...order,
+            createdAt: new Date().toISOString(),
+            samples: [
+                { name: "Fit Sample", status: "Pending" },
+                { name: "PP Sample", status: "Pending" },
+                { name: "Size Set", status: "Pending" },
+            ],
+        };
+
+
         try {
-            const res = await axiosSecure.post('/api/postOrders', order)
+            const res = await axiosSecure.post('/api/postOrders', payload)
             if (res.data) {
                 SuccessMsg('post successful')
 
@@ -63,32 +74,87 @@ const CreateOrder = () => {
                 </div>
                 <form
                     onSubmit={handleSubmit}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-4
-                   p-6 rounded-xl"
+                    className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6 rounded-xl"
                 >
-                    <input name="buyer" placeholder="Buyer" onChange={handleChange} value={order.buyer}
-                        className="input input-bordered bg-zinc-600" />
+                    <div className="flex flex-col">
+                        <label className="text-sm text-slate-200">Buyer</label>
+                        <input
+                            name="buyer"
+                            placeholder="Buyer"
+                            onChange={handleChange}
+                            value={order.buyer}
+                            className="input input-bordered bg-zinc-600"
+                            required
+                        />
+                    </div>
 
-                    <input name="styleNo" placeholder="Style No" onChange={handleChange} value={order.styleNo}
-                        className="input input-bordered bg-zinc-600" />
+                    <div className="flex flex-col">
+                        <label className="text-sm text-slate-200">Style No</label>
+                        <input
+                            name="styleNo"
+                            placeholder="Style No"
+                            onChange={handleChange}
+                            value={order.styleNo}
+                            className="input input-bordered bg-zinc-600"
+                            required
+                        />
+                    </div>
 
-                    <input name="orderQty" type="number" placeholder="Quantity" value={order.orderQty}
-                        onChange={handleChange}
-                        className="input input-bordered bg-zinc-600" />
+                    <div className="flex flex-col">
+                        <label className="text-sm text-slate-200">Quantity / Order Qty</label>
+                        <input
+                            name="orderQty"
+                            type="number"
+                            placeholder="Quantity / orderQty"
+                            onChange={handleChange}
+                            value={order.orderQty}
+                            className="input input-bordered bg-zinc-600"
+                            required
+                        />
+                    </div>
 
-                    <input name="orderDate" type="date" onChange={handleChange} value={order.orderDate}
-                        className="input input-bordered bg-zinc-600" />
+                    <div className="flex flex-col">
+                        <label className="text-sm text-slate-200">Order Date</label>
+                        <input
+                            name="orderDate"
+                            type="date"
+                            onChange={handleChange}
+                            value={order.orderDate}
+                            className="input input-bordered bg-zinc-600"
+                            required
+                        />
+                    </div>
 
-                    <input name="exFactoryDate" type="date" onChange={handleChange} value={order.exFactoryDate}
-                        className="input input-bordered bg-zinc-600" />
+                    <div className="flex flex-col">
+                        <label className="text-sm text-slate-200">Ex-Factory Date</label>
+                        <input
+                            name="exFactoryDate"
+                            type="date"
+                            onChange={handleChange}
+                            value={order.exFactoryDate}
+                            className="input input-bordered bg-zinc-600"
+                            min={order.orderDate}
+                            required
+                        />
+                    </div>
 
-                    <input name="season" placeholder="Season" onChange={handleChange} value={order.season}
-                        className="input input-bordered bg-zinc-600" />
+                    <div className="flex flex-col">
+                        <label className="text-sm text-slate-200">Season</label>
+                        <input
+                            name="season"
+                            placeholder="Season"
+                            onChange={handleChange}
+                            value={order.season}
+                            className="input input-bordered bg-zinc-600"
+                            required
+                        />
+                    </div>
 
                     <button className="btn btn-primary col-span-full rounded-b-2xl">
                         Save Order
                     </button>
                 </form>
+
             </div>
         </div>
     );
