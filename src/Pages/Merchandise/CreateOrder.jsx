@@ -26,7 +26,7 @@ const CreateOrder = () => {
 
         const payload = {
             ...order,
-            createdAt: new Date().toISOString(),
+   
             samples: [
                 { name: "Fit Sample", status: "Pending" },
                 { name: "PP Sample", status: "Pending" },

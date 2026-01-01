@@ -1,6 +1,6 @@
 
 
-const TNAProgress = () => {
+const TNAProgress = ({order=[]}) => {
     return (
         <div className="bg-green-600/50 rounded-xl p-3 md:p-4">
             <h3 className="font-semibold mb-3">TNA Progress</h3>
