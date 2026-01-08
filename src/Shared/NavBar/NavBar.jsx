@@ -21,7 +21,7 @@ import {
 const NavBar = () => {
   const navigate = useNavigate()
   const { logOut, user } = useContext(AuthContext)
-  console.log("user===", user)
+ 
   const handleLogOut = () => {
     try {
       logOut()

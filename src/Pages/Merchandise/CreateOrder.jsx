@@ -34,7 +34,6 @@ const CreateOrder = () => {
             ],
         };
 
-
         try {
             const res = await axiosSecure.post('/api/postOrders', payload)
             if (res.data) {

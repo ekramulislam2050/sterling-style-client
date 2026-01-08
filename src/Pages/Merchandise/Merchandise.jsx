@@ -17,6 +17,7 @@ const Merchandise = () => {
       useEffect(()=>{
            axiosSecure.get("/api/getOrders")
           .then((res)=>{
+            console.log(res.data)
              setOrder(res.data)
           })
       },[axiosSecure])
@@ -43,7 +44,9 @@ const Merchandise = () => {
 
             {/* TNA + MATERIAL */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <TNAProgress orders={orders}/>
+                {
+                    orders.map(order=><TNAProgress order={order}/>)
+                }
                 <MaterialStatus orders={orders}/>
             </div>
 

@@ -1,6 +1,6 @@
 
 
-const TopSummaryWidgets = ({orders}) => {
+const TopSummaryWidgets = ({orders=[]}) => {
     const SummaryCard = ({ title, value, color }) => (
         <div className={`rounded-xl p-4 bg-${color}-800`}>
             <p className="text-xs md:text-sm opacity-80">{title}</p>
