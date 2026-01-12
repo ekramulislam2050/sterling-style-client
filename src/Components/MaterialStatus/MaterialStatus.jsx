@@ -1,6 +1,6 @@
 
 
-const MaterialStatus = () => {
+const MaterialStatus = ({order}) => {
     return (
         <div className="bg-orange-900/70 rounded-xl p-3 md:p-4">
             <h3 className="font-semibold mb-3">Material Status</h3>

@@ -11,18 +11,18 @@ import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
 
 
 const Merchandise = () => {
-      const axiosSecure=useAxiosSecure()
-      const [orders,setOrder]=useState([])
+    const axiosSecure = useAxiosSecure()
+    const [orders, setOrder] = useState([])
 
-      useEffect(()=>{
-           axiosSecure.get("/api/getOrders")
-          .then((res)=>{
-            console.log(res.data)
-             setOrder(res.data)
-          })
-      },[axiosSecure])
+    useEffect(() => {
+        axiosSecure.get("/api/getOrders")
+            .then((res) => {
+                console.log(res.data)
+                setOrder(res.data)
+            })
+    }, [axiosSecure])
 
-      
+
     return (
         <div className="p-3 md:p-4 space-y-4   min-h-screen text-slate-100 ">
             <div className="flex justify-between mt-18 bg-linear-to-r from-indigo-900 to-blue-800 py-5 rounded-t-2xl px-2">
@@ -34,24 +34,26 @@ const Merchandise = () => {
                 </Link>
             </div>
             {/* TOP SUMMARY */}
-            <TopSummaryWidgets  orders={orders}/>
+            <TopSummaryWidgets orders={orders} />
 
             {/* ORDER + SAMPLE */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <OrderStyleTable orders={orders}/>
-                <SampleTracking  orders={orders}/>
+                <OrderStyleTable orders={orders} />
+                <SampleTracking orders={orders} />
             </div>
 
             {/* TNA + MATERIAL */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {
-                    orders.map(order=><TNAProgress order={order}/>)
+                    orders.map(order => <TNAProgress order={order} key={order._id} />)
                 }
-                <MaterialStatus orders={orders}/>
+                {
+                    orders.map(order =><MaterialStatus order={order} key={order._id} />)
+                }
             </div>
 
             {/* SHIPMENT RISK */}
-            <ShipmentRiskTable orders={orders}/>
+            <ShipmentRiskTable orders={orders} />
         </div>
     );
 };

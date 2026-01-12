@@ -34,6 +34,7 @@ const TNAProgress = ({ order }) => {
     if (!order?.tna) return null
 
     const steps = Object.entries(order.tna).map(([name, value]) => ({
+
         name,
         planned: value.planned,
         actual: value.actual,
