@@ -17,7 +17,7 @@ const Merchandise = () => {
     useEffect(() => {
         axiosSecure.get("/api/getOrders")
             .then((res) => {
-                console.log(res.data)
+            
                 setOrder(res.data)
             })
     }, [axiosSecure])
