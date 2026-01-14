@@ -18,22 +18,23 @@ const getTNAStatus = (planned, actual) => {
     if (actual) {
         return "completed"
     }
+    
     if (planned) {
         const plannedDate = new Date(planned)
         plannedDate.setHours(0, 0, 0, 0)
-
+        if(plannedDate>today) return "pending"
         if (plannedDate < today) return "delayed"
-
+    
         if (plannedDate.getTime() === today.getTime()) return "in-progress"
     }
-
-    return "pending"
+  return "pending"
+    
 }
 
 const TNAProgress = ({ order }) => {
-    if (!order?.tna) return null
+     const productions=order?.tna?.production || {}
 
-    const steps = Object.entries(order.tna).map(([name, value]) => ({
+    const steps = Object.entries(productions).map(([name, value]) => ({
 
         name,
         planned: value.planned,

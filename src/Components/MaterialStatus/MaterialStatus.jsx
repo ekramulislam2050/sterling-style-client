@@ -14,7 +14,7 @@ const getStatusConfig = (material) => {
 
 }
 const MaterialStatus = ({ order }) => {
-    const materials = order?.tna?.materials
+    const materials = order?.tna?.materials || {}
     const steps = Object.entries(materials).map(([name, material]) => ({
         name,
         status: getStatusConfig(material)
