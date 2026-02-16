@@ -8,6 +8,7 @@ import TopSummaryWidgets from "../../Components/TopSummaryWidgets/TopSummaryWidg
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
+ 
 
 
 const Merchandise = () => {
@@ -21,7 +22,11 @@ const Merchandise = () => {
                 setOrder(res.data)
             })
     }, [axiosSecure])
-
+     
+    // running/active order------------
+    const runningOrder=orders.filter((order)=>{
+      return order?.tna?.shipment?.status!=="completed"
+    })
 
     return (
         <div className="p-3 md:p-4 space-y-4   min-h-screen text-slate-100 ">
@@ -34,26 +39,26 @@ const Merchandise = () => {
                 </Link>
             </div>
             {/* TOP SUMMARY */}
-            <TopSummaryWidgets orders={orders} />
+            <TopSummaryWidgets runningOrder={runningOrder} />
 
             {/* ORDER + SAMPLE */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <OrderStyleTable orders={orders} />
-                <SampleTracking orders={orders} />
+                <OrderStyleTable runningOrder={runningOrder} />
+                <SampleTracking runningOrder={runningOrder} />
             </div>
 
             {/* TNA + MATERIAL */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {
-                    orders.map(order => <TNAProgress order={order} key={order._id} />)
+                    runningOrder.map(order => <TNAProgress order={order} key={order._id} />)
                 }
                 {
-                    orders.map(order =><MaterialStatus order={order} key={order._id} />)
+                    runningOrder.map(order =><MaterialStatus order={order} key={order._id} />)
                 }
             </div>
 
             {/* SHIPMENT RISK */}
-            <ShipmentRiskTable orders={orders} />
+            <ShipmentRiskTable runningOrder={runningOrder} />
         </div>
     );
 };

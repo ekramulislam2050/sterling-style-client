@@ -1,8 +1,8 @@
 import SampleItem from "../SampleItem/SampleItem";
 
-const SampleTracking = ({ orders = [] }) => {
+const SampleTracking = ({ runningOrder = [] }) => {
    
-    const samples = orders.length > 0 ? orders[0].samples : [];
+    const samples = runningOrder.length > 0 ? runningOrder[0].samples : [];
 
     return (
         <div className="bg-indigo-600/50 rounded-xl p-3 md:p-4">

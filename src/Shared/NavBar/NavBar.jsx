@@ -16,6 +16,7 @@ import {
   CheckCircle,
   Truck,
   FileText,
+   Settings 
 } from "lucide-react";
 
 const NavBar = () => {
@@ -191,8 +192,23 @@ const NavBar = () => {
         }`
       }
     >
-      <FileText size={16} className="text-red-500" />
+      <FileText size={16} className="text-blue-500" />
       Reports
+    </NavLink>
+    <NavLink
+      to="/settings"
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+        border-l-4
+        ${
+          isActive
+            ? "border-red-600 bg-red-800 text-red-100 font-semibold"
+            : "border-transparent hover:border-red-500 hover:bg-indigo-700"
+        }`
+      }
+    >
+      <Settings size={16} className="text-red-500" />
+      Settings
     </NavLink>
   </>
 );

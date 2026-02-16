@@ -14,6 +14,7 @@ const Register = lazy(() => import("../Authentication/Register/Register"))
 const Dashboard = lazy(() => import("../Pages/Dashboard/Dashboard"))
 const Merchandise = lazy(() => import("../Pages/Merchandise/Merchandise"))
 const CreateOrder= lazy(()=>import("../Pages/Merchandise/CreateOrder"))
+const Settings = lazy(()=>import("../Pages/Settings/Settings"))
 
 // skeleton-component------------------
 const PageSkeleton = () => {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path:"/createOrder",
         element:<WithSuspense Component={CreateOrder}></WithSuspense>
+      },
+      {
+        path:"/settings",
+        element:<WithSuspense Component={Settings}></WithSuspense>
       }
 
     ]

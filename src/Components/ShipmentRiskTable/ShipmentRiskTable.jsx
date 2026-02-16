@@ -1,6 +1,6 @@
 
 
-const ShipmentRiskTable = () => {
+const ShipmentRiskTable = ({runningOrder=[]}) => {
     return (
         <div className="bg-teal-700/60 rounded-xl p-3 md:p-4 overflow-x-auto">
             <h3 className="font-semibold mb-3">Shipment Risk Alert</h3>

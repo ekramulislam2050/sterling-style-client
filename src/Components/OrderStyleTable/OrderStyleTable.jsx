@@ -1,4 +1,4 @@
-const OrderStyleTable = ({ orders = [] }) => {
+const OrderStyleTable = ({ runningOrder = [] }) => {
     return (
         <div className="bg-slate-600/80 rounded-xl p-3 md:p-4 lg:col-span-2 overflow-x-auto">
             <h3 className="font-semibold mb-3">Order & Style Status</h3>
@@ -15,14 +15,14 @@ const OrderStyleTable = ({ orders = [] }) => {
                 </thead>
 
                 <tbody>
-                    {orders.length === 0 ? (
+                    {runningOrder.length === 0 ? (
                         <tr>
                             <td colSpan="5" className="text-center py-4 text-slate-400">
                                 No orders found
                             </td>
                         </tr>
                     ) : (
-                        orders.map(order => (
+                        runningOrder.map(order => (
                             <tr
                                 key={order._id}
                                 className="border-t border-slate-700 hover:bg-slate-700/40"
