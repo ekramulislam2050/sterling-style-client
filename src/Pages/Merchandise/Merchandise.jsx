@@ -14,7 +14,7 @@ import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
 const Merchandise = () => {
     const axiosSecure = useAxiosSecure()
     const [orders, setOrder] = useState([])
-
+       
     useEffect(() => {
         axiosSecure.get("/api/getOrders")
             .then((res) => {
@@ -27,7 +27,7 @@ const Merchandise = () => {
     const runningOrder=orders.filter((order)=>{
       return order?.tna?.shipment?.status!=="completed"
     })
-
+ 
     return (
         <div className="p-3 md:p-4 space-y-4   min-h-screen text-slate-100 ">
             <div className="flex justify-between mt-18 bg-linear-to-r from-indigo-900 to-blue-800 py-5 rounded-t-2xl px-2">
