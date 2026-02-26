@@ -1,8 +1,20 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
+import { toast } from "react-toastify";
+import ErrMsg from "../../SuccessAndErrMsg/ErrMsg/ErrMsg";
+import { useNavigate } from "react-router-dom";
 
 const UpdateOrderForm = ({ order }) => {
+  const navigate=useNavigate()
+  const axiosSecure = useAxiosSecure()
+
   const isMerchandiser = true;
+  const isProduction = false;
+  const isSample = false;
+  const isMaterial = false;
+
+  const isPermission = isMerchandiser || isProduction || isSample || isMaterial
 
   const {
     register,
@@ -12,11 +24,63 @@ const UpdateOrderForm = ({ order }) => {
   } = useForm();
 
   useEffect(() => {
-    if (order) reset(order); // fill form after order loaded
+    if (order) reset(order);
   }, [order, reset]);
 
-  const onSubmit = (data) => {
-    console.log("Updated Order:", data);
+
+  // onsubmit------------------
+  const onSubmit = async (data) => {
+    let updatePayload = {};
+
+    // ================= Merchandiser =================
+    if (isMerchandiser) {
+      updatePayload = {
+        ...updatePayload,
+        orderQty: data.orderQty,
+        "tna.shipment.planned": data.tna.shipment.planned,
+        "tna.shipment.actual": data.tna.shipment.actual,
+        "tna.shipment.status": data.tna.shipment.status,
+      };
+    }
+
+    // ================= Sample Team =================
+    if (isSample) {
+      updatePayload = {
+        ...updatePayload,
+        samples: data.samples,
+      };
+    }
+
+    // ================= Material Team =================
+    if (isMaterial) {
+      updatePayload = {
+        ...updatePayload,
+        "tna.materials": data.tna.materials,
+      };
+    }
+
+    // ================= Production Team =================
+    if (isProduction) {
+      updatePayload = {
+        ...updatePayload,
+        "tna.production": data.tna.production,
+      };
+    }
+
+    try {
+      const res = await axiosSecure.patch(
+        `/api/patchOrders/${data?._id}`,
+        updatePayload
+      );
+         if(res.data.acknowledged==true){
+             toast.success("Update success")
+             navigate("/merchandise")
+         }
+      
+    } catch (error) {
+      console.error("Update Failed:", error);
+       ErrMsg(error.message)
+    }
   };
 
   return (
@@ -53,7 +117,7 @@ const UpdateOrderForm = ({ order }) => {
 
             <div>
               <label className="label">Order Qty</label>
-              <input type="number" {...register("orderQty")} className="input-style" />
+              <input type="number" {...register("orderQty")} className="input-style disabled:cursor-not-allowed disabled:opacity-70" disabled={!isMerchandiser} />
             </div>
           </div>
         </div>
@@ -74,7 +138,8 @@ const UpdateOrderForm = ({ order }) => {
 
               <select
                 {...register(`samples.${index}.status`)}
-                className="input-style w-40 bg-[#0f172a]"
+                className="input-style w-40 bg-[#0f172a] disabled:cursor-not-allowed disabled:opacity-70"
+                disabled={!isSample}
               >
                 <option value="Pending">Pending</option>
                 <option value="Approved">Approved</option>
@@ -103,7 +168,7 @@ const UpdateOrderForm = ({ order }) => {
                   <input
                     type="date"
                     {...register(`tna.materials.${key}.planned`)}
-                    className="input-style"
+                    className="input-style disabled:cursor-not-allowed disabled:opacity-70" disabled={!isMaterial}
                   />
                 </div>
 
@@ -112,7 +177,7 @@ const UpdateOrderForm = ({ order }) => {
                   <input
                     type="date"
                     {...register(`tna.materials.${key}.actual`)}
-                    className="input-style"
+                    className="input-style" disabled={!isMaterial}
                   />
                 </div>
 
@@ -120,7 +185,7 @@ const UpdateOrderForm = ({ order }) => {
                   <label className="label">Status</label>
                   <select
                     {...register(`tna.materials.${key}.status`)}
-                    className="input-style  bg-[#0f172a]"
+                    className="input-style  bg-[#0f172a] disabled:cursor-not-allowed disabled:opacity-70" disabled={!isMaterial}
                   >
                     <option value="pending">Pending</option>
                     <option value="completed">Completed</option>
@@ -151,8 +216,8 @@ const UpdateOrderForm = ({ order }) => {
                   <input
                     type="date"
                     {...register(`tna.production.${stage}.planned`)}
-                    disabled
-                    className="input-style bg-gray-700 cursor-not-allowed opacity-70"
+                    disabled={!isProduction}
+                    className="input-style bg-gray-700 disabled:cursor-not-allowed disabled:opacity-70  "
                   />
                 </div>
 
@@ -161,8 +226,8 @@ const UpdateOrderForm = ({ order }) => {
                   <input
                     type="date"
                     {...register(`tna.production.${stage}.actual`)}
-                    disabled
-                    className="input-style bg-gray-700 cursor-not-allowed opacity-70"
+                    disabled={!isProduction}
+                    className="input-style bg-gray-700  disabled:cursor-not-allowed disabled:opacity-70"
                   />
                 </div>
 
@@ -170,8 +235,8 @@ const UpdateOrderForm = ({ order }) => {
                   <label className="label">Status</label>
                   <select
                     {...register(`tna.production.${stage}.status`)}
-                    disabled
-                    className="input-style bg-gray-700 cursor-not-allowed opacity-70"
+                    disabled={!isProduction}
+                    className="input-style bg-gray-700  disabled:cursor-not-allowed disabled:opacity-70"
                   >
                     <option value="pending">Pending</option>
                     <option value="completed">Completed</option>
@@ -196,7 +261,7 @@ const UpdateOrderForm = ({ order }) => {
                 type="date"
                 {...register("tna.shipment.planned")}
                 disabled={!isMerchandiser}
-                className="input-style"
+                className="input-style disabled:cursor-not-allowed disabled:opacity-70"
               />
             </div>
 
@@ -206,7 +271,7 @@ const UpdateOrderForm = ({ order }) => {
                 type="date"
                 {...register("tna.shipment.actual")}
                 disabled={!isMerchandiser}
-                className="input-style"
+                className="input-style disabled:cursor-not-allowed disabled:opacity-70"
               />
             </div>
 
@@ -215,7 +280,7 @@ const UpdateOrderForm = ({ order }) => {
               <select
                 {...register("tna.shipment.status")}
                 disabled={!isMerchandiser}
-                className="input-style  bg-[#0f172a]"
+                className="input-style  bg-[#0f172a] disabled:cursor-not-allowed disabled:opacity-70"
               >
                 <option value="pending">Pending</option>
                 <option value="completed">Completed</option>
@@ -225,7 +290,7 @@ const UpdateOrderForm = ({ order }) => {
           </div>
         </div>
 
-        <button className="btn btn-primary w-full mt-8">
+        <button className="btn btn-primary w-full mt-8 disabled:cursor-not-allowed disabled:opacity-70" disabled={!isPermission}>
           Update Order
         </button>
       </form>
