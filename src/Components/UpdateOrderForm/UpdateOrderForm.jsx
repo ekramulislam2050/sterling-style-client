@@ -6,13 +6,13 @@ import ErrMsg from "../../SuccessAndErrMsg/ErrMsg/ErrMsg";
 import { useNavigate } from "react-router-dom";
 
 const UpdateOrderForm = ({ order }) => {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const axiosSecure = useAxiosSecure()
 
   const isMerchandiser = true;
-  const isProduction = false;
-  const isSample = false;
-  const isMaterial = false;
+  const isProduction = true;
+  const isSample = true;
+  const isMaterial = true;
 
   const isPermission = isMerchandiser || isProduction || isSample || isMaterial
 
@@ -72,14 +72,14 @@ const UpdateOrderForm = ({ order }) => {
         `/api/patchOrders/${data?._id}`,
         updatePayload
       );
-         if(res.data.acknowledged==true){
-             toast.success("Update success")
-             navigate("/merchandise")
-         }
-      
+      if (res.data.acknowledged == true) {
+        toast.success("Update success")
+        navigate("/merchandise")
+      }
+
     } catch (error) {
       console.error("Update Failed:", error);
-       ErrMsg(error.message)
+      ErrMsg(error.message)
     }
   };
 
@@ -207,7 +207,7 @@ const UpdateOrderForm = ({ order }) => {
             Object.keys(order.tna.production).map((stage) => (
               <div
                 key={stage}
-                className="grid md:grid-cols-4 gap-4 items-center bg-slate-700 p-4 rounded-lg mb-4"
+                className="grid md:grid-cols-5 gap-4 items-center bg-slate-700 p-4 rounded-lg mb-4"
               >
                 <div className="font-semibold capitalize text-white">{stage}</div>
 
@@ -228,6 +228,16 @@ const UpdateOrderForm = ({ order }) => {
                     {...register(`tna.production.${stage}.actual`)}
                     disabled={!isProduction}
                     className="input-style bg-gray-700  disabled:cursor-not-allowed disabled:opacity-70"
+                  />
+                </div>
+
+                <div>
+                  <label className="label">Actual Qty</label>
+                  <input
+                    type="number"
+                    {...register(`tna.production.${stage}.actualQty`)}
+                    disabled={!isProduction}
+                    className="input-style"
                   />
                 </div>
 
