@@ -70,7 +70,7 @@ const TNAProgress = ({ order }) => {
             
             {/* Circle with progress ring and tooltip */}
             <div className="relative w-16 h-16 md:w-20 md:h-20 group" title={`Planned: ${step.plannedQty}, Actual: ${step.actualQty}, Remaining: ${step.remainingQty}`}>
-              <svg className="w-full h-full rotate-[-90deg]">
+              <svg className="w-full h-full rotate-90">
                 <circle
                   cx="50%" cy="50%" r="30%"
                   stroke="#808080"
