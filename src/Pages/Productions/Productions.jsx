@@ -4,26 +4,29 @@ import UiOfProductionPage from "../../Components/Ui-Of-ProductionPage/UiOfProduc
 
 
 const Productions = () => {
-    const axiosSecure = useAxiosSecure()
-    const [orders, setOrders] = useState([])
+    const axiosSecure = useAxiosSecure();
+    const [orders, setOrders] = useState([]);
 
     useEffect(() => {
         axiosSecure.get("/api/getOrders")
-            .then((res) => {
-                setOrders(res.data)
-            })
-    }, [axiosSecure])
+            .then((res) => setOrders(res.data))
+            .catch((err) => console.log(err));
+    }, [axiosSecure]);
 
-    // running/active order------------
-    const runningOrder = orders.filter((order) => {
-        return order?.tna?.shipment?.status !== "completed"
-    })
-  
+    const runningOrder = orders.filter(
+        (order) => order?.tna?.shipment?.status !== "completed"
+    );
+
     return (
         <div>
-           <UiOfProductionPage runningOrder={runningOrder}></UiOfProductionPage>
+            <UiOfProductionPage
+                runningOrder={runningOrder}
+                orders={orders}
+                setOrders={setOrders}
+                axiosSecure={axiosSecure}
+            />
         </div>
     );
 };
 
-export default Productions;
+export default Productions

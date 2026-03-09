@@ -1,51 +1,20 @@
+import { useState } from "react";
 import BasicOrderInfo from "../BasicOrderInfo/BasicOrderInfo";
-import DailyProductionUpdate from "../DailyProductionUpdate/DailyProductionUpdate";
 import ProductionProgress from "../ProductionProgress/ProductionProgress";
 import StageWiseStatus from "../StageWiseStatus/StageWiseStatus";
-
+import { ChevronDown, ChevronRight } from "lucide-react";
 
 const UiOfProductionPage = ({ runningOrder = [] }) => {
-    const handleChange = (orderId, stage, field, value) => {
-        const updated = orders.map((order) =>
-            order._id === orderId
-                ? {
-                    ...order,
-                    tna: {
-                        ...order.tna,
-                        production: {
-                            ...order.tna.production,
-                            [stage]: {
-                                ...order.tna.production[stage],
-                                [field]: value,
-                            },
-                        },
-                    },
-                }
-                : order
-        );
 
-        setOrders(updated);
-    };
+    const [openId, setOpenId] = useState(null);
 
-    const handleSave = async (order) => {
-        try {
-            const res = await axiosSecure.patch(
-                `/api/patchOrders/${order._id}`,
-                {
-                    "tna.production": order.tna.production,
-                }
-            );
-
-            if (res.data.modifiedCount > 0) {
-                toast.success("Production Updated");
-            }
-        } catch (error) {
-            toast.error("Update Failed");
-        }
+    const toggleAccordion = (id) => {
+        setOpenId(openId === id ? null : id);
     };
 
     const calculateProgress = (production) => {
         const total = Object.keys(production || {}).length;
+
         const completed = Object.values(production || {}).filter(
             (stage) => stage.status === "Completed"
         ).length;
@@ -54,27 +23,107 @@ const UiOfProductionPage = ({ runningOrder = [] }) => {
     };
 
     return (
-        <div className="p-6   min-h-screen pt-30">
-            <h1 className="text-2xl font-bold mb-6">Production Management</h1>
+        <div className="p-6 min-h-screen pt-30">
+
+            <h1 className="text-2xl font-bold mb-6">
+                Production Dashboard
+            </h1>
 
             {runningOrder.length === 0 && (
-                <div>
-                    <p className="text-gray-500">No Running Orders</p>
-                    {/* basic order info---------- */}
-                    <BasicOrderInfo></BasicOrderInfo>
-                    {/* progress bar------------- */}
-                    <ProductionProgress></ProductionProgress>
-                    {/* stage wise status-------- */}
-                    <StageWiseStatus></StageWiseStatus>
-                    {/* daily production update------------- */}
-                    <DailyProductionUpdate></DailyProductionUpdate>
-                </div>
+                <p className="text-gray-500">No Running Orders</p>
             )}
 
+            <div className="space-y-4">
 
+                {runningOrder.map((order) => {
+
+                    const progress = calculateProgress(order?.tna?.production);
+
+                    return (
+                        <div
+                            key={order._id}
+                            className="bg-slate-800 rounded-xl shadow hover:shadow-lg transition"
+                        >
+
+                            {/* Accordion Header */}
+
+                            <div
+                                onClick={() => toggleAccordion(order._id)}
+                                className="cursor-pointer p-4"
+                            >
+
+                                <div className="flex justify-between items-center">
+
+                                    <div>
+                                        <h2 className="font-semibold text-lg">
+                                            {order.buyer} | {order.styleNo}
+                                        </h2>
+
+                                        <p className="text-sm opacity-70">
+                                            Order Qty : {order.orderQty}
+                                        </p>
+                                    </div>
+
+                                    {/* Icon */}
+
+                                    <div className="flex items-center gap-3">
+
+                                        <span className="text-sm font-semibold">
+                                            {progress}%
+                                        </span>
+
+                                        {openId === order._id
+                                            ? <ChevronDown size={20} />
+                                            : <ChevronRight size={20} />
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                                {/* Progress Bar */}
+
+                                <div className="mt-3">
+
+                                    <div className="w-full bg-gray-200 rounded-full h-2">
+
+                                        <div
+                                            className="bg-green-500 h-2 rounded-full transition-all"
+                                            style={{ width: `${progress}%` }}
+                                        />
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            {/* Accordion Body */}
+
+                            {openId === order._id && (
+
+                                <div className="border-t p-4 space-y-4">
+
+                                    <BasicOrderInfo order={order} />
+
+                                    <ProductionProgress progress={progress} />
+
+                                    <StageWiseStatus
+                                        production={order?.tna?.production}
+                                        viewOnly={true}
+                                    />
+
+                                </div>
+
+                            )}
+
+                        </div>
+                    );
+                })}
+
+            </div>
         </div>
     );
-
 };
 
 export default UiOfProductionPage;
