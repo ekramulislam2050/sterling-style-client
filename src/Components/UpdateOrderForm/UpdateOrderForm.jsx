@@ -56,6 +56,7 @@ const UpdateOrderForm = ({ order }) => {
       updatePayload = {
         ...updatePayload,
         "tna.materials": data.tna.materials,
+        "tna.inventory": data.tna.inventory
       };
     }
 
@@ -195,6 +196,55 @@ const UpdateOrderForm = ({ order }) => {
               </div>
             ))}
         </div>
+
+        {/* ================= INVENTORY ================= */}
+        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+          <h3 className="text-xl font-semibold text-yellow-400 mb-4 border-b border-slate-600 pb-2">
+            📦 Inventory
+          </h3>
+          {order?.tna?.inventory &&
+            Object.keys(order.tna.inventory).map((item) => {
+              const stock =
+                (order.tna.inventory?.[item]?.receivedQty || 0) -
+                (order.tna.inventory?.[item]?.issuedQty || 0);
+              return (
+                <div
+                  key={item}
+                  className="grid md:grid-cols-4 gap-4 items-center bg-slate-700 p-4 rounded-lg mb-4"
+                >
+                  <div className="font-semibold capitalize text-white">{item}</div>
+                  <div>
+                    <label className="label">Received</label>
+                    <input
+                      type="number"
+                      {...register(`tna.inventory.${item}.receivedQty`)}
+                      className="input-style"
+                      disabled={!isMaterial}
+                    />
+                  </div>
+                  <div>
+                    <label className="label">Issued</label>
+                    <input
+                      type="number"
+                      {...register(`tna.inventory.${item}.issuedQty`)}
+                      className="input-style"
+                      disabled={!isMaterial}
+                    />
+                  </div>
+                  <div>
+                    <label className="label">Stock</label>
+                    <input
+                      type="number"
+                      value={stock}
+                      className="input-style"
+                      disabled
+                    />
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+
 
 
         {/* ================= PRODUCTION ================= */}
