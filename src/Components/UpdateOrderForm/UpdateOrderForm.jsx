@@ -198,7 +198,7 @@ const UpdateOrderForm = ({ order }) => {
         </div>
 
         {/* ================= INVENTORY ================= */}
-        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 mt-8">
           <h3 className="text-xl font-semibold text-yellow-400 mb-4 border-b border-slate-600 pb-2">
             📦 Inventory
           </h3>

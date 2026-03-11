@@ -4,6 +4,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
 import PrivateRoute from "./PrivateRoute";
  
+ 
 
 // lazy loaded components------------
 const MainLayOut = lazy(() => import("../Pages/MainLayOut/MainLayOut"))
@@ -16,6 +17,7 @@ const Merchandise = lazy(() => import("../Pages/Merchandise/Merchandise"))
 const CreateOrder= lazy(()=>import("../Pages/Merchandise/CreateOrder"))
 const Settings = lazy(()=>import("../Pages/Settings/Settings"))
 const Production =lazy(()=>import('../Pages/Productions/Productions'))
+const Inventory=lazy(()=>import("../Pages/Inventory/Inventory"))
 
 // skeleton-component------------------
 const PageSkeleton = () => {
@@ -77,6 +79,10 @@ const router = createBrowserRouter([
       {
         path: "/production",
         element: <PrivateRoute><WithSuspense Component={Production}></WithSuspense></PrivateRoute>
+      },
+      {
+        path: "/inventory",
+        element: <PrivateRoute><WithSuspense Component={Inventory}></WithSuspense></PrivateRoute>
       },
       {
         path:"/createOrder",
