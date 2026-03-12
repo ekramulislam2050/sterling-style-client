@@ -10,7 +10,7 @@ const Inventory = () => {
     const axiosSecure = useAxiosSecure();
     const [orders, setOrders] = useState([]);
     const [openIndex, setOpenIndex] = useState(null);
-
+   console.log(orders)
     useEffect(() => {
         axiosSecure
             .get("/api/getOrders")
@@ -44,7 +44,7 @@ const Inventory = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white p-6 pt-30">
+        <div className="min-h-screen bg-linear-to-br from-slate-900 via-blue-950 to-slate-900 text-white p-6 pt-30">
 
             <h1 className="text-3xl font-bold mb-8">Inventory Orders</h1>
 
@@ -128,13 +128,13 @@ const Inventory = () => {
 
                                     <InventorySummaryCards order={order} />
 
-                                    <InventoryMaterialTable materials={order.materials} />
+                                    <InventoryMaterialTable  materials={order?.tna?.materials} />
 
                                     <div className="grid lg:grid-cols-2 gap-6">
 
-                                        <InventoryRecentReceiveTable order={order} />
+                                        <InventoryRecentReceiveTable materials={order?.tna?.materials} />
 
-                                        <InventoryLowStockAlert materials={order.materials} />
+                                        <InventoryLowStockAlert  materials={order?.tna?.materials} />
 
                                     </div>
 
