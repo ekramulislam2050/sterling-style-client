@@ -5,7 +5,7 @@ const InventoryLowStockAlert = ({ materials = {} }) => {
     if (materialEntries.length === 0) return null;
 
     return (
-        <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+        <div className="bg-orange-500/20 border border-orange-500/20 rounded-lg p-4">
 
             <h2 className="text-lg font-semibold mb-4">Material Stock Status</h2>
 

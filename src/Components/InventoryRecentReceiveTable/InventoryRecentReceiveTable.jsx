@@ -1,4 +1,4 @@
-import { format } from "date-fns"; // npm install date-fns
+import { format } from "date-fns";  
 
 const InventoryRecentReceiveTable = ({ materials = {} }) => {
     const entries = Object.entries(materials);
@@ -10,7 +10,7 @@ const InventoryRecentReceiveTable = ({ materials = {} }) => {
         .slice(0, 5);
 
     return (
-        <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+        <div className="bg-green-500/20 border border-green-500/20 rounded-lg p-4">
             <h2 className="text-lg font-semibold mb-4">Recent Material Receive</h2>
 
             <table className="w-full text-sm">
