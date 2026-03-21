@@ -18,6 +18,7 @@ const CreateOrder= lazy(()=>import("../Pages/Merchandise/CreateOrder"))
 const Settings = lazy(()=>import("../Pages/Settings/Settings"))
 const Production =lazy(()=>import('../Pages/Productions/Productions'))
 const Inventory=lazy(()=>import("../Pages/Inventory/Inventory"))
+const Hr=lazy(()=>import("../Pages/Hr/Hr"))
 
 // skeleton-component------------------
 const PageSkeleton = () => {
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path:"/settings",
         element:<WithSuspense Component={Settings}></WithSuspense>
+      },
+      {
+        path:"/hr",
+        element:<WithSuspense Component={Hr}></WithSuspense>
       }
 
     ]
