@@ -1,4 +1,4 @@
-const HrTopStats = ({ runningOrder }) => {
+const HrTopStats = ({ runningOrder={} }) => {
     console.log("hrtopStats=", runningOrder)
 
     const totalEmployees = runningOrder?.hr?.assignedEmployees?.length;
