@@ -3,6 +3,7 @@ import HrTopStats from "../HrTopStats/HrTopStats";
 import HrEmployeeLIst from "../HrEmployeeList/HrEmployeeLIst";
 import HrTodaysAttendance from "../HrTodaysAttendance/HrTodaysAttendance";
 import HrPayrollSummary from "../HrPayrollSummary/HrPayrollSummary";
+import HrPayrollTable from "../HrPayrollTable/HrPayrollTable";
 
 const HrAccordion = ({ runningOrder = [] }) => {
     const [openOrderId, setOpenOrderId] = useState(null);
@@ -52,8 +53,8 @@ const HrAccordion = ({ runningOrder = [] }) => {
                             <div className="flex items-center gap-3">
                                 <span
                                     className={`text-xs px-3 py-1 rounded-full font-medium ${isLate
-                                            ? "bg-red-500/30 text-red-400"
-                                            : "bg-green-500/30 text-green-400"
+                                        ? "bg-red-500/30 text-red-400"
+                                        : "bg-green-500/30 text-green-400"
                                         }`}
                                 >
                                     {isLate ? "Late" : "Running"}
@@ -70,18 +71,32 @@ const HrAccordion = ({ runningOrder = [] }) => {
                                 }`}
                         >
                             <div className="space-y-5">
-                                <div className="bg-white/10 p-5 rounded-2xl ">
+
+                                {/* Top Stats */}
+                                <div className="bg-indigo-500/10 p-5 rounded-2xl backdrop-blur-sm">
                                     <HrTopStats runningOrder={order} />
                                 </div>
-                                <div className="bg-white/10 p-5 rounded-2xl  ">
+
+                                {/* Employee List */}
+                                <div className="bg-green-500/10 p-5 rounded-2xl backdrop-blur-sm">
                                     <HrEmployeeLIst runningOrder={order} />
                                 </div>
-                                <div className="bg-white/10 p-5 rounded-2xl  ">
+
+                                {/* Today's Attendance */}
+                                <div className="bg-yellow-500/10 p-5 rounded-2xl backdrop-blur-sm">
                                     <HrTodaysAttendance runningOrder={order} />
                                 </div>
-                                <div className="bg-white/10 p-5 rounded-2xl  ">
+
+                                {/* Payroll Summary */}
+                                <div className="bg-blue-500/10 p-5 rounded-2xl backdrop-blur-sm">
                                     <HrPayrollSummary runningOrder={order} />
                                 </div>
+
+                                {/* Payroll Table */}
+                                <div className="bg-pink-500/10 p-5 rounded-2xl backdrop-blur-sm overflow-x-auto">
+                                    <HrPayrollTable runningOrder={order} />
+                                </div>
+
                             </div>
                         </div>
                     </div>
