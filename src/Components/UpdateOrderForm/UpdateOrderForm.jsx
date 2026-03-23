@@ -13,18 +13,33 @@ const UpdateOrderForm = ({ order }) => {
   const isProduction = true;
   const isSample = true;
   const isMaterial = true;
+  const isHr = true
 
-  const isPermission = isMerchandiser || isProduction || isSample || isMaterial
+  const isPermission = isMerchandiser || isProduction || isSample || isMaterial || isHr
+
+
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors }
+    formState: { errors },
+    watch
   } = useForm();
 
+  const payrollWatch = watch("hr.payroll", []);
+
   useEffect(() => {
-    if (order) reset(order);
+    if (order) {
+      reset({
+        ...order,
+        hr: {
+          assignedEmployees: order?.hr?.assignedEmployees || [],
+          attendance: order?.hr?.attendance || [],
+          payroll: order?.hr?.payroll || []
+        }
+      });
+    }
   }, [order, reset]);
 
 
@@ -65,6 +80,18 @@ const UpdateOrderForm = ({ order }) => {
       updatePayload = {
         ...updatePayload,
         "tna.production": data.tna.production,
+      };
+    }
+    // =================HR ADD THIS======================
+    if (isHr && data?.hr) {
+      updatePayload = {
+        ...updatePayload,
+        "hr.assignedEmployees": data.hr?.assignedEmployees || [],
+        "hr.attendance": data.hr?.attendance || [],
+        "hr.payroll": (data.hr?.payroll || []).map(p => ({
+          ...p,
+          net: (p.basic || 0) + (p.allowance || 0) - (p.deduction || 0)
+        }))
       };
     }
 
@@ -305,6 +332,97 @@ const UpdateOrderForm = ({ order }) => {
                 </div>
               </div>
             ))}
+        </div>
+
+        {/* ================= HR Section ================= */}
+        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 mt-8">
+          <h3 className="text-xl font-semibold text-cyan-400 mb-4 border-b border-slate-600 pb-2">
+            👥 HR Information
+          </h3>
+
+          {/* Employee Assignment */}
+          {order?.hr?.assignedEmployees?.map((emp, idx) => (
+            <div key={idx} className="grid md:grid-cols-3 gap-4 items-center mb-4 bg-slate-700 p-3 rounded-lg">
+              <div className="text-white font-medium">{emp.name}</div>
+              <select
+                {...register(`hr.assignedEmployees.${idx}.role`)}
+                className="input-style bg-[#0f172a] disabled:opacity-70"
+              >
+                <option value="staff">Staff</option>
+                <option value="supervisor">Supervisor</option>
+                <option value="manager">Manager</option>
+              </select>
+              <input
+                type="checkbox"
+                defaultChecked={emp.active}
+                {...register(`hr.assignedEmployees.${idx}.active`)}
+              />
+            </div>
+          ))}
+
+          {/* Attendance */}
+          <div className="mt-6">
+            <h4 className="text-lg text-yellow-400 font-semibold mb-2">Today's Attendance</h4>
+            {order?.hr?.attendance?.map((att, idx) => (
+              <div key={idx} className="flex justify-between items-center mb-2 bg-slate-700 p-2 rounded-lg">
+                <span className="text-white">{att.employeeName}</span>
+                <input type="time" {...register(`hr.attendance.${idx}.checkIn`)} className="input-style w-24" />
+                <input type="time" {...register(`hr.attendance.${idx}.checkOut`)} className="input-style w-24" />
+                <select {...register(`hr.attendance.${idx}.status`)} className="input-style w-32 bg-[#0f172a]">
+                  <option value="present">Present</option>
+                  <option value="absent">Absent</option>
+                  <option value="leave">Leave</option>
+                </select>
+              </div>
+            ))}
+          </div>
+
+          {/* Payroll Summary   */}
+          {order?.hr?.payroll?.map((pay, idx) => {
+
+            const net =
+              (payrollWatch?.[idx]?.basic || 0) +
+              (payrollWatch?.[idx]?.allowance || 0) -
+              (payrollWatch?.[idx]?.deduction || 0);
+
+            return (
+              <div
+                key={idx}
+                className="grid md:grid-cols-5 gap-4 items-center mb-4 bg-slate-700 p-3 rounded-lg"
+              >
+                <div className="text-white font-medium">{pay.employeeName}</div>
+
+                <input
+                  type="number"
+                  {...register(`hr.payroll.${idx}.basic`)}
+                  placeholder="Basic"
+                  className="input-style"
+                />
+
+                <input
+                  type="number"
+                  {...register(`hr.payroll.${idx}.allowance`)}
+                  placeholder="Allowance"
+                  className="input-style"
+                />
+
+                <input
+                  type="number"
+                  {...register(`hr.payroll.${idx}.deduction`)}
+                  placeholder="Deduction"
+                  className="input-style"
+                />
+
+                {/* ✅ Live Net Salary */}
+                <input
+                  type="number"
+                  value={net}
+                  readOnly
+                  className="input-style bg-green-900 text-green-300 font-bold"
+                />
+              </div>
+            );
+          })}
         </div>
 
 

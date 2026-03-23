@@ -4,6 +4,7 @@ import HrEmployeeLIst from "../HrEmployeeList/HrEmployeeLIst";
 import HrTodaysAttendance from "../HrTodaysAttendance/HrTodaysAttendance";
 import HrPayrollSummary from "../HrPayrollSummary/HrPayrollSummary";
 import HrPayrollTable from "../HrPayrollTable/HrPayrollTable";
+import { Link } from "react-router-dom";
 
 const HrAccordion = ({ runningOrder = [] }) => {
     const [openOrderId, setOpenOrderId] = useState(null);
@@ -96,7 +97,10 @@ const HrAccordion = ({ runningOrder = [] }) => {
                                 <div className="bg-pink-500/10 p-5 rounded-2xl backdrop-blur-sm overflow-x-auto">
                                     <HrPayrollTable runningOrder={order} />
                                 </div>
-
+                                 {/* update button */}
+                                <div className="flex justify-center ">
+                                        <Link to={"/settings"} className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-md font-medium transition w-1/2 text-center">Update</Link>
+                                </div>
                             </div>
                         </div>
                     </div>
