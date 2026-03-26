@@ -10,7 +10,7 @@ const Inventory = () => {
     const axiosSecure = useAxiosSecure();
     const [orders, setOrders] = useState([]);
     const [openIndex, setOpenIndex] = useState(null);
-   console.log(orders)
+    console.log(orders)
     useEffect(() => {
         axiosSecure
             .get("/api/getOrders")
@@ -27,20 +27,18 @@ const Inventory = () => {
     };
 
     // material progress calculate
-    const getMaterialProgress = (materials = []) => {
-        const totalRequired = materials.reduce(
-            (sum, m) => sum + (m.requiredQty || 0),
-            0
-        );
+    const getMaterialProgress = (materials = {}) => {
+        if (!materials || typeof materials !== "object") return 0;
 
-        const totalIssued = materials.reduce(
-            (sum, m) => sum + (m.issuedQty || 0),
-            0
-        );
+        const items = Object.values(materials);
 
-        if (!totalRequired) return 0;
+        const total = items.length;
 
-        return Math.round((totalIssued / totalRequired) * 100);
+        const completed = items.filter(m => m?.status === "completed").length;
+
+        if (!total) return 0;
+
+        return Math.round((completed / total) * 100);
     };
 
     return (
@@ -52,8 +50,7 @@ const Inventory = () => {
 
                 {runningOrder.map((order, index) => {
 
-                    const progress = getMaterialProgress(order.materials);
-
+                    const progress = getMaterialProgress(order?.tna?.materials);
                     return (
                         <div
                             key={order._id}
@@ -80,11 +77,13 @@ const Inventory = () => {
                                             <span>Qty: {order.orderQty}</span>
 
                                             <span>
-                                                Ship: {order?.tna?.shipment?.plannedDate || "N/A"}
+                                                Ship: {order?.tna?.shipment?.planned || "N/A"}
                                             </span>
 
                                         </div>
-
+                                        <p className="text-xs text-gray-400 mt-1">
+                                            {Object.keys(order?.tna?.materials || {}).length} Materials
+                                        </p>
                                     </div>
 
                                     {/* Right progress */}
@@ -128,13 +127,13 @@ const Inventory = () => {
 
                                     <InventorySummaryCards order={order} />
 
-                                    <InventoryMaterialTable  materials={order?.tna?.materials} />
+                                    <InventoryMaterialTable materials={order?.tna?.materials} />
 
                                     <div className="grid lg:grid-cols-2 gap-6">
 
                                         <InventoryRecentReceiveTable materials={order?.tna?.materials} />
 
-                                        <InventoryLowStockAlert  materials={order?.tna?.materials} />
+                                        <InventoryLowStockAlert materials={order?.tna?.materials} />
 
                                     </div>
 

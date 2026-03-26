@@ -3,10 +3,12 @@ import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
 import ErrMsg from "../../SuccessAndErrMsg/ErrMsg/ErrMsg";
 import SuccessMsg from "../../SuccessAndErrMsg/successMsg/successMsg";
 import { useNavigate } from "react-router-dom";
+import CreateOrderForm from "../../Components/CreateOrderForm/CreateOrderForm";
 
 const CreateOrder = () => {
-    const navigate = useNavigate()
-    const axiosSecure = useAxiosSecure()
+    const navigate = useNavigate();
+    const axiosSecure = useAxiosSecure();
+
     const [order, setOrder] = useState({
         buyer: "",
         styleNo: "",
@@ -16,30 +18,79 @@ const CreateOrder = () => {
         season: ""
     });
 
-
     const handleChange = e => {
         setOrder({ ...order, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const qty = Number(order.orderQty) || 0;
+
         const payload = {
-            ...order,
-   
+            buyer: order.buyer,
+            styleNo: order.styleNo,
+            orderQty: qty,
+            orderDate: order.orderDate,
+            exFactoryDate: order.exFactoryDate,
+            season: order.season,
+
+             // Default value----
+
+            // ================= SAMPLES =================
             samples: [
-                { name: "Fit Sample", status: "Pending" },
-                { name: "PP Sample", status: "Pending" },
-                { name: "Size Set", status: "Pending" },
+                { name: "Proto Sample", status: "Pending", date: "" },
+                { name: "Fit Sample", status: "Pending", date: "" },
+                { name: "PP Sample", status: "Pending", date: "" },
+                { name: "Size Set", status: "Pending", date: "" }
             ],
+
+            // ================= TNA =================
+            tna: {
+                materials: {
+                    fabric: { planned: "", actual: "", status: "pending" },
+                    button: { planned: "", actual: "", status: "pending" },
+                    zipper: { planned: "", actual: "", status: "pending" }
+                },
+                inventory: {
+                    fabric: { receivedQty: 0, issuedQty: 0 },   
+                    button: { receivedQty: 0, issuedQty: 0 },   
+                    zipper: { receivedQty: 0, issuedQty: 0 }  
+                },
+                production: {
+                    cutting: { planned: "", actual: "", actualQty: 0, status: "pending" },
+                    sewing: { planned: "", actual: "", actualQty: 0, status: "pending" },
+                    finishing: { planned: "", actual: "", actualQty: 0, status: "pending" }
+                },
+                shipment: {
+                    planned: order.exFactoryDate || "",
+                    actual: "",
+                    status: "pending"
+                }
+            },
+
+            // ================= HR =================
+            hr: {
+                assignedEmployees: [
+                    { name: "", role: "staff", active: true } // Default row
+                ],
+                attendance: [
+                    { employeeName: "", checkIn: "", checkOut: "", status: "present" }
+                ],
+                payroll: [
+                    { employeeName: "", basic: 0, allowance: 0, deduction: 0 }
+                ]
+            },
+
+            createdAt: new Date()
         };
 
         try {
-            const res = await axiosSecure.post('/api/postOrders', payload)
-            if (res.data) {
-                SuccessMsg('post successful')
+            const res = await axiosSecure.post('/api/postOrders', payload);
 
-                // form reset---------
+            if (res.data) {
+                SuccessMsg('Order Created Successfully ✅');
+
                 setOrder({
                     buyer: "",
                     styleNo: "",
@@ -48,113 +99,27 @@ const CreateOrder = () => {
                     exFactoryDate: "",
                     season: ""
                 });
-                // navigate to merchandising---------
-                navigate("/merchandise")
+
+                navigate("/merchandise");
             }
+
         } catch (err) {
             const message =
                 err.response?.data?.message ||
                 err.message ||
                 "Something went wrong";
 
-            ErrMsg(message)
+            ErrMsg(message);
         }
-
-
     };
 
-
     return (
-        <div className="p-1    ">
-
-            <div className="mt-22 ">
-                <div className="px-6">
-                    <h2 className="  bg-linear-to-r from-indigo-900 to-blue-800 py-4 rounded-t-2xl pl-3 text-xl font-semibold" >Create Your Order</h2>
-                </div>
-                <form
-                    onSubmit={handleSubmit}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6 rounded-xl"
-                >
-                    <div className="flex flex-col">
-                        <label className="text-sm text-slate-200">Buyer</label>
-                        <input
-                            name="buyer"
-                            placeholder="Buyer"
-                            onChange={handleChange}
-                            value={order.buyer}
-                            className="input input-bordered bg-zinc-600"
-                            required
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label className="text-sm text-slate-200">Style No</label>
-                        <input
-                            name="styleNo"
-                            placeholder="Style No"
-                            onChange={handleChange}
-                            value={order.styleNo}
-                            className="input input-bordered bg-zinc-600"
-                            required
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label className="text-sm text-slate-200">Quantity / Order Qty</label>
-                        <input
-                            name="orderQty"
-                            type="number"
-                            placeholder="Quantity / orderQty"
-                            onChange={handleChange}
-                            value={order.orderQty}
-                            className="input input-bordered bg-zinc-600"
-                            required
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label className="text-sm text-slate-200">Order Date</label>
-                        <input
-                            name="orderDate"
-                            type="date"
-                            onChange={handleChange}
-                            value={order.orderDate}
-                            className="input input-bordered bg-zinc-600"
-                            required
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label className="text-sm text-slate-200">Ex-Factory Date</label>
-                        <input
-                            name="exFactoryDate"
-                            type="date"
-                            onChange={handleChange}
-                            value={order.exFactoryDate}
-                            className="input input-bordered bg-zinc-600"
-                            min={order.orderDate}
-                            required
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label className="text-sm text-slate-200">Season</label>
-                        <input
-                            name="season"
-                            placeholder="Season"
-                            onChange={handleChange}
-                            value={order.season}
-                            className="input input-bordered bg-zinc-600"
-                            required
-                        />
-                    </div>
-
-                    <button className="btn btn-primary col-span-full rounded-b-2xl">
-                        Save Order
-                    </button>
-                </form>
-
-            </div>
+        <div>
+            <CreateOrderForm
+                order={order}
+                handleSubmit={handleSubmit}
+                handleChange={handleChange}
+            />
         </div>
     );
 };

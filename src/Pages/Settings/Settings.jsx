@@ -35,7 +35,7 @@ const Settings = () => {
 
 
     return (
-        <div className="space-y-4 pt-30">
+        <div className="space-y-4 pt-30 pb-5">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-center text-cyan-400 mb-6 drop-shadow-lg">
                 Update Order
             </h2>
@@ -43,7 +43,7 @@ const Settings = () => {
                 <div key={order._id} className="border border-slate-700 rounded-xl overflow-hidden">
                     {/* Header */}
                     <div
-                        className="bg-slate-800 p-4 cursor-pointer flex justify-between items-center"
+                        className="bg-slate-600 p-4 cursor-pointer flex justify-between items-center"
                         onClick={() => toggleAccordion(idx)}
                     >
                         <span className="text-white font-semibold">{order.styleNo} - {order.buyer}</span>
