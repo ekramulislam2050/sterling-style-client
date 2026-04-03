@@ -35,7 +35,7 @@ const CreateOrder = () => {
             exFactoryDate: order.exFactoryDate,
             season: order.season,
 
-             // Default value----
+            // Default value----
 
             // ================= SAMPLES =================
             samples: [
@@ -53,14 +53,16 @@ const CreateOrder = () => {
                     zipper: { planned: "", actual: "", status: "pending" }
                 },
                 inventory: {
-                    fabric: { receivedQty: 0, issuedQty: 0 },   
-                    button: { receivedQty: 0, issuedQty: 0 },   
-                    zipper: { receivedQty: 0, issuedQty: 0 }  
+                    fabric: { receivedQty: 0, issuedQty: 0 },
+                    button: { receivedQty: 0, issuedQty: 0 },
+                    zipper: { receivedQty: 0, issuedQty: 0 }
                 },
                 production: {
                     cutting: { planned: "", actual: "", actualQty: 0, status: "pending" },
                     sewing: { planned: "", actual: "", actualQty: 0, status: "pending" },
                     finishing: { planned: "", actual: "", actualQty: 0, status: "pending" }
+                   
+
                 },
                 shipment: {
                     planned: order.exFactoryDate || "",
@@ -71,9 +73,9 @@ const CreateOrder = () => {
 
             // ================= HR =================
             hr: {
-                assignedEmployees: [
-                    { name: "", role: "staff", active: true } // Default row
-                ],
+                    assignedEmployees: [
+                        { name: "", role: "staff", active: true } // Default row
+                    ],
                 attendance: [
                     { employeeName: "", checkIn: "", checkOut: "", status: "present" }
                 ],

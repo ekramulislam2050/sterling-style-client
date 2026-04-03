@@ -16,13 +16,16 @@ import {
   CheckCircle,
   Truck,
   FileText,
-   Settings 
+  Settings,
+  UserRoundSearch,
+  UserSearch,
+
 } from "lucide-react";
 
 const NavBar = () => {
   const navigate = useNavigate()
   const { logOut, user } = useContext(AuthContext)
- 
+
   const handleLogOut = () => {
     try {
       logOut()
@@ -32,186 +35,193 @@ const NavBar = () => {
       toast.error("লগ আউট ব্যার্থ হয়েছে  ")
     }
   }
-  
 
- const links = (
-  <>
-    <NavLink
-      to="/"
-      className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+
+  const links = (
+    <>
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 text-sm transition-all
         border-l-4
-        ${
-          isActive
+        ${isActive
             ? "border-blue-600 bg-blue-800 text-blue-100 font-semibold"
             : "border-transparent hover:border-blue-500 hover:bg-blue-800"
-        }`
-      }
-    >
-      <Home size={16} className="text-yellow-500" />
-      Home
-    </NavLink>
+          }`
+        }
+      >
+        <Home size={16} className="text-yellow-500" />
+        Home
+      </NavLink>
 
-    <NavLink
-      to="/dashboard"
-      className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+      <NavLink
+        to="/dashboard"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 text-sm transition-all
         border-l-4
-        ${
-          isActive
+        ${isActive
             ? "border-teal-600 bg-teal-800 text-teal-100 font-semibold"
             : "border-transparent hover:border-teal-500 hover:bg-teal-800"
-        }`
-      }
-    >
-      <LayoutDashboard size={16} className="text-blue-500" />
-      Dashboard
-    </NavLink>
+          }`
+        }
+      >
+        <LayoutDashboard size={16} className="text-blue-500" />
+        Dashboard
+      </NavLink>
 
-    <NavLink
-      to="/merchandise"
-      className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+      <NavLink
+        to="/merchandise"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 text-sm transition-all
         border-l-4
-        ${
-          isActive
+        ${isActive
             ? "border-purple-600 bg-purple-800 text-purple-100 font-semibold"
             : "border-transparent hover:border-purple-500 hover:bg-purple-800"
-        }`
-      }
-    >
-      <Briefcase size={16} className="text-indigo-500" />
-      Merchandising
-    </NavLink>
+          }`
+        }
+      >
+        <Briefcase size={16} className="text-indigo-500" />
+        Merchandising
+      </NavLink>
 
-    <NavLink
-      to="/production"
-      className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+      <NavLink
+        to="/production"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 text-sm transition-all
         border-l-4
-        ${
-          isActive
+        ${isActive
             ? "border-orange-600 bg-orange-800 text-orange-100 font-semibold"
             : "border-transparent hover:border-orange-500 hover:bg-orange-800"
-        }`
-      }
-    >
-      <Factory size={16} className="text-teal-500" />
-      Production
-    </NavLink>
+          }`
+        }
+      >
+        <Factory size={16} className="text-teal-500" />
+        Production
+      </NavLink>
 
-    <NavLink
-      to="/inventory"
-      className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+      <NavLink
+        to="/inventory"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 text-sm transition-all
         border-l-4
-        ${
-          isActive
+        ${isActive
             ? "border-emerald-600 bg-emerald-800 text-emerald-100 font-semibold"
             : "border-transparent hover:border-emerald-500 hover:bg-green-800"
-        }`
-      }
-    >
-      <Boxes size={16} className="text-emerald-500" />
-      Inventory
-    </NavLink>
+          }`
+        }
+      >
+        <Boxes size={16} className="text-emerald-500" />
+        Inventory
+      </NavLink>
 
-    <NavLink
-      to="/hr"
-      className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+      <NavLink
+        to="/hr"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 text-sm transition-all
         border-l-4
-        ${
-          isActive
+        ${isActive
             ? "border-pink-600 bg-pink-800 text-pink-100 font-semibold"
             : "border-transparent hover:border-pink-500 hover:bg-pink-800"
-        }`
-      }
-    >
-      <Users size={16} className="text-pink-500" />
-      HR
-    </NavLink>
+          }`
+        }
+      >
+        <Users size={16} className="text-pink-500" />
+        HR
+      </NavLink>
 
-    <NavLink
-      to="/accounts"
-      className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+      <NavLink
+        to="/accounts"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 text-sm transition-all
         border-l-4
-        ${
-          isActive
+        ${isActive
             ? "border-cyan-600 bg-cyan-800 text-cyan-100 font-semibold"
             : "border-transparent hover:border-cyan-500 hover:bg-cyan-800"
-        }`
-      }
-    >
-      <Calculator size={16} className="text-cyan-500" />
-      Accounts
-    </NavLink>
+          }`
+        }
+      >
+        <Calculator size={16} className="text-cyan-500" />
+        Accounts
+      </NavLink>
 
-    <NavLink
-      to="/qc"
-      className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+      <NavLink
+        to="/qc"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 text-sm transition-all
         border-l-4
-        ${
-          isActive
+        ${isActive
             ? "border-green-600 bg-green-800 text-green-100 font-semibold"
             : "border-transparent hover:border-green-500 hover:bg-green-800"
-        }`
-      }
-    >
-      <CheckCircle size={16} className="text-green-500" />
-      Quality Control
-    </NavLink>
+          }`
+        }
+      >
+        <CheckCircle size={16} className="text-green-500" />
+        Quality Control
+      </NavLink>
 
-    <NavLink
-      to="/delivery"
-      className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+      <NavLink
+        to="/delivery"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 text-sm transition-all
         border-l-4
-        ${
-          isActive
+        ${isActive
             ? "border-yellow-600 bg-yellow-800 text-yellow-100 font-semibold"
             : "border-transparent hover:border-yellow-500 hover:bg-yellow-800"
-        }`
-      }
-    >
-      <Truck size={16} className="text-yellow-500" />
-      Delivery
-    </NavLink>
+          }`
+        }
+      >
+        <Truck size={16} className="text-yellow-500" />
+        Delivery
+      </NavLink>
 
-    <NavLink
-      to="/reports"
-      className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+      <NavLink
+        to="/reports"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 text-sm transition-all
         border-l-4
-        ${
-          isActive
+        ${isActive
             ? "border-red-600 bg-red-800 text-red-100 font-semibold"
             : "border-transparent hover:border-red-500 hover:bg-red-800"
-        }`
-      }
-    >
-      <FileText size={16} className="text-blue-500" />
-      Reports
-    </NavLink>
-    <NavLink
-      to="/settings"
-      className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-2 text-sm transition-all
+          }`
+        }
+      >
+        <FileText size={16} className="text-blue-500" />
+        Reports
+      </NavLink>
+      <NavLink
+        to="/settings"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 text-sm transition-all
         border-l-4
-        ${
-          isActive
+        ${isActive
             ? "border-red-600 bg-red-800 text-red-100 font-semibold"
             : "border-transparent hover:border-red-500 hover:bg-indigo-700"
-        }`
-      }
-    >
-      <Settings size={16} className="text-red-500" />
-      Settings
-    </NavLink>
-  </>
-);
+          }`
+        }
+      >
+        <Settings size={16} className="text-red-500" />
+        Settings
+      </NavLink>
+
+      <NavLink
+        to="/allWorker"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 text-sm transition-all
+    border-l-4
+    ${isActive
+            ? "border-indigo-600 bg-indigo-800 text-indigo-100 font-semibold"
+            : "border-transparent hover:border-indigo-500 hover:bg-indigo-800"
+          }`
+        }
+      >
+        <UserSearch
+          size={16}
+          className="text-indigo-400"
+        />
+        All Worker
+      </NavLink>
+    </>
+  );
 
 
 
@@ -219,7 +229,7 @@ const NavBar = () => {
   const links2 = <>
     <NavLink to={"/login"}><li className="hover:bg-blue-500 text-sm rounded py-1 pl-2" >Log In </li></NavLink>
     <li onClick={handleLogOut}><button className="hover:bg-blue-500 text-sm rounded py-1 pl-2">
-     Log Out
+      Log Out
     </button> </li>
   </>
   return (

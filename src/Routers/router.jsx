@@ -19,6 +19,7 @@ const Settings = lazy(()=>import("../Pages/Settings/Settings"))
 const Production =lazy(()=>import('../Pages/Productions/Productions'))
 const Inventory=lazy(()=>import("../Pages/Inventory/Inventory"))
 const Hr=lazy(()=>import("../Pages/Hr/Hr"))
+const AllWorker=lazy(()=>import("../Pages/AllWorker/AllWorker"))
 
 // skeleton-component------------------
 const PageSkeleton = () => {
@@ -96,6 +97,10 @@ const router = createBrowserRouter([
       {
         path:"/hr",
         element:<WithSuspense Component={Hr}></WithSuspense>
+      },
+      {
+        path:"/allWorker",
+        element:<WithSuspense Component={AllWorker}></WithSuspense>
       }
 
     ]
