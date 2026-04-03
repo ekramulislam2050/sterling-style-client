@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
 
 const AllWorker = () => {
@@ -6,16 +6,32 @@ const AllWorker = () => {
 
     const [workers, setWorkers] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [fetchLoading, setFetchLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const isHr = true;
+    const isAdmin = true;
+
+    const canImport = isHr || isAdmin
+
 
     const fetchWorkers = async () => {
         try {
+            setFetchLoading(true)
             const res = await axiosSecure.get("/api/getAllWorkersData");
             setWorkers(res.data);
         } catch (error) {
             console.error(error);
+        }finally{
+            setFetchLoading(false)
         }
     };
+
+    // ✅ page load / refresh এ automatically data আনবে
+    useEffect(() => {
+
+        fetchWorkers();
+
+    }, []);
 
     const handleImportWorkers = async () => {
         try {
@@ -46,20 +62,25 @@ const AllWorker = () => {
                     All Workers
                 </h1>
 
-                <button
-                    onClick={handleImportWorkers}
-                    disabled={loading}
-                    className="px-4 py-2 rounded-lg bg-indigo-600 text-white"
-                >
-                    {loading
-                        ? "Importing..."
-                        : "Import Workers"}
-                </button>
+                {/* all worker data import button---------------- */}
+                {
+                    canImport && (
+                        <button
+                            onClick={handleImportWorkers}
+                            disabled={loading}
+                            className="px-4 py-2 rounded-lg bg-indigo-600 text-white"
+                        >
+                            {loading
+                                ? "Importing..."
+                                : "Import Workers"}
+                        </button>
+                    )
+                }
             </div>
 
             {/* status */}
             {message && (
-                <p className="mb-4 text-sm text-green-500">
+                <p className="mb-4 text-sm text-red-500 flex justify-end">
                     {message}
                 </p>
             )}
@@ -77,8 +98,15 @@ const AllWorker = () => {
             />
 
             {/* worker list */}
-            <div className="border rounded-lg p-4">
-                {workers.length === 0 ? (
+            <div className="border rounded-lg p-4 min-h-[200px]">
+                {fetchLoading ? (
+                    <div className="flex flex-col justify-center items-center py-10 gap-3">
+                        <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+                        <p className="text-gray-500">
+                            Loading workers data...
+                        </p>
+                    </div>
+                ) : workers.length === 0 ? (
                     <p>No worker data available</p>
                 ) : (
                     workers.map((worker) => (
