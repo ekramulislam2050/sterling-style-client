@@ -1,6 +1,7 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import "../../Css/scrollBar.css"
 
 const PAGE_LIMIT = 50;
 
@@ -40,12 +41,14 @@ const TableForAllWorkers = ({ axiosSecure }) => {
     [axiosSecure, page, loading, hasMore, searchTerm, workers.length]
   );
 
+
+
   // Initial load
   useEffect(() => {
     fetchWorkers(true);
   }, []);
 
-  // Filtered workers (client-side)
+  // Filtered workers (client-side, optional)
   const filteredWorkers = workers.filter(
     w =>
       w.workerId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -89,6 +92,7 @@ const TableForAllWorkers = ({ axiosSecure }) => {
 
       {/* Search input */}
       <div className="relative mb-4 w-full">
+
         <input
           type="text"
           ref={searchInputRef}
@@ -96,6 +100,24 @@ const TableForAllWorkers = ({ axiosSecure }) => {
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
           onKeyDown={handleSearchKey}
+          onPaste={e => {
+            e.preventDefault(); // default paste রোধ
+            const paste = e.clipboardData.getData("text").trim(); // trim করে paste
+            const { selectionStart, selectionEnd } = e.target;
+
+            // cursor এর আগে ও পরে যা আছে তার সাথে paste merge করা
+            const newValue =
+              searchTerm.slice(0, selectionStart) +
+              paste +
+              searchTerm.slice(selectionEnd);
+
+            setSearchTerm(newValue);
+
+            // cursor position paste শেষে set করা
+            setTimeout(() => {
+              e.target.selectionStart = e.target.selectionEnd = selectionStart + paste.length;
+            }, 0);
+          }}
           className="w-full p-3 pl-10 rounded border"
         />
         <FiSearch
@@ -108,7 +130,7 @@ const TableForAllWorkers = ({ axiosSecure }) => {
       {/* Virtualized list with custom scroll bar */}
       <div
         ref={parentRef}
-        className="border rounded-lg h-[600px] overflow-auto scrollbar-thin scrollbar-thumb-indigo-600 scrollbar-track-gray-200"
+        className="border rounded-lg h-[600px] overflow-auto custom-scrollbar"
       >
         <div style={{ height: rowVirtualizer.getTotalSize(), position: "relative" }}>
           {rowVirtualizer.getVirtualItems().map(virtualRow => {
