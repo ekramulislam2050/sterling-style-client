@@ -2,10 +2,11 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import "../../Css/scrollBar.css"
+import SummaryCardOfAllWorkers from "../SummaryCardOfAllWorkers/SummaryCardOfAllWorkers";
 
 const PAGE_LIMIT = 50;
 
-const TableForAllWorkers = ({ axiosSecure }) => {
+const TableForAllWorkers = ({ axiosSecure, canImport, loadingImport, handleImportWorkers, message }) => {
   const [workers, setWorkers] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
@@ -86,26 +87,60 @@ const TableForAllWorkers = ({ axiosSecure }) => {
   };
 
   return (
-    <div>
-      {/* Total worker count */}
-      <p className="text-[#ffffff] mb-2">Total Worker: {total}</p>
+    <div className="space-y-4">
+      {/* Top section */}
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-2xl font-bold">All Workers</h2>
+          <p className="text-gray-400 text-sm">
+            Total Workers: {total}
+          </p>
+        </div>
+        <div className="space-x-2 flex">
+          <div>
+            {/* Import button */}
+            {canImport && (
+              <button
+                onClick={handleImportWorkers}
+                disabled={loadingImport}
+                className="px-4 py-2 rounded-lg bg-indigo-600 text-white"
+              >
+                {loadingImport ? "Importing..." : "Import Workers"}
+              </button>
+            )}
 
-      {/* Search input */}
-      <div className="relative mb-4 w-full">
+            {/* Status message */}
+            {message && (
+              <p className=" text-sm text-red-500 flex ">{message}</p>
+            )}
+          </div>
 
+          {/* assign to btn--------- */}
+          <div>
+            <button className="px-4 py-2 rounded-lg bg-indigo-600 text-white">
+              Assign to Line / Order
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* summary card--------------- */}
+      <SummaryCardOfAllWorkers></SummaryCardOfAllWorkers>
+
+      {/* Search */}
+      <div className="relative w-full">
         <input
           type="text"
           ref={searchInputRef}
-          placeholder="Search by worker ID or name"
+          placeholder="Search by Worker ID or Name..."
           value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
+          onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={handleSearchKey}
-          onPaste={e => {
-            e.preventDefault(); // default paste রোধ
-            const paste = e.clipboardData.getData("text").trim(); // trim করে paste
+          onPaste={(e) => {
+            e.preventDefault();
+            const paste = e.clipboardData.getData("text").trim();
             const { selectionStart, selectionEnd } = e.target;
 
-            // cursor এর আগে ও পরে যা আছে তার সাথে paste merge করা
             const newValue =
               searchTerm.slice(0, selectionStart) +
               paste +
@@ -113,31 +148,49 @@ const TableForAllWorkers = ({ axiosSecure }) => {
 
             setSearchTerm(newValue);
 
-            // cursor position paste শেষে set করা
             setTimeout(() => {
-              e.target.selectionStart = e.target.selectionEnd = selectionStart + paste.length;
+              e.target.selectionStart =
+                e.target.selectionEnd =
+                selectionStart + paste.length;
             }, 0);
           }}
-          className="w-full p-3 pl-10 rounded border"
+          className="w-full p-3 pl-10 rounded-lg border outline-none"
         />
+
         <FiSearch
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer hover:text-gray-700 transition"
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
           size={20}
           onClick={handleSearchClick}
         />
       </div>
 
-      {/* Virtualized list with custom scroll bar */}
+      {/* Table header */}
+      <div className="grid grid-cols-6 gap-4 px-4 py-3   rounded-lg font-semibold text-sm">
+        <div>Worker ID</div>
+        <div>Name</div>
+        <div>Department</div>
+        <div>Designation</div>
+        <div>Status</div>
+        <div>Actions</div>
+      </div>
+
+      {/* Virtualized list */}
       <div
         ref={parentRef}
         className="border rounded-lg h-[600px] overflow-auto custom-scrollbar"
       >
-        <div style={{ height: rowVirtualizer.getTotalSize(), position: "relative" }}>
-          {rowVirtualizer.getVirtualItems().map(virtualRow => {
+        <div
+          style={{
+            height: rowVirtualizer.getTotalSize(),
+            position: "relative",
+          }}
+        >
+          {rowVirtualizer.getVirtualItems().map((virtualRow) => {
             const worker = filteredWorkers[virtualRow.index];
+
             return (
               <div
-                key={worker?.workerId || virtualRow.index}
+                key={worker?._id || virtualRow.index}
                 ref={virtualRow.measureRef}
                 style={{
                   position: "absolute",
@@ -145,19 +198,53 @@ const TableForAllWorkers = ({ axiosSecure }) => {
                   left: 0,
                   width: "100%",
                   height: virtualRow.size,
-                  transform: `translateY(${virtualRow.start}px)`
+                  transform: `translateY(${virtualRow.start}px)`,
                 }}
-                className="py-2 border-b px-4"
+                className="grid grid-cols-6 gap-4 px-4 py-3 border-b items-center  hover:bg-gray-800"
               >
-                {worker?.workerId} - {worker?.name}
+                <div>{worker?.workerId}</div>
+                <div>{worker?.name}</div>
+                <div>{worker?.department}</div>
+                <div>{worker?.designation}</div>
+
+                <div>
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${worker?.status === "Active"
+                      ? "bg-green-100 text-green-700"
+                      : worker?.status === "On Leave"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : worker?.status === "Resigned"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-gray-100 text-gray-700"
+                      }`}
+                  >
+                    {worker?.status}
+                  </span>
+                </div>
+
+                <div>
+                  <button className="px-3 py-1  rounded-lg text-sm hover:bg-blue-700">
+                    View
+                  </button>
+                </div>
               </div>
             );
           })}
         </div>
       </div>
 
-      {loading && <p className="text-center mt-2 text-gray-500">Loading more workers...</p>}
-      {!hasMore && <p className="text-center mt-2 text-gray-500">All workers loaded ({total})</p>}
+      {/* Footer */}
+      {loading && (
+        <p className="text-center text-gray-500">
+          Loading more workers...
+        </p>
+      )}
+
+      {!hasMore && (
+        <p className="text-center text-gray-500">
+          All workers loaded ({total})
+        </p>
+      )}
     </div>
   );
 };
