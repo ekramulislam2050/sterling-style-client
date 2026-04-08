@@ -264,12 +264,12 @@ const TableForAllWorkers = ({
                   <div>
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${worker?.status === "Active"
-                          ? "bg-green-100 text-green-700"
-                          : worker?.status === "On Leave"
-                            ? "bg-yellow-100 text-yellow-700"
-                            : worker?.status === "Resigned"
-                              ? "bg-red-100 text-red-700"
-                              : "bg-gray-100 text-gray-700"
+                        ? "bg-green-100 text-green-700"
+                        : worker?.status === "On Leave"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : worker?.status === "Resigned"
+                            ? "bg-red-100 text-red-700"
+                            : "bg-gray-100 text-gray-700"
                         }`}
                     >
                       {worker?.status}
@@ -288,62 +288,9 @@ const TableForAllWorkers = ({
         </div>
       </div>
 
-      {/* sticky bottom action bar */}
-      <div className="sticky bottom-0 z-20 bg-gray-900 border rounded-xl px-4 py-3 shadow-lg">
-        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-3">
-          <p className="text-sm font-medium">
-            {selectedWorkers.length} worker
-            {selectedWorkers.length !== 1 ? "s" : ""} selected
-          </p>
-
-          <div className="grid grid-cols-2 lg:flex gap-3">
-            <button
-              onClick={clearSelection}
-              disabled={selectedWorkers.length === 0}
-              className={`px-4 py-2 rounded-lg text-white ${selectedWorkers.length === 0
-                  ? "bg-gray-600 cursor-not-allowed opacity-50"
-                  : "bg-gray-700"
-                }`}
-            >
-              Clear
-            </button>
-
-            <button
-              disabled={selectedWorkers.length === 0}
-              className={`px-4 py-2 rounded-lg text-white ${selectedWorkers.length === 0
-                  ? "bg-green-500 cursor-not-allowed opacity-50"
-                  : "bg-green-700"
-                }`}
-            >
-              Attendance
-            </button>
-
-            <button
-              disabled={selectedWorkers.length === 0}
-              className={`px-4 py-2 rounded-lg text-white ${selectedWorkers.length === 0
-                  ? "bg-indigo-500 cursor-not-allowed opacity-50"
-                  : "bg-indigo-700"
-                }`}
-            >
-              Assign
-            </button>
-
-            <button
-              disabled={selectedWorkers.length === 0}
-              className={`px-4 py-2 rounded-lg text-white ${selectedWorkers.length === 0
-                  ? "bg-blue-500 cursor-not-allowed opacity-50"
-                  : "bg-blue-700"
-                }`}
-            >
-              Export
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* footer */}
       {loading && (
-        <p className="text-center text-gray-500">
+        <p className="text-center text-gray-400">
           Loading more workers...
         </p>
       )}
@@ -353,6 +300,137 @@ const TableForAllWorkers = ({
           All workers loaded ({total})
         </p>
       )}
+
+
+
+      {/* bottom action bar */}
+      <div className="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-2xl px-3 sm:px-4 lg:px-6 py-3 shadow-xl">
+        <div className="flex flex-col gap-4">
+
+          {/* top info section */}
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+            <p className="text-sm font-medium text-white">
+              {selectedWorkers.length} worker
+              {selectedWorkers.length !== 1 ? "s" : ""} selected
+            </p>
+
+            <button
+              onClick={clearSelection}
+              disabled={selectedWorkers.length === 0}
+              className={`px-3 py-1.5 rounded-md text-xs font-medium text-white transition-all duration-200 ${selectedWorkers.length === 0
+                ? "bg-gray-600 cursor-not-allowed opacity-50"
+                : "bg-gray-700 hover:bg-gray-600"
+                }`}
+            >
+              Clear Selection
+            </button>
+          </div>
+
+          {/* action groups */}
+          <div className="flex  xl:flex-row justify-between gap-4 ">
+
+            {/* HR actions */}
+            <div className="border border-gray-700 rounded-xl p-3">
+              <h3 className="text-sm font-semibold text-green-400 mb-2">
+                HR Actions
+              </h3>
+
+              <div className="flex flex-wrap gap-2">
+                <button
+                  disabled={selectedWorkers.length === 0}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium text-white transition-all ${selectedWorkers.length === 0
+                    ? "bg-green-500 opacity-50 cursor-not-allowed"
+                    : "bg-green-700 hover:bg-green-600"
+                    }`}
+                >
+                  Attendance
+                </button>
+
+                <button
+                  disabled={selectedWorkers.length === 0}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium text-white transition-all ${selectedWorkers.length === 0
+                    ? "bg-blue-500 opacity-50 cursor-not-allowed"
+                    : "bg-blue-700 hover:bg-blue-600"
+                    }`}
+                >
+                  Export
+                </button>
+
+                <button
+                  disabled={selectedWorkers.length === 0}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium text-white transition-all ${selectedWorkers.length === 0
+                    ? "bg-yellow-500 opacity-50 cursor-not-allowed"
+                    : "bg-yellow-700 hover:bg-yellow-600"
+                    }`}
+                >
+                  Transfer
+                </button>
+
+                <button
+                  disabled={selectedWorkers.length === 0}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium text-white transition-all ${selectedWorkers.length === 0
+                    ? "bg-purple-500 opacity-50 cursor-not-allowed"
+                    : "bg-purple-700 hover:bg-purple-600"
+                    }`}
+                >
+                  Payroll
+                </button>
+              </div>
+            </div>
+
+            {/* Production actions */}
+            <div className="border border-gray-700 rounded-xl p-3">
+              <h3 className="text-sm font-semibold text-indigo-400 mb-2">
+                Production Actions
+              </h3>
+
+              <div className="flex flex-wrap gap-2">
+                <button
+                  disabled={selectedWorkers.length === 0}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium text-white transition-all ${selectedWorkers.length === 0
+                    ? "bg-indigo-500 opacity-50 cursor-not-allowed"
+                    : "bg-indigo-700 hover:bg-indigo-600"
+                    }`}
+                >
+                  Assign Line
+                </button>
+
+                <button
+                  disabled={selectedWorkers.length === 0}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium text-white transition-all ${selectedWorkers.length === 0
+                    ? "bg-pink-500 opacity-50 cursor-not-allowed"
+                    : "bg-pink-700 hover:bg-pink-600"
+                    }`}
+                >
+                  Assign Order
+                </button>
+
+                <button
+                  disabled={selectedWorkers.length === 0}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium text-white transition-all ${selectedWorkers.length === 0
+                    ? "bg-teal-500 opacity-50 cursor-not-allowed"
+                    : "bg-teal-700 hover:bg-teal-600"
+                    }`}
+                >
+                  Shift
+                </button>
+
+                <button
+                  disabled={selectedWorkers.length === 0}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium text-white transition-all ${selectedWorkers.length === 0
+                    ? "bg-sky-600 opacity-50 cursor-not-allowed"
+                    : "bg-sky-800 hover:bg-sky-600"
+                    }`}
+                >
+                  Supervisor
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   );
 };
