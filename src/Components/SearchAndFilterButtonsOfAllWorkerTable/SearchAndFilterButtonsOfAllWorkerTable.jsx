@@ -1,6 +1,6 @@
 import { FiSearch } from "react-icons/fi";
 
-const SearchAndFilterButtonsOfAllWorkerTable = ({ searchInputRef, searchTerm, handleSearchKey, handleSearchClick }) => {
+const SearchAndFilterButtonsOfAllWorkerTable = ({ searchInputRef, searchTerm, handleSearchKey, handleSearchClick,setSearchTerm }) => {
     return (
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
             <div className="relative w-full lg:w-1/2">

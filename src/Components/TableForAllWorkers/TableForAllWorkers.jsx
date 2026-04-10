@@ -160,9 +160,10 @@ const TableForAllWorkers = ({
       <SearchAndFilterButtonsOfAllWorkerTable
         searchInputRef={searchInputRef}
         searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
         handleSearchKey={handleSearchKey}
         handleSearchClick={handleSearchClick}
-      ></SearchAndFilterButtonsOfAllWorkerTable>
+      />
 
       {/* table wrapper-------------------------*/}
       <div className="overflow-x-auto">
@@ -173,6 +174,9 @@ const TableForAllWorkers = ({
         <WorkerListOfAllWorkerTable
           parentRef={parentRef}
           rowVirtualizer={rowVirtualizer}
+          filteredWorkers={filteredWorkers}
+          selectedWorkers={selectedWorkers}
+          toggleWorkerSelection={toggleWorkerSelection}
         ></WorkerListOfAllWorkerTable>
       </div>
 

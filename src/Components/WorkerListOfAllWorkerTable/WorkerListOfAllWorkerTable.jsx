@@ -1,6 +1,10 @@
-
-
-const WorkerListOfAllWorkerTable = ({ parentRef, rowVirtualizer }) => {
+const WorkerListOfAllWorkerTable = ({
+    parentRef,
+    rowVirtualizer,
+    filteredWorkers,
+    selectedWorkers,
+    toggleWorkerSelection,
+}) => {
     return (
         <div
             ref={parentRef}
@@ -16,9 +20,11 @@ const WorkerListOfAllWorkerTable = ({ parentRef, rowVirtualizer }) => {
                 {rowVirtualizer.getVirtualItems().map((virtualRow) => {
                     const worker = filteredWorkers[virtualRow.index];
 
+                    if (!worker) return null;
+
                     return (
                         <div
-                            key={worker?._id || virtualRow.index}
+                            key={worker._id}
                             ref={virtualRow.measureRef}
                             style={{
                                 position: "absolute",
@@ -33,31 +39,31 @@ const WorkerListOfAllWorkerTable = ({ parentRef, rowVirtualizer }) => {
                             <div>
                                 <input
                                     type="checkbox"
-                                    checked={selectedWorkers.includes(worker?._id)}
+                                    checked={selectedWorkers.includes(worker._id)}
                                     onChange={() =>
-                                        toggleWorkerSelection(worker?._id)
+                                        toggleWorkerSelection(worker._id)
                                     }
                                     className="w-4 h-4 cursor-pointer"
                                 />
                             </div>
 
-                            <div>{worker?.workerId}</div>
-                            <div>{worker?.name}</div>
-                            <div>{worker?.department}</div>
-                            <div>{worker?.designation}</div>
+                            <div>{worker.workerId}</div>
+                            <div>{worker.name}</div>
+                            <div>{worker.department}</div>
+                            <div>{worker.designation}</div>
 
                             <div>
                                 <span
-                                    className={`px-3 py-1 rounded-full text-xs font-medium ${worker?.status === "Active"
-                                        ? "bg-green-100 text-green-700"
-                                        : worker?.status === "On Leave"
-                                            ? "bg-yellow-100 text-yellow-700"
-                                            : worker?.status === "Resigned"
-                                                ? "bg-red-100 text-red-700"
-                                                : "bg-gray-100 text-gray-700"
+                                    className={`px-3 py-1 rounded-full text-xs font-medium ${worker.status === "Active"
+                                            ? "bg-green-100 text-green-700"
+                                            : worker.status === "On Leave"
+                                                ? "bg-yellow-100 text-yellow-700"
+                                                : worker.status === "Resigned"
+                                                    ? "bg-red-100 text-red-700"
+                                                    : "bg-gray-100 text-gray-700"
                                         }`}
                                 >
-                                    {worker?.status}
+                                    {worker.status}
                                 </span>
                             </div>
 

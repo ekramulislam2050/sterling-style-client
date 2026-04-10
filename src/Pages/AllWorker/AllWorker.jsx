@@ -27,14 +27,6 @@ const AllWorker = () => {
 
   return (
     <div className="p-6 pt-30">
-      {/* Header */}
-      <div className="flex justify-end items-center mb-6">
-
-
-
-      </div>
-
-     
 
       {/* Workers table */}
       <TableForAllWorkers
