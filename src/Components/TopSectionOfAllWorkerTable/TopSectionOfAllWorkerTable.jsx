@@ -27,9 +27,7 @@ const TopSectionOfAllWorkerTable = ({ total, canImport, handleImportWorkers, loa
                     )}
                 </div>
 
-                <button className="px-4 py-2 rounded-lg bg-indigo-700 text-white">
-                    Assign to Line / Order
-                </button>
+               
             </div>
         </div>
     );
