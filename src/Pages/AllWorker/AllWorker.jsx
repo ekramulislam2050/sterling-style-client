@@ -12,7 +12,7 @@ const AllWorker = () => {
   const [message, setMessage] = useState("");
   const isHr = true;
   const isAdmin = true;
-  console.log("total====", total)
+
   const canImport = isHr || isAdmin;
 
   const handleImportWorkers = async () => {
@@ -31,7 +31,7 @@ const AllWorker = () => {
   };
 
 
-  //all workers----------
+  //get  all workers----------
   const fetchWorkers = async () => {
     try {
       const res = await axiosSecure.get("/api/getAllWorkersData")
@@ -76,13 +76,7 @@ const AllWorker = () => {
         </div>
       </div>
       {/* Workers table */}
-      <TableForAllWorkers
-        axiosSecure={axiosSecure}
-        handleImportWorkers={handleImportWorkers}
-        loadingImport={loadingImport}
-        canImport={canImport}
-        message={message}
-      />
+      <TableForAllWorkers/>
     </div>
   );
 };

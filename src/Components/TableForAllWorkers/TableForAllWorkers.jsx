@@ -7,18 +7,14 @@ import HrAndProductionsActionButtons from "../HrAndProductionsActionButtons/HrAn
 import HeaderOfAllWorkersTable from "../HeaderOfAllWorkersTable/HeaderOfAllWorkersTable";
 import WorkerListOfAllWorkerTable from "../WorkerListOfAllWorkerTable/WorkerListOfAllWorkerTable";
 import SearchAndFilterButtonsOfAllWorkerTable from "../SearchAndFilterButtonsOfAllWorkerTable/SearchAndFilterButtonsOfAllWorkerTable";
-import TopSectionOfAllWorkerTable from "../TopSectionOfAllWorkerTable/TopSectionOfAllWorkerTable";
+
 import FooterOfAllWorkerTable from "../FooterOfAllWorkerTable/FooterOfAllWorkerTable";
+import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
 
 const PAGE_LIMIT = 50;
 
-const TableForAllWorkers = ({
-  axiosSecure,
-  canImport,
-  loadingImport,
-  handleImportWorkers,
-  message,
-}) => {
+const TableForAllWorkers = () => {
+  const axiosSecure = useAxiosSecure()
   const [selectedWorkers, setSelectedWorkers] = useState([]);
   const [workers, setWorkers] = useState([]);
   const [page, setPage] = useState(1);
@@ -144,14 +140,6 @@ const TableForAllWorkers = ({
 
   return (
     <div className="space-y-4">
-      {/* top section------------------------ */}
-      <TopSectionOfAllWorkerTable
-        total={total}
-        canImport={canImport}
-        handleImportWorkers={handleImportWorkers}
-        loadingImport={loadingImport}
-        message={message}
-      ></TopSectionOfAllWorkerTable>
 
       {/* summary------------------------------ */}
       <SummaryCardOfAllWorkers />
