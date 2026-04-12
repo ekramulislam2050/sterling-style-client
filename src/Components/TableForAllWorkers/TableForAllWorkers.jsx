@@ -22,7 +22,6 @@ const TableForAllWorkers = () => {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [hasMore, setHasMore] = useState(true);
-
   const parentRef = useRef(null);
   const searchInputRef = useRef(null);
 
@@ -142,7 +141,10 @@ const TableForAllWorkers = () => {
     <div className="space-y-4">
 
       {/* summary------------------------------ */}
-      <SummaryCardOfAllWorkers />
+      <SummaryCardOfAllWorkers
+        workers={workers}
+        total={total}
+      />
 
       {/* search section------------------------*/}
       <SearchAndFilterButtonsOfAllWorkerTable
