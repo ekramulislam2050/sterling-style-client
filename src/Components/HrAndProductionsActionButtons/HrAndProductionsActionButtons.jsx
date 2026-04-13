@@ -1,6 +1,12 @@
 
 
-const HrAndProductionsActionButtons = ({clearSelection,selectedWorkers}) => {
+const HrAndProductionsActionButtons = ({selectedWorkers,setSelectedWorkers}) => {
+    
+    // clear selected worker-----------
+     const clearSelection = () => {
+        setSelectedWorkers([]);
+      };
+    
     return (
         <div className="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-2xl px-3 sm:px-4 lg:px-6 py-3 shadow-xl mt-10">
             <div className="flex flex-col gap-4">

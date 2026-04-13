@@ -1,10 +1,66 @@
+import { useEffect, useMemo, useRef } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
+
 const WorkerListOfAllWorkerTable = ({
-    parentRef,
-    rowVirtualizer,
-    filteredWorkers,
+    workers,
+    searchTerm,
     selectedWorkers,
-    toggleWorkerSelection,
+    setSelectedWorkers,
+    hasMore,
+    loading,
+    fetchWorkers,
 }) => {
+    const parentRef = useRef(null);
+
+    // Toggle worker selection---------------
+    const toggleWorkerSelection = (workerId) => {
+        setSelectedWorkers((prev) =>
+            prev.includes(workerId)
+                ? prev.filter((id) => id !== workerId)
+                : [...prev, workerId]
+        );
+    };
+
+    // filtered worker--------------------
+    const filteredWorkers = useMemo(() => {
+        return workers.filter(
+            (w) =>
+                w.workerId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                w.name?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }, [workers, searchTerm]);
+
+    const rowVirtualizer = useVirtualizer({
+        count: filteredWorkers.length,
+        getScrollElement: () => parentRef.current,
+        estimateSize: () => 52,
+        overscan: 10,
+    });
+
+    // scrolling-------------------
+    useEffect(() => {
+        const el = parentRef.current;
+        if (!el) return;
+
+        const onScroll = () => {
+            const { scrollHeight, scrollTop, clientHeight } = el;
+
+            if (
+                scrollTop + clientHeight >= scrollHeight - 50 &&
+                hasMore &&
+                !loading
+            ) {
+                fetchWorkers();
+            }
+        };
+
+        el.addEventListener("scroll", onScroll);
+
+        return () => {
+            el.removeEventListener("scroll", onScroll);
+        };
+    }, [fetchWorkers, hasMore, loading]);
+
     return (
         <div
             ref={parentRef}
@@ -55,12 +111,12 @@ const WorkerListOfAllWorkerTable = ({
                             <div>
                                 <span
                                     className={`px-3 py-1 rounded-full text-xs font-medium ${worker.status === "Active"
-                                            ? "bg-green-100 text-green-700"
-                                            : worker.status === "On Leave"
-                                                ? "bg-yellow-100 text-yellow-700"
-                                                : worker.status === "Resigned"
-                                                    ? "bg-red-100 text-red-700"
-                                                    : "bg-gray-100 text-gray-700"
+                                        ? "bg-green-100 text-green-700"
+                                        : worker.status === "On Leave"
+                                            ? "bg-yellow-100 text-yellow-700"
+                                            : worker.status === "Resigned"
+                                                ? "bg-red-100 text-red-700"
+                                                : "bg-gray-100 text-gray-700"
                                         }`}
                                 >
                                     {worker.status}

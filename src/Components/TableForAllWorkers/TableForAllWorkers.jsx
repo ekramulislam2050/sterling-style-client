@@ -1,5 +1,5 @@
-import { useVirtualizer } from "@tanstack/react-virtual";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+ 
+import { useCallback, useEffect,useRef, useState } from "react";
 
 import "../../Css/scrollBar.css";
 import SummaryCardOfAllWorkers from "../SummaryCardOfAllWorkers/SummaryCardOfAllWorkers";
@@ -22,23 +22,11 @@ const TableForAllWorkers = () => {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [hasMore, setHasMore] = useState(true);
-  const parentRef = useRef(null);
+
+  // ref--------------------
   const searchInputRef = useRef(null);
 
-  // selection toggle
-  const toggleWorkerSelection = (workerId) => {
-    setSelectedWorkers((prev) =>
-      prev.includes(workerId)
-        ? prev.filter((id) => id !== workerId)
-        : [...prev, workerId]
-    );
-  };
-
-  const clearSelection = () => {
-    setSelectedWorkers([]);
-  };
-
-  // fetch workers
+  // fetch workers----------------------
   const fetchWorkers = useCallback(
     async (reset = false) => {
       if (loading || (!hasMore && !reset)) return;
@@ -82,60 +70,12 @@ const TableForAllWorkers = () => {
     [axiosSecure, page, loading, hasMore, searchTerm, workers.length]
   );
 
-  // initial load
+  // initial load----------------
   useEffect(() => {
     fetchWorkers(true);
   }, []);
 
-  // filtered workers
-  const filteredWorkers = useMemo(() => {
-    return workers.filter(
-      (w) =>
-        w.workerId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        w.name?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [workers, searchTerm]);
 
-  // virtualizer
-  const rowVirtualizer = useVirtualizer({
-    count: filteredWorkers.length,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => 52,
-    overscan: 10,
-  });
-
-  // infinite scroll
-  useEffect(() => {
-    const el = parentRef.current;
-    if (!el) return;
-
-    const onScroll = () => {
-      const { scrollHeight, scrollTop, clientHeight } = el;
-
-      if (
-        scrollTop + clientHeight >= scrollHeight - 50 &&
-        hasMore &&
-        !loading
-      ) {
-        fetchWorkers();
-      }
-    };
-
-    el.addEventListener("scroll", onScroll);
-
-    return () => el.removeEventListener("scroll", onScroll);
-  }, [fetchWorkers, hasMore, loading]);
-
-  // search
-  const handleSearchClick = () => {
-    fetchWorkers(true);
-  };
-
-  const handleSearchKey = (e) => {
-    if (e.key === "Enter") {
-      fetchWorkers(true);
-    }
-  };
 
   return (
     <div className="space-y-4">
@@ -151,8 +91,8 @@ const TableForAllWorkers = () => {
         searchInputRef={searchInputRef}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-        handleSearchKey={handleSearchKey}
-        handleSearchClick={handleSearchClick}
+        fetchWorkers={fetchWorkers}
+
       />
 
       {/* table wrapper-------------------------*/}
@@ -162,12 +102,15 @@ const TableForAllWorkers = () => {
 
         {/* list--------------------------------*/}
         <WorkerListOfAllWorkerTable
-          parentRef={parentRef}
-          rowVirtualizer={rowVirtualizer}
-          filteredWorkers={filteredWorkers}
+          workers={workers}
+          searchTerm={searchTerm}
           selectedWorkers={selectedWorkers}
-          toggleWorkerSelection={toggleWorkerSelection}
-        ></WorkerListOfAllWorkerTable>
+          setSelectedWorkers={setSelectedWorkers}
+          hasMore={hasMore}
+          loading={loading}
+          fetchWorkers={fetchWorkers}
+        />
+
       </div>
 
       {/* footer--------------------------------*/}
@@ -182,7 +125,7 @@ const TableForAllWorkers = () => {
       {/* bottom action bar-----------------------*/}
       <HrAndProductionsActionButtons
         selectedWorkers={selectedWorkers}
-        clearSelection={clearSelection}
+        setSelectedWorkers={setSelectedWorkers}
       ></HrAndProductionsActionButtons>
 
 
