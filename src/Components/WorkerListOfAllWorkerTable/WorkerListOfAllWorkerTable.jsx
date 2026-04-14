@@ -3,7 +3,6 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 
 const WorkerListOfAllWorkerTable = ({
     filteredWorkers,
-    searchTerm,
     selectedWorkers,
     setSelectedWorkers,
     hasMore,

@@ -133,7 +133,6 @@ const TableForAllWorkers = () => {
         {/* list--------------------------------*/}
         <WorkerListOfAllWorkerTable
           filteredWorkers={filteredWorkers}
-          searchTerm={searchTerm}
           selectedWorkers={selectedWorkers}
           setSelectedWorkers={setSelectedWorkers}
           hasMore={hasMore}
