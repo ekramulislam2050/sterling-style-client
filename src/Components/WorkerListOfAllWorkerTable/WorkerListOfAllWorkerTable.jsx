@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 
 const WorkerListOfAllWorkerTable = ({
-    workers,
+    filteredWorkers,
     searchTerm,
     selectedWorkers,
     setSelectedWorkers,
@@ -21,16 +21,7 @@ const WorkerListOfAllWorkerTable = ({
         );
     };
 
-    // filtered worker--------------------
-    const filteredWorkers = useMemo(() => {
-        return workers.filter(
-            (w) =>
-                w.workerId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                w.name?.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-    }, [workers, searchTerm]);
-
-    const rowVirtualizer = useVirtualizer({
+ const rowVirtualizer = useVirtualizer({
         count: filteredWorkers.length,
         getScrollElement: () => parentRef.current,
         estimateSize: () => 52,

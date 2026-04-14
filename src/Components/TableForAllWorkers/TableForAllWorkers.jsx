@@ -1,5 +1,5 @@
- 
-import { useCallback, useEffect,useRef, useState } from "react";
+
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import "../../Css/scrollBar.css";
 import SummaryCardOfAllWorkers from "../SummaryCardOfAllWorkers/SummaryCardOfAllWorkers";
@@ -22,6 +22,10 @@ const TableForAllWorkers = () => {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [hasMore, setHasMore] = useState(true);
+  const [selectedDepartment, setSelectedDepartment] =
+    useState("All Departments");
+  const [selectedStatus, setSelectedStatus] =
+    useState("All Status");
 
   // ref--------------------
   const searchInputRef = useRef(null);
@@ -75,10 +79,31 @@ const TableForAllWorkers = () => {
     fetchWorkers(true);
   }, []);
 
+  // filtered by allDepartment and allStatus button----------
+  const filteredWorkers = useMemo(() => {
+    return workers.filter((worker) => {
+      const departmentMatch =
+        selectedDepartment === "All Departments" ||
+        worker.department === selectedDepartment;
 
+      const statusMatch =
+        selectedStatus === "All Status" ||
+        worker.status === selectedStatus;
+
+      const searchMatch =
+        worker.workerId
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        worker.name
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase());
+
+      return departmentMatch && statusMatch && searchMatch;
+    });
+  }, [workers, selectedDepartment, selectedStatus, searchTerm]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 mt-2">
 
       {/* summary------------------------------ */}
       <SummaryCardOfAllWorkers
@@ -87,12 +112,17 @@ const TableForAllWorkers = () => {
       />
 
       {/* search section------------------------*/}
+
       <SearchAndFilterButtonsOfAllWorkerTable
         searchInputRef={searchInputRef}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         fetchWorkers={fetchWorkers}
-
+        workers={workers}
+        selectedDepartment={selectedDepartment}
+        setSelectedDepartment={setSelectedDepartment}
+        selectedStatus={selectedStatus}
+        setSelectedStatus={setSelectedStatus}
       />
 
       {/* table wrapper-------------------------*/}
@@ -102,7 +132,7 @@ const TableForAllWorkers = () => {
 
         {/* list--------------------------------*/}
         <WorkerListOfAllWorkerTable
-          workers={workers}
+          filteredWorkers={filteredWorkers}
           searchTerm={searchTerm}
           selectedWorkers={selectedWorkers}
           setSelectedWorkers={setSelectedWorkers}

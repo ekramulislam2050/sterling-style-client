@@ -1,8 +1,20 @@
 import { FiSearch } from "react-icons/fi";
+import { useMemo } from "react";
 
-const SearchAndFilterButtonsOfAllWorkerTable = ({ searchInputRef, searchTerm, fetchWorkers, setSearchTerm }) => {
+const SearchAndFilterButtonsOfAllWorkerTable = ({
+    searchInputRef,
+    searchTerm,
+    fetchWorkers,
+    setSearchTerm,
+    workers = [],
+    selectedDepartment,
+    setSelectedDepartment,
+    selectedStatus,
+    setSelectedStatus,
+}) => {
 
-    // search---------------------
+
+    // search
     const handleSearchClick = () => {
         fetchWorkers(true);
     };
@@ -11,7 +23,32 @@ const SearchAndFilterButtonsOfAllWorkerTable = ({ searchInputRef, searchTerm, fe
         if (e.key === "Enter") {
             fetchWorkers(true);
         }
-    }
+    };
+
+    // dynamic departments
+    const departments = useMemo(() => {
+        return [
+            "All Departments",
+            ...new Set(
+                workers
+                    .map((worker) => worker.department)
+                    .filter(Boolean)
+            ),
+        ];
+    }, [workers]);
+
+    // dynamic status
+    const statuses = useMemo(() => {
+        return [
+            "All Status",
+            ...new Set(
+                workers
+                    .map((worker) => worker.status)
+                    .filter(Boolean)
+            ),
+        ];
+    }, [workers]);
+
     return (
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
             <div className="relative w-full lg:w-1/2">
@@ -33,12 +70,35 @@ const SearchAndFilterButtonsOfAllWorkerTable = ({ searchInputRef, searchTerm, fe
             </div>
 
             <div className="flex flex-wrap gap-3">
-                <button className="px-4 py-2 rounded-lg text-white bg-pink-800">
-                    All Departments
-                </button>
-                <button className="px-4 py-2 rounded-lg text-white bg-sky-800">
-                    All Status
-                </button>
+                {/* department */}
+                <select
+                    value={selectedDepartment}
+                    onChange={(e) =>
+                        setSelectedDepartment(e.target.value)
+                    }
+                    className="px-4 py-2 rounded-lg bg-pink-800 text-white outline-none"
+                >
+                    {departments.map((dept, index) => (
+                        <option key={index} value={dept}>
+                            {dept}
+                        </option>
+                    ))}
+                </select>
+
+                {/* status */}
+                <select
+                    value={selectedStatus}
+                    onChange={(e) =>
+                        setSelectedStatus(e.target.value)
+                    }
+                    className="px-4 py-2 rounded-lg bg-sky-800 text-white outline-none"
+                >
+                    {statuses.map((status, index) => (
+                        <option key={index} value={status}>
+                            {status}
+                        </option>
+                    ))}
+                </select>
             </div>
         </div>
     );
