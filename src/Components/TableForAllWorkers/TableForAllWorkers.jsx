@@ -106,10 +106,7 @@ const TableForAllWorkers = () => {
     <div className="space-y-4 mt-2">
 
       {/* summary------------------------------ */}
-      <SummaryCardOfAllWorkers
-        workers={workers}
-        total={total}
-      />
+      <SummaryCardOfAllWorkers/>
 
       {/* search section------------------------*/}
 
@@ -148,8 +145,6 @@ const TableForAllWorkers = () => {
         hasMore={hasMore}
         total={total}
       ></FooterOfAllWorkerTable>
-
-
 
       {/* bottom action bar-----------------------*/}
       <HrAndProductionsActionButtons

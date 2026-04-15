@@ -6,40 +6,36 @@ import {
     FiUserX,
     FiUserMinus,
 } from "react-icons/fi";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
 
-const SummaryCardOfAllWorkers = ({ workers = [], total = 0 }) => {
+const SummaryCardOfAllWorkers = () => {
+    const axiosSecure = useAxiosSecure();
+    const [summary, setSummary] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchSummary = async () => {
+            try {
+                const res = await axiosSecure.get("/api/getWorkersSummary");
+                setSummary(res.data);
+            } catch (error) {
+                console.error("Summary fetch error:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSummary();
+    }, [axiosSecure]);
+
     const summaryData = useMemo(() => {
-        const activeWorkers = workers.filter(
-            (worker) =>
-                worker.status?.trim().toLowerCase() === "active"
-        ).length;
-
-        const onLeave = workers.filter(
-            (worker) =>
-                worker.status?.trim().toLowerCase() === "on leave"
-        ).length;
-
-        const inactiveWorkers = workers.filter(
-            (worker) =>
-                worker.status?.trim().toLowerCase() === "inactive"
-        ).length;
-
-        const resignedWorkers = workers.filter(
-            (worker) =>
-                worker.status?.trim().toLowerCase() === "resigned"
-        ).length;
-
-        const departments = new Set(
-            workers
-                .map((worker) => worker.department?.trim())
-                .filter(Boolean)
-        ).size;
+        if (!summary) return [];
 
         return [
             {
                 title: "Total Workers",
-                value: total,
+                value: summary.total,
                 icon: FiUsers,
                 bg: "bg-blue-900",
                 iconBg: "bg-blue-800",
@@ -47,7 +43,7 @@ const SummaryCardOfAllWorkers = ({ workers = [], total = 0 }) => {
             },
             {
                 title: "Active",
-                value: activeWorkers,
+                value: summary.active,
                 icon: FiCheckCircle,
                 bg: "bg-green-900",
                 iconBg: "bg-green-800",
@@ -55,7 +51,7 @@ const SummaryCardOfAllWorkers = ({ workers = [], total = 0 }) => {
             },
             {
                 title: "On Leave",
-                value: onLeave,
+                value: summary.onLeave,
                 icon: FiClock,
                 bg: "bg-yellow-900",
                 iconBg: "bg-yellow-800",
@@ -63,7 +59,7 @@ const SummaryCardOfAllWorkers = ({ workers = [], total = 0 }) => {
             },
             {
                 title: "Inactive",
-                value: inactiveWorkers,
+                value: summary.inactive,
                 icon: FiUserMinus,
                 bg: "bg-gray-800",
                 iconBg: "bg-gray-700",
@@ -71,7 +67,7 @@ const SummaryCardOfAllWorkers = ({ workers = [], total = 0 }) => {
             },
             {
                 title: "Resigned",
-                value: resignedWorkers,
+                value: summary.resigned,
                 icon: FiUserX,
                 bg: "bg-red-900",
                 iconBg: "bg-red-800",
@@ -79,14 +75,18 @@ const SummaryCardOfAllWorkers = ({ workers = [], total = 0 }) => {
             },
             {
                 title: "Departments",
-                value: departments,
+                value: summary.departments,
                 icon: FiGrid,
                 bg: "bg-purple-900",
                 iconBg: "bg-purple-800",
                 iconColor: "text-purple-400",
             },
         ];
-    }, [workers, total]);
+    }, [summary]);
+
+    if (loading) {
+        return <p className="text-white">Loading summary...</p>;
+    }
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
