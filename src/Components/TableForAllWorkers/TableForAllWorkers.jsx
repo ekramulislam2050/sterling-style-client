@@ -106,7 +106,7 @@ const TableForAllWorkers = () => {
     <div className="space-y-4 mt-2">
 
       {/* summary------------------------------ */}
-      <SummaryCardOfAllWorkers/>
+      <SummaryCardOfAllWorkers />
 
       {/* search section------------------------*/}
 

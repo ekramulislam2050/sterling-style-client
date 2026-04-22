@@ -20,6 +20,7 @@ const Production =lazy(()=>import('../Pages/Productions/Productions'))
 const Inventory=lazy(()=>import("../Pages/Inventory/Inventory"))
 const Hr=lazy(()=>import("../Pages/Hr/Hr"))
 const AllWorker=lazy(()=>import("../Pages/AllWorker/AllWorker"))
+const Attendance=lazy(()=>import("../Pages/Attendance/Attendance"))
 
 // skeleton-component------------------
 const PageSkeleton = () => {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
       {
         path:"/allWorker",
         element:<WithSuspense Component={AllWorker}></WithSuspense>
+      },
+      {
+        path:"/attendance",
+        element:<WithSuspense Component={Attendance}></WithSuspense>
       }
 
     ]
