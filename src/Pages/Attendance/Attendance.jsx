@@ -1,16 +1,14 @@
-import { useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
-import ErrMsg from "../../SuccessAndErrMsg/ErrMsg/ErrMsg";
-
+ 
 const PAGE_SIZE = 50;
 
 const Attendance = () => {
     const axiosSecure = useAxiosSecure();
     const parentRef = useRef();
 
-    // 🔥 infinite query
     const {
         data,
         fetchNextPage,
@@ -26,47 +24,128 @@ const Attendance = () => {
             );
             return res.data;
         },
-        getNextPageParam: (lastPage) => {
-            return lastPage.page < lastPage.totalPages
+        getNextPageParam: (lastPage) =>
+            lastPage.page < lastPage.totalPages
                 ? lastPage.page + 1
-                : undefined;
-        },
+                : undefined,
     });
 
-    // 🔥 flatten data
-    const items = data?.pages.flatMap((p) => p.data) || [];
+    const items = useMemo(
+        () => data?.pages?.flatMap((p) => p.data) || [],
+        [data]
+    );
 
-    // 🔥 virtualizer
+
     const virtualizer = useVirtualizer({
-        count: hasNextPage ? items.length + 1 : items.length,
+        count: items.length,
         getScrollElement: () => parentRef.current,
         estimateSize: () => 60,
         overscan: 10,
     });
 
-    // 🔥 load more on scroll end
     const virtualItems = virtualizer.getVirtualItems();
 
-    const lastItem = virtualItems[virtualItems.length - 1];
+    useEffect(() => {
+        const last = virtualItems.at(-1);
 
-    if (lastItem?.index >= items.length - 1 && hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-    }
+        if (
+            last &&
+            last.index >= items.length - 5 &&
+            hasNextPage &&
+            !isFetchingNextPage
+        ) {
+            fetchNextPage();
+        }
+    }, [virtualItems, items.length, hasNextPage, isFetchingNextPage]);
 
-    if (isLoading) return <p>Loading...</p>;
-    if (isError) return <p>Error loading data</p>;
+    if (isLoading) return <p className="p-4">Loading...</p>;
+    if (isError) return <p className="p-4 text-red-500">Error loading data</p>;
+
+    // =========================
+    // 🎨 STATUS COLOR FUNCTION
+    // =========================
+    const getStatusStyle = (status) => {
+        switch (status) {
+            case "present":
+                return "bg-green-300 text-green-800 border border-green-300";
+
+            case "absent":
+                return "bg-red-300 text-red-800 border border-red-300";
+
+            case "late":
+                return "bg-yellow-200 text-yellow-800 border border-yellow-300";
+
+            case "leave":
+                return "bg-blue-300 text-blue-800 border border-blue-300";
+
+            default:
+                return "bg-gray-200 text-gray-800 border border-gray-300";
+        }
+    };
 
     return (
-        <div>
-            <h1>Attendance</h1>
+        <div className="pt-28 px-4 space-y-4">
 
-            {/* scroll container */}
+            {/* =========================
+                📊 HEADER
+            ========================= */}
+            <div className="flex justify-between items-center">
+                <h1 className="text-2xl font-bold">Attendance Dashboard</h1>
+                <p className="text-sm text-gray-100  ">
+                    Total Record Of per page : {items.length}
+                </p>
+               
+            </div>
+
+            {/* =========================
+                📊 SUMMARY CARDS
+            ========================= */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="p-3 bg-green-700 rounded-lg shadow-sm">
+                    <p className="text-sm text-gray-100">Present</p>
+                    <p className="text-xl font-bold text-green-100">
+                        {items.filter(i => i.status === "Present").length}
+                    </p>
+                </div>
+
+                <div className="p-3 bg-red-700 rounded-lg shadow-sm">
+                    <p className="text-sm text-gray-100">Absent</p>
+                    <p className="text-xl font-bold text-red-100">
+                        {items.filter(i => i.status === "Absent").length}
+                    </p>
+                </div>
+
+                <div className="p-3 bg-yellow-700 rounded-lg shadow-sm">
+                    <p className="text-sm text-gray-100">Late</p>
+                    <p className="text-xl font-bold text-yellow-100">
+                        {items.filter(i => i.status === "Late").length}
+                    </p>
+                </div>
+
+                <div className="p-3 bg-blue-800 rounded-lg shadow-sm">
+                    <p className="text-sm text-gray-100">Leave</p>
+                    <p className="text-xl font-bold text-blue-100">
+                        {items.filter(i => i.status === "Leave").length}
+                    </p>
+                </div>
+            </div>
+
+            {/* =========================
+                📋 TABLE HEADER
+            ========================= */}
+            <div className="grid grid-cols-4 p-3 rounded-md font-semibold text-sm">
+                <span>Worker ID</span>
+                <span>In Time</span>
+                <span>Status</span>
+                <span>Out Time</span>
+            </div>
+
+            {/* =========================
+                📜 VIRTUAL LIST
+            ========================= */}
             <div
                 ref={parentRef}
-                style={{
-                    height: "500px",
-                    overflow: "auto",
-                }}
+                className="h-[500px] overflow-auto border rounded-md custom-scrollbar"
             >
                 <div
                     style={{
@@ -75,8 +154,6 @@ const Attendance = () => {
                     }}
                 >
                     {virtualItems.map((virtualRow) => {
-                        const isLoaderRow = virtualRow.index >= items.length;
-
                         const item = items[virtualRow.index];
 
                         return (
@@ -89,20 +166,36 @@ const Attendance = () => {
                                     width: "100%",
                                     transform: `translateY(${virtualRow.start}px)`,
                                 }}
-                                className="border-b p-2"
+                                className="grid grid-cols-4 px-3 py-2 border-b hover:bg-gray-700 text-sm items-center"
                             >
-                                {isLoaderRow ? (
-                                    <p>Loading more...</p>
-                                ) : (
-                                    <>
-                                        <p>{item.workerId}</p>
-                                        <p>{item.status}</p>
-                                    </>
-                                )}
+                                <span className="font-medium">
+                                    {item.workerId}
+                                </span>
+
+                                <span>{item.inTime || "-"}</span>
+
+                                <span>
+                                    <span
+                                        className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusStyle(
+                                            item.status
+                                        )}`}
+                                    >
+                                        {item.status}
+                                    </span>
+                                </span>
+
+                                <span>{item.outTime || "-"}</span>
                             </div>
                         );
                     })}
                 </div>
+
+                {/* LOADING MORE */}
+                {isFetchingNextPage && (
+                    <div className="p-2 text-center text-gray-500 text-sm">
+                        Loading more attendance...
+                    </div>
+                )}
             </div>
         </div>
     );
