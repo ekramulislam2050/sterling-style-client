@@ -85,7 +85,7 @@ const SummaryCardOfAllWorkers = () => {
     }, [summary]);
 
     if (loading) {
-        return <p className="text-white">Loading summary...</p>;
+        return <p className="text-red-500 text-center">Loading summary................. <span className="loading loading-ring loading-xl"></span></p>;
     }
 
     return (

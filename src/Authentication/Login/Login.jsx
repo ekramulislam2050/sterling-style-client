@@ -40,7 +40,7 @@ const Login = () => {
 
     }
     return (
-        <div className="hero  min-h-screen py-5">
+        <div className="hero  pb-5 pt-25">
             <div className="card  w-full max-w-sm shrink-0 shadow-2xl border border-blue-400">
                 <div className="card-body">
                     {/* heading */}

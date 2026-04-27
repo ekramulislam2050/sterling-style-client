@@ -2,7 +2,7 @@ import { useEffect, useRef, useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
- 
+import "../../Css/rotateBorder.css"
 const PAGE_SIZE = 50;
 
 const Attendance = () => {
@@ -35,7 +35,7 @@ const Attendance = () => {
         [data]
     );
 
-
+    console.log("data", data)
     const virtualizer = useVirtualizer({
         count: items.length,
         getScrollElement: () => parentRef.current,
@@ -58,7 +58,7 @@ const Attendance = () => {
         }
     }, [virtualItems, items.length, hasNextPage, isFetchingNextPage]);
 
-    if (isLoading) return <p className="p-4">Loading...</p>;
+    if (isLoading) return <p className="p-4">Loading...........</p>;
     if (isError) return <p className="p-4 text-red-500">Error loading data</p>;
 
     // =========================
@@ -91,10 +91,26 @@ const Attendance = () => {
             ========================= */}
             <div className="flex justify-between items-center">
                 <h1 className="text-2xl font-bold">Attendance Dashboard</h1>
-                <p className="text-sm text-gray-100  ">
-                    Total Record Of per page : {items.length}
-                </p>
-               
+                <div>
+                    {
+                        data.pages?.map((pages, idx) => <div key={idx} className="relative">
+                            <div className="px-2 py-1">
+                                <span className="text-blue-300 font-semibold">Page : {pages.page}</span>
+                                <span className="text-green-300 mx-1 font-semibold">
+                                    <span className="pr-1 text-xl text-yellow-300">&#8594;</span>
+                                    Records : {pages.data.length}
+                                    <span className="pl-1 text-xl text-yellow-300">&#8594;</span>
+                                </span>
+                                <span className="text-red-400 font-semibold"> Total : {pages.total} </span>
+                            </div>
+                            {/* Rotating Border----------------- */}
+                            <span className="absolute inset-0 rounded-xl border-2 border-cyan-400 
+        animate-rotate-border"></span>
+
+                        </div>)
+                    }
+                </div>
+
             </div>
 
             {/* =========================
@@ -104,28 +120,28 @@ const Attendance = () => {
                 <div className="p-3 bg-green-700 rounded-lg shadow-sm">
                     <p className="text-sm text-gray-100">Present</p>
                     <p className="text-xl font-bold text-green-100">
-                        {items.filter(i => i.status === "Present").length}
+                        {items.filter(i => i.status?.toLowerCase() === "present").length}
                     </p>
                 </div>
 
                 <div className="p-3 bg-red-700 rounded-lg shadow-sm">
                     <p className="text-sm text-gray-100">Absent</p>
                     <p className="text-xl font-bold text-red-100">
-                        {items.filter(i => i.status === "Absent").length}
+                        {items.filter(i => i.status?.toLowerCase() === "absent").length}
                     </p>
                 </div>
 
                 <div className="p-3 bg-yellow-700 rounded-lg shadow-sm">
                     <p className="text-sm text-gray-100">Late</p>
                     <p className="text-xl font-bold text-yellow-100">
-                        {items.filter(i => i.status === "Late").length}
+                        {items.filter(i => i.status?.toLowerCase() === "late").length}
                     </p>
                 </div>
 
                 <div className="p-3 bg-blue-800 rounded-lg shadow-sm">
                     <p className="text-sm text-gray-100">Leave</p>
                     <p className="text-xl font-bold text-blue-100">
-                        {items.filter(i => i.status === "Leave").length}
+                        {items.filter(i => i.status?.toLowerCase === "leave").length}
                     </p>
                 </div>
             </div>
