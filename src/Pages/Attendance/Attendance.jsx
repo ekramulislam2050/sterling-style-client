@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
@@ -12,6 +12,13 @@ const PAGE_SIZE = 50;
 const Attendance = () => {
     const axiosSecure = useAxiosSecure();
     const parentRef = useRef();
+    const [filter,setFilter]=useState({
+        search:"",
+        status:"all",
+        date:"",
+        fromDate:"",
+        toDate:""
+    })
 
     const {
         data,
@@ -21,10 +28,20 @@ const Attendance = () => {
         isError,
         isFetchingNextPage,
     } = useInfiniteQuery({
-        queryKey: ["attendance"],
+        queryKey: ["attendance",filter],
         queryFn: async ({ pageParam = 1 }) => {
             const res = await axiosSecure.get(
-                `/api/getAttendanceOfWorker?page=${pageParam}&limit=${PAGE_SIZE}`
+                `/api/getAttendanceOfWorker`,{
+                    params:{
+                        page:pageParam,
+                        limit:PAGE_SIZE,
+                        workerId:filter.search,
+                        status:filter.status,
+                        date:filter.date,
+                        fromDate:filter.fromDate,
+                        toDate:filter.toDate
+                    }
+                }
             );
             return res.data;
         },
@@ -62,6 +79,13 @@ const Attendance = () => {
         }
     }, [virtualItems, items.length, hasNextPage, isFetchingNextPage]);
 
+    // =============================
+    // Scroll reset on filter change
+    // ==============================
+    useEffect(()=>{
+        parentRef.current?.scrollTo(0,0)
+    },[filter])
+
     if (isLoading) return <p className="p-4">Loading...........</p>;
     if (isError) return <p className="p-4 text-red-500">Error loading data</p>;
    
@@ -83,7 +107,7 @@ const Attendance = () => {
             {/*========================
                  SEARCH AND FILTER
               =========================  */}
-              <SearchAndFilterOfWorkerAttendance></SearchAndFilterOfWorkerAttendance>
+              <SearchAndFilterOfWorkerAttendance onFilterChange={(newFilter)=>setFilter(newFilter)} ></SearchAndFilterOfWorkerAttendance>
 
              {/*=====================
                 TABLE
