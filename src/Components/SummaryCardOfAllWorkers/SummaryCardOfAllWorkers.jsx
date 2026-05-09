@@ -8,6 +8,7 @@ import {
 } from "react-icons/fi";
 import { useEffect, useMemo, useState } from "react";
 import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
+import Loading from "../../LoadingAndSuccessAndErrMsg/Loading/Loading";
 
 const SummaryCardOfAllWorkers = () => {
     const axiosSecure = useAxiosSecure();
@@ -85,7 +86,7 @@ const SummaryCardOfAllWorkers = () => {
     }, [summary]);
 
     if (loading) {
-        return <p className="text-red-500 text-center">Loading summary................. <span className="loading loading-ring loading-xl"></span></p>;
+        return Loading("Loading summary")
     }
 
     return (
