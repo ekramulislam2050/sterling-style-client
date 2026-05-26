@@ -1,21 +1,17 @@
-
+import SummaryCardOfAllWorkers from "../../Components/SummaryCardOfAllWorkers/SummaryCardOfAllWorkers"
 import TableForAllWorkers from "../../Components/TableForAllWorkers/TableForAllWorkers";
-
-
 
 const AllWorker = () => {
 
 
   return (
     <div className="p-6 pt-30">
-      {/* Top section---------------- */}
-      <div>
-        <h2 className="text-2xl font-bold">All Workers</h2>
+      {/* Heading---------------- */}
+      <h2 className="text-2xl font-bold">All Workers</h2>
+      {/* summary------------------------------ */}
+      <SummaryCardOfAllWorkers></SummaryCardOfAllWorkers>
 
-      </div>
-
-
-      {/* Workers table */}
+      {/* Workers table---------- */}
       <TableForAllWorkers />
     </div>
   );

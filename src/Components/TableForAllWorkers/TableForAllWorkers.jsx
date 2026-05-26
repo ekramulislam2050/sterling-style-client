@@ -1,4 +1,4 @@
-import SummaryCardOfAllWorkers from "../SummaryCardOfAllWorkers/SummaryCardOfAllWorkers"
+
 import HeaderOfAllWorkersTable from "../HeaderOfAllWorkersTable/HeaderOfAllWorkersTable"
 import WorkerListOfAllWorkerTable from "../WorkerListOfAllWorkerTable/WorkerListOfAllWorkerTable"
 import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
@@ -24,8 +24,7 @@ const TableForAllWorkers = () => {
   }, [axiosSecure])
   return (
     <div className="space-y-4 mt-2">
-      {/* summary------------------------------ */}
-      <SummaryCardOfAllWorkers></SummaryCardOfAllWorkers>
+     
 
       {/* search section------------------------*/}
       {/* <SearchAndFilterButtonsOfAllWorkerTable/> */}
@@ -36,7 +35,9 @@ const TableForAllWorkers = () => {
         <HeaderOfAllWorkersTable />
 
         {/* list--------------------------------*/}
-        <WorkerListOfAllWorkerTable />
+        <WorkerListOfAllWorkerTable
+          allWorkersData={allWorkersData}
+        />
       </div>
 
       {/* footer--------------------------------*/}
