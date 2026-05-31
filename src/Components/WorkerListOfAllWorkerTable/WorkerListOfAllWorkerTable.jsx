@@ -1,5 +1,7 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
+import { SpaceIcon } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 
 
@@ -13,7 +15,7 @@ const WorkerListOfAllWorkerTable = ({ allWorkersData = [] }) => {
         estimateSize: () => 55,
         overscan: 10
     })
-    console.log("getVirtualItems==", rowVirtualizer.getVirtualItems())
+ 
     // for keep to top scrollAble div on -----------
     useEffect(() => {
         if (parentRef.current) {
@@ -52,7 +54,13 @@ const WorkerListOfAllWorkerTable = ({ allWorkersData = [] }) => {
                                     </div>
 
                                     <div>
-                                        {worker?.workerId}
+                                        <span className="text-red-500 pr-1 font-bold text-lg">
+                                            {`${virtualRow.index + 1}.`}
+                                        </span>
+                                        <span>
+                                            {worker?.workerId}
+                                        </span>
+
                                     </div>
 
                                     <div>
@@ -72,7 +80,9 @@ const WorkerListOfAllWorkerTable = ({ allWorkersData = [] }) => {
                                     </div>
 
                                     <div>
-                                        <button  className="  py-1 px-2 rounded-lg bg-cyan-800">View</button>
+                                       <Link to={`/WorkerDetails/${worker?._id}`} className="  py-1 px-2 rounded-lg bg-cyan-800">
+                                         View 
+                                       </Link>
                                     </div>
                                 </div>
 

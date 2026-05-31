@@ -5,6 +5,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import PrivateRoute from "./PrivateRoute";
  
  
+ 
 
 // lazy loaded components------------
 const MainLayOut = lazy(() => import("../Pages/MainLayOut/MainLayOut"))
@@ -20,7 +21,7 @@ const Production =lazy(()=>import('../Pages/Productions/Productions'))
 const Inventory=lazy(()=>import("../Pages/Inventory/Inventory"))
 const Hr=lazy(()=>import("../Pages/Hr/Hr"))
 const AllWorker=lazy(()=>import("../Pages/AllWorker/AllWorker"))
-const Attendance=lazy(()=>import("../Pages/Attendance/Attendance"))
+const WorkerDetails=lazy(()=>import("../Pages/WorkerDetails/WorkerDetails"))
 
 // skeleton-component------------------
 const PageSkeleton = () => {
@@ -104,8 +105,8 @@ const router = createBrowserRouter([
         element:<WithSuspense Component={AllWorker}></WithSuspense>
       },
       {
-        path:"/attendance",
-        element:<WithSuspense Component={Attendance}></WithSuspense>
+        path:"/workerDetails/:id",
+        element:<WorkerDetails Component={WorkerDetails}></WorkerDetails>
       }
 
     ]
