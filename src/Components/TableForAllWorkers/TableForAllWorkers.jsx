@@ -43,6 +43,9 @@ const TableForAllWorkers = () => {
         {/* list--------------------------------*/}
         <WorkerListOfAllWorkerTable
           allWorkersData={allWorkersData}
+          selectedWorkers={selectedWorkers}
+          setSelectedWorkers={setSelectedWorkers}
+          loading={loading}
         />
       </div>
 

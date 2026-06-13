@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 
 const HrActionButtons = ({ _idsOfSelectedWorkers = [] }) => {
- 
+     console.log("----",_idsOfSelectedWorkers)
 
     return (
         <div className="border border-gray-700 rounded-xl p-3">
