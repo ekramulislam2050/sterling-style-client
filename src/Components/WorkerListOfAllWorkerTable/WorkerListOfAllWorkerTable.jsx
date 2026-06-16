@@ -30,7 +30,7 @@ const WorkerListOfAllWorkerTable = ({ allWorkersData = [], selectedWorkers, setS
         overscan: 10
     })
 
-    // for keep to top scrollAble div on -----------
+    // scrollable div to keep on top-------------------------
     useEffect(() => {
         if (parentRef.current) {
             parentRef.current.scrollTop = 0
