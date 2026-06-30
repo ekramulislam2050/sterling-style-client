@@ -1,14 +1,27 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useEffect, useRef } from "react";
-import Skeleton from "../../LoadingAndSuccessAndErrMsg/Skeleton/Skeleton";
+import { useEffect } from "react";
 import AttendanceSummaryCards from "../AttendanceSummaryCard/AttendanceSummaryCard";
+import TableSkeleton from "../../LoadingAndSuccessAndErrMsg/TableSkeleton/TableSkeleton";
+import SearchAndFilterOfAttendance from "../SearchAndFilterOfAttendance/SearchAndFilterOfAttendance";
 
-const ListOfAllAttendance = ({ attendance = [], loading }) => {
-  const parentRef = useRef(null);
+const ListOfAllAttendance = ({
+  attendance = [],
+  loading,
+  containerRef,
+  handleScroll,
+  handleSearch,
+  handleStatus,
+  handleDate,
+  handleReset,
+  search,
+  status,
+  date,
+}) => {
+  // const parentRef = useRef(null);
 
   const rowVirtualizer = useVirtualizer({
     count: attendance.length,
-    getScrollElement: () => parentRef.current,
+    getScrollElement: () => containerRef.current,
     estimateSize: () => 55,
     overscan: 10,
   });
@@ -21,8 +34,22 @@ const ListOfAllAttendance = ({ attendance = [], loading }) => {
 
   return (
     <div className="pt-30">
-       <h1 className="ml-2 mb-1 text-4xl font-semibold">Attendance</h1>
+      <h1 className="ml-2 mb-1 text-4xl font-semibold">Attendance</h1>
+
+      {/* attendance summary card------------------ */}
       <AttendanceSummaryCards attendance={attendance}></AttendanceSummaryCards>
+
+      {/* attendance search and filtering--------------------- */}
+      <SearchAndFilterOfAttendance
+        handleSearch={handleSearch}
+        handleDate={handleDate}
+        handleStatus={handleStatus}
+        handleReset={handleReset}
+        search={search}
+        status={status}
+        date={date}
+      ></SearchAndFilterOfAttendance>
+
       <div className="w-full rounded-lg border shadow-sm   ">
         {/* Table Header */}
         <div className="grid grid-cols-6 bg-teal-600   text-white font-semibold sticky top-0 z-10">
@@ -36,12 +63,13 @@ const ListOfAllAttendance = ({ attendance = [], loading }) => {
 
         {/* Virtualized Body */}
         <div
-          ref={parentRef}
+          ref={containerRef}
+          onScroll={handleScroll}
           className="h-[650px] overflow-auto  "
         >
           {
             loading ?
-              <Skeleton></Skeleton>
+              <TableSkeleton></TableSkeleton>
               :
 
               <div
@@ -69,8 +97,9 @@ const ListOfAllAttendance = ({ attendance = [], loading }) => {
                         transform: `translateY(${virtualRow.start}px)`,
                       }}
                     >
+
                       <div className="p-2 font-medium">
-                        {row.workerId}
+                        <span className="text-red-500 font-bold"> {virtualRow.index + 1} . </span>{row.workerId}
                       </div>
 
                       <div className="p-2">

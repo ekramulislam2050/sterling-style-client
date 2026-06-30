@@ -1,6 +1,6 @@
  
 
-const Skeleton = () => {
+const TableSkeleton = () => {
     return (
         <div className="w-full rounded-lg overflow-hidden border border-gray-200 animate-pulse">
             {/* Header */}
@@ -31,4 +31,4 @@ const Skeleton = () => {
     );
 };
 
-export default Skeleton;
+export default TableSkeleton;
