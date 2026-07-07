@@ -8,6 +8,8 @@ const SearchAndFilterOfAttendance = ({
     search,
     status,
     date,
+    searchTxt,
+    
 }) => {
     return (
         <div className="  rounded-xl shadow  p-4 mb-6">
@@ -22,7 +24,7 @@ const SearchAndFilterOfAttendance = ({
                     <input
                         type="text"
                         placeholder="Worker ID / Name..."
-                        value={search}
+                        value={searchTxt}
                         onChange={(e) => handleSearch(e.target.value)}
                         className="input input-bordered w-full text-zinc-500"
                     />
@@ -64,7 +66,7 @@ const SearchAndFilterOfAttendance = ({
                 <div className="flex items-end">
                     <button
                         onClick={handleReset}
-                        className="btn bg-teal-600 hover:bg-teal-700 text-white w-full"
+                        className="btn bg-red-500 hover:bg-teal-700 text-white w-full"
                     >
                         Reset Filters
                     </button>

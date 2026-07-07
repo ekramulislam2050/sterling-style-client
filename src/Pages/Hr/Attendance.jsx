@@ -14,17 +14,40 @@ const Attendance = () => {
     const [search, setSearch] = useState("")
     const [status, setStatus] = useState("all")
     const [date, setDate] = useState('')
-
+    const [searchTxt,setSearchTxt]=useState("")
     // Ref--------------
     const containerRef = useRef(null)
+    const timerRef = useRef(null)
 
-    // search handler-------
+    // ====================================
+    // search handler start---------------
+    // ====================================
     const handleSearch = (value) => {
-        setAttendance([])
-        setHasMore(true)
-        setPage(1)
-        setSearch(value)
+        // search text set to state----------------
+        setSearchTxt(value)
+
+        // Removed old search key from timerRef store --------------
+        clearTimeout(timerRef.current)
+          
+        // Storing new search key in timerRef -----------
+        timerRef.current = setTimeout(() => {
+            setAttendance([])
+            setHasMore(true)
+            setPage(1)
+            setSearch(value)
+
+        }, 500);
+
     }
+    // timeOut() cleared when component is unmounted ---------
+    useEffect(() => {
+        return () => {
+            clearTimeout(timerRef.current)
+        }
+    }, [])
+    // ====================================
+    // search handler end---------------
+    // ====================================
 
     // status handler---------
     const handleStatus = (value) => {
@@ -80,6 +103,7 @@ const Attendance = () => {
         setStatus("all");
         setDate("");
         setPage(1);
+        setSearchTxt("")
     };
 
     // infinite scroll------------
@@ -107,6 +131,8 @@ const Attendance = () => {
                 search={search}
                 status={status}
                 date={date}
+                searchTxt={searchTxt}
+                
             ></ListOfAllAttendance>
         </div>
     );

@@ -16,8 +16,10 @@ const ListOfAllAttendance = ({
   search,
   status,
   date,
+  searchTxt,
+ 
 }) => {
-  // const parentRef = useRef(null);
+
 
   const rowVirtualizer = useVirtualizer({
     count: attendance.length,
@@ -26,11 +28,6 @@ const ListOfAllAttendance = ({
     overscan: 10,
   });
 
-  useEffect(() => {
-    if (!loading && attendance.length > 0) {
-      rowVirtualizer.scrollToIndex(0);
-    }
-  }, [attendance.length, loading, rowVirtualizer]);
 
   return (
     <div className="pt-30">
@@ -48,6 +45,8 @@ const ListOfAllAttendance = ({
         search={search}
         status={status}
         date={date}
+        searchTxt={searchTxt}
+      
       ></SearchAndFilterOfAttendance>
 
       <div className="w-full rounded-lg border shadow-sm   ">
