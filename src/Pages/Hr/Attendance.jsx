@@ -18,7 +18,7 @@ const Attendance = () => {
     // Ref--------------
     const containerRef = useRef(null)
     const timerRef = useRef(null)
-
+    const fetchingRef=useRef(false)
     // ====================================
     // search handler start---------------
     // ====================================
@@ -69,6 +69,7 @@ const Attendance = () => {
     // --------------data fetch---------------
     useEffect(() => {
         const fetchAttendance = async () => {
+            fetchingRef.current=true;
             setLoading(true)
             try {
 
@@ -88,6 +89,7 @@ const Attendance = () => {
                 ErrMsg('Failed to fetch allAttendance data to attendancePage(line:14)')
 
             } finally {
+                fetchingRef.current=false
                 setLoading(false)
             }
         }
@@ -105,14 +107,15 @@ const Attendance = () => {
         setPage(1);
         setSearchTxt("")
     };
-
+ 
     // infinite scroll------------
     const handleScroll = () => {
-        if (!containerRef.current || loading || !hasMore) return
+        if (!containerRef.current || !hasMore || fetchingRef.current) return
 
         const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
         const reachedBottom = scrollHeight - scrollTop - clientHeight < 300;
         if (reachedBottom) {
+             fetchingRef.current=true
             setPage((prev) => prev + 1)
         }
 
