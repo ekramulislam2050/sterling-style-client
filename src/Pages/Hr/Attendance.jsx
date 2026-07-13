@@ -135,7 +135,7 @@ const Attendance = () => {
                 status={status}
                 date={date}
                 searchTxt={searchTxt}
-                
+       
             ></ListOfAllAttendance>
         </div>
     );
