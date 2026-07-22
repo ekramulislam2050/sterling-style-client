@@ -10,42 +10,33 @@ import useAxiosSecure from "../../Hooks/UseAxiosSecure/UseAxiosSecure";
 import { useEffect, useState } from "react";
 import ErrMsg from "../../LoadingAndSuccessAndErrMsg/ErrMsg/ErrMsg";
 
-const AttendanceSummaryCards = ({ attendance = [] }) => {
+const AttendanceSummaryCards = () => {
     const axiosSecure = useAxiosSecure()
-    const [totalNumberOfWorkers,setTotalNumberOfWorkers] = useState(0)
-    
+    const [summaryData, setSummaryData] = useState(0)
+
 
     // get all worker data----------------
     useEffect(() => {
         const fetch = async () => {
             try {
-                const res = await axiosSecure.get("/api/getTotalNumberOfWorkers")
-                setTotalNumberOfWorkers(res.data.totalNumberOfWorkers)
+                const res = await axiosSecure.get("/api/getAttendanceSummaryCardData")
+                console.log("attendanceSummary====", res.data)
+                setSummaryData(res.data)
+
             } catch (err) {
                 if (err) {
                     ErrMsg("Failed to fetch totalNumberOfWorkers to(component :AttendanceSummaryCards;line: 19-20 )")
                 }
-            }  
+            }
         }
         fetch()
     }, [axiosSecure])
-    const presentCount = attendance.filter((items) => items.status === "present").length
 
-    const lateCount = attendance.filter((items) => items.status === "late").length
-
-    const absentCount = attendance.filter((items) => items.status === "absent").length
-
-    const insideFactoryCount = attendance.filter((items) => items.checkIn && !items.checkOut).length
-
-    const attendanceRate =
-        totalNumberOfWorkers > 0 ? (
-            ((presentCount + lateCount) /totalNumberOfWorkers) * 100
-        ).toFixed(1) : 0
 
     const cards = [
         {
-            title: "Total Workers",
-            value: totalNumberOfWorkers,
+            title: "Active Workers",
+            value: summaryData.totalNumberOfActiveWorker,
             icon: Users,
             bg: "bg-blue-900",
             iconBg: "bg-blue-800",
@@ -53,7 +44,7 @@ const AttendanceSummaryCards = ({ attendance = [] }) => {
         },
         {
             title: "Present",
-            value: presentCount,
+            value: summaryData.present,
             icon: CheckCircle,
             bg: "bg-green-900",
             iconBg: "bg-green-700",
@@ -61,7 +52,7 @@ const AttendanceSummaryCards = ({ attendance = [] }) => {
         },
         {
             title: "Late",
-            value: lateCount,
+            value: summaryData.late,
             icon: Clock3,
             bg: "bg-yellow-900",
             iconBg: "bg-yellow-700",
@@ -69,7 +60,7 @@ const AttendanceSummaryCards = ({ attendance = [] }) => {
         },
         {
             title: "Absent",
-            value: absentCount,
+            value: summaryData.absent,
             icon: XCircle,
             bg: "bg-red-900",
             iconBg: "bg-red-700",
@@ -77,7 +68,7 @@ const AttendanceSummaryCards = ({ attendance = [] }) => {
         },
         {
             title: "Attendance Rate",
-            value: `${attendanceRate}%`,
+            value: `${summaryData.attendanceRate}%`,
             icon: TrendingUp,
             bg: "bg-purple-900",
             iconBg: "bg-purple-700",
@@ -85,7 +76,7 @@ const AttendanceSummaryCards = ({ attendance = [] }) => {
         },
         {
             title: "Inside Factory",
-            value: insideFactoryCount,
+            value: summaryData.insideFactory,
             icon: Building2,
             bg: "bg-cyan-900",
             iconBg: "bg-cyan-700",
@@ -137,6 +128,8 @@ const AttendanceSummaryCards = ({ attendance = [] }) => {
             })}
         </div>
     );
+
+
 };
 
 export default AttendanceSummaryCards;
