@@ -1,6 +1,6 @@
 
 
-const FooterOfAllWorkerTable = ({ loading, allWorkersData = [] }) => {
+const FooterOfAllWorkerTable = ({ loading, workers = [] }) => {
     return (
         <div>
             {loading ? (
@@ -8,7 +8,7 @@ const FooterOfAllWorkerTable = ({ loading, allWorkersData = [] }) => {
                     Loading more workers...
                 </p>) : (
                 <p className="text-center text-gray-500">
-                    All workers loaded ({allWorkersData.length})
+                    All workers loaded ({workers.length})
                 </p>)
             }
 

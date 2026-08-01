@@ -13,7 +13,7 @@ const AllWorker = () => {
 
       {/* Workers table---------- */}
       <TableForAllWorkers />
-    </div>
+      </div>
   );
 };
 

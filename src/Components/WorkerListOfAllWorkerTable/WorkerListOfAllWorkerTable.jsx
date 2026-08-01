@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 
 
-const WorkerListOfAllWorkerTable = ({ allWorkersData = [], selectedWorkers, setSelectedWorkers, loading }) => {
+const WorkerListOfAllWorkerTable = ({ workers = [], selectedWorkers, setSelectedWorkers, loading,setPage }) => {
 
     // handle selected worker----------
     const handleSelectedWorker = (_id) => {
@@ -24,7 +24,7 @@ const WorkerListOfAllWorkerTable = ({ allWorkersData = [], selectedWorkers, setS
     const parentRef = useRef()
     // row virtualizer------------
     const rowVirtualizer = useVirtualizer({
-        count: allWorkersData.length,
+        count: workers.length,
         getScrollElement: () => parentRef.current,
         estimateSize: () => 55,
         overscan: 10
@@ -35,7 +35,18 @@ const WorkerListOfAllWorkerTable = ({ allWorkersData = [], selectedWorkers, setS
         if (parentRef.current) {
             parentRef.current.scrollTop = 0
         }
-    }, [allWorkersData])
+    }, [workers])
+
+    // update page.................
+    const virtualRows=rowVirtualizer.getVirtualItems()
+    useEffect(()=>{
+        const lastRow=virtualRows[virtualRows.length-1]
+        if(!lastRow) return;
+        if(lastRow.index>=workers.length - 5 && !loading){
+            setPage((prev)=>prev + 1)
+        }
+
+    },[virtualRows,workers.length,loading])
 
     return (
         <div className="h-[600px] overflow-auto border-2 border-[#e5e7eb] rounded-[10px]" ref={parentRef}>
@@ -54,7 +65,7 @@ const WorkerListOfAllWorkerTable = ({ allWorkersData = [], selectedWorkers, setS
                     <div style={{ width: '100%', position: "relative", height: `${rowVirtualizer.getTotalSize()}px` }}>
                         {
                             rowVirtualizer.getVirtualItems().map((virtualRow) => {
-                                const worker = allWorkersData[virtualRow.index]
+                                const worker = workers[virtualRow.index]
                                 return (
                                     <div key={worker?._id || virtualRow.index}
                                         style={{

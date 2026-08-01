@@ -8,26 +8,31 @@ import HrAndProductionsActionButtons from "../HrAndProductionsActionButtons/HrAn
 
 
 const TableForAllWorkers = () => {
-   const [selectedWorkers,setSelectedWorkers]=useState([])
-   const [loading,setLoading]=useState(false)
-  const [allWorkersData, setAllWorkersData] = useState([])
+  const [page,setPage]=useState(1)
+  const [selectedWorkers, setSelectedWorkers] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [workers, setWorkers] = useState([])
   const axiosSecure = useAxiosSecure()
-
+  
+  const limit=50
   useEffect(() => {
     const fetchAllWorkersData = async () => {
       try {
         setLoading(true)
-        const res = await axiosSecure.get("/api/getAllWorkersData")
-        const allWorkers = await res?.data
-        setAllWorkersData(allWorkers)
+        const res = await axiosSecure.get(`/api/getAllWorkersData?page=${page}&limit=${limit}`)
+        const newWorkers = res?.data?.workers
+
+        setWorkers((prev)=>
+              page===1?newWorkers:[...prev,...newWorkers]
+        )
       } catch (err) {
-        ErrMsg("Failed to fetch all workers data to (component:TableForAllWorkers;line:15)")
-      }finally{
+        ErrMsg("Failed to fetch all workers data to (component:TableForAllWorkers)")
+      } finally {
         setLoading(false)
       }
     }
     fetchAllWorkersData()
-  }, [axiosSecure])
+  }, [axiosSecure,page])
   return (
     <div className="space-y-4 mt-2">
 
@@ -42,18 +47,19 @@ const TableForAllWorkers = () => {
 
         {/* list--------------------------------*/}
         <WorkerListOfAllWorkerTable
-          allWorkersData={allWorkersData}
+          workers={workers}
           selectedWorkers={selectedWorkers}
           setSelectedWorkers={setSelectedWorkers}
           loading={loading}
+          setPage={setPage}
         />
       </div>
 
       {/* footer--------------------------------*/}
-      <FooterOfAllWorkerTable loading={loading} allWorkersData={allWorkersData}/>
+      <FooterOfAllWorkerTable loading={loading} workers={workers} />
 
       {/* bottom action bar-----------------------*/}
-      <HrAndProductionsActionButtons selectedWorkers={selectedWorkers}setSelectedWorkers={setSelectedWorkers}/>
+      <HrAndProductionsActionButtons selectedWorkers={selectedWorkers} setSelectedWorkers={setSelectedWorkers} />
     </div>
   );
 };
