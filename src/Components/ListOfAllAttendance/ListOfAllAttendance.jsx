@@ -1,5 +1,4 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useEffect } from "react";
 import AttendanceSummaryCards from "../AttendanceSummaryCard/AttendanceSummaryCard";
 import TableSkeleton from "../../LoadingAndSuccessAndErrMsg/TableSkeleton/TableSkeleton";
 import SearchAndFilterOfAttendance from "../SearchAndFilterOfAttendance/SearchAndFilterOfAttendance";
