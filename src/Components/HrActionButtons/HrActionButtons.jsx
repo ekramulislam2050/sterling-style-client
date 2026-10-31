@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 
 const HrActionButtons = ({ _idsOfSelectedWorkers = [] }) => {
-     console.log("----",_idsOfSelectedWorkers)
+    console.log("----", _idsOfSelectedWorkers)
 
     return (
         <div className="border border-gray-700 rounded-xl p-3">
@@ -19,7 +19,8 @@ const HrActionButtons = ({ _idsOfSelectedWorkers = [] }) => {
                 </Link>
 
                 <div className="flex flex-wrap gap-2">
-                    <button
+                    <Link
+                        to={'/exportWorkers'}
                         disabled={_idsOfSelectedWorkers.length === 0}
                         className={`px-3 py-1.5 rounded-md text-xs font-medium text-white transition-all ${_idsOfSelectedWorkers.length === 0
                             ? "bg-blue-500 opacity-50 cursor-not-allowed"
@@ -27,7 +28,7 @@ const HrActionButtons = ({ _idsOfSelectedWorkers = [] }) => {
                             }`}
                     >
                         Export
-                    </button>
+                    </Link>
 
                     <button
                         disabled={_idsOfSelectedWorkers.length === 0}
